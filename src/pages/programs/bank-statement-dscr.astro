@@ -1,0 +1,122 @@
+---
+import ProgramLayout from '../../layouts/ProgramLayout.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "Bank Statement DSCR Loan",
+    "description": "DSCR loans qualifying with 12-24 months of bank statements for self-employed investors whose tax returns understate actual income. Available in all 50 states.",
+    "url": "https://dscrbroker.com/programs/bank-statement-dscr",
+    "provider": { "@type": "Organization", "name": "DSCRBroker.com", "url": "https://dscrbroker.com" },
+    "offers": { "@type": "AggregateOffer", "priceCurrency": "USD", "lowPrice": "75000", "highPrice": "3000000", "description": "DSCR loan program for real estate investors. Qualifies on property cash flow, not personal income" },
+    "areaServed": { "@type": "Country", "name": "United States" },
+    "category": "DSCR Mortgage Loan",
+    "feesAndCommissionsSpecification": "Loan terms and fees vary by lender. DSCRBroker.com does not charge borrowers any fees."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many months of bank statements do I need?", "acceptedAnswer": { "@type": "Answer", "text": "Most lenders require 12 months. Some require 24 months for higher loan amounts or lower DSCR ratios. Personal or business bank statements are accepted. If using business statements, you may need to show that you own at least 25% of the business." } },
+      { "@type": "Question", "name": "What if my deposits are irregular?", "acceptedAnswer": { "@type": "Answer", "text": "Lenders average all deposits over the statement period. Irregular deposits are fine as long as the average is sufficient. Large one-time deposits (sale of an asset, inheritance) may be excluded. Your broker will review the statements before submission." } },
+      { "@type": "Question", "name": "Can I use this if I already have a DSCR above 1.0x?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, though if the property qualifies on its own with a 1.0x+ DSCR, a Standard DSCR loan would likely open up broader program options. The Bank Statement program is most valuable when the DSCR is between 0.75x and 1.0x and the bank deposits make the deal work." } },
+      { "@type": "Question", "name": "Is this different from a traditional bank statement loan?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. A traditional bank statement loan qualifies the borrower only. This program qualifies both the property (DSCR) and the borrower (bank deposits). It is a hybrid that gives more flexibility than either approach alone." } },
+      { "@type": "Question", "name": "Do I need to be self-employed?", "acceptedAnswer": { "@type": "Answer", "text": "The Bank Statement program is designed primarily for self-employed borrowers. W-2 employees can sometimes use it if they have substantial non-employment income. Your broker will confirm eligibility." } }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dscrbroker.com" },
+      { "@type": "ListItem", "position": 2, "name": "Loan Programs", "item": "https://dscrbroker.com/programs" },
+      { "@type": "ListItem", "position": 3, "name": "Bank Statement DSCR Loans", "item": "https://dscrbroker.com/programs/bank-statement-dscr" }
+    ]
+  }
+];
+---
+
+<ProgramLayout
+  title="Bank Statement DSCR Loans | DSCRBroker.com"
+  description="Bank statement DSCR loans for self-employed investors. 12-24 months of deposits qualify you. Match with a licensed DSCR specialist who structures your deal.com."
+  slug="bank-statement-dscr"
+  heroImage="/images/programs/bank-statement-dscr.jpg"
+  programName="Bank Statement DSCR"
+  h1="Bank Statement DSCR Loans"
+  subhead="For self-employed investors whose tax returns don't tell the full story. Use 12-24 months of bank deposits instead of W-2s or tax returns to qualify."
+  stats={[
+    { value: '0.75x', label: 'Min DSCR' },
+    { value: '20%', label: 'Min Down' },
+    { value: '660', label: 'Min FICO' },
+    { value: '80%', label: 'Max LTV' },
+  ]}
+  howItWorks={[
+    "The Bank Statement DSCR program is a hybrid. It uses the DSCR ratio from the property AND the borrower's bank statements to qualify the deal. The lender reviews 12-24 months of personal or business bank statements and calculates an average monthly deposit amount. This deposit income supplements the property's DSCR.",
+    "This program is useful when a property's DSCR is below 1.0x but the borrower has strong personal income from bank deposits. It bridges the gap between a pure no-doc DSCR loan and a full-doc conventional loan.",
+    "The lender does not look at tax returns. They calculate income by averaging deposits and applying an expense factor (typically 50% for self-employed, 100% for personal accounts). The remaining amount is treated as qualifying income.",
+    "Self-employment for 2+ years is required, documented by bank statements or a business license. If using business statements, you may need to show that you own at least 25% of the business. Irregular deposits are fine as long as the average is sufficient. Large one-time deposits (sale of an asset, inheritance) may be excluded."
+  ]}
+  qualifyItems={[
+    { text: 'You are self-employed with strong bank deposits but low taxable income' },
+    { text: 'Your business deposits $10,000+/month but your tax returns show a fraction of that' },
+    { text: 'Your FICO score is 660 or higher' },
+    { text: 'You can put 20% or more down' },
+    { text: 'You have 12-24 months of personal or business bank statements' },
+    { text: 'You have been self-employed for 2+ years' },
+    { text: "Your property's DSCR is between 0.75x and 1.0x and needs the deposit income to qualify" },
+  ]}
+  notRightItems={[
+    { text: 'You are a W-2 employee with no substantial non-employment income' },
+    { text: 'Your property already qualifies at 1.0x+ DSCR (Standard DSCR opens up broader program options)' },
+    { text: 'You have been self-employed for less than 2 years' },
+    { text: 'Your bank deposits are inconsistent with large gaps between deposit periods' },
+    { text: 'You cannot provide 12 months of statements' },
+  ]}
+  dealInvestor="Priya S., Arizona"
+  dealProperty="Single-family rental in Mesa, AZ"
+  dealDetails={[
+    { label: 'Purchase Price', value: '$415,000' },
+    { label: 'Down Payment', value: '25% ($103,750)' },
+    { label: 'Loan Amount', value: '$311,250' },
+    { label: 'Term', value: '30-year fixed' },
+  ]}
+  dealBreakdown={[
+    { label: 'Monthly P&I', value: '$2,071' },
+    { label: 'Property Taxes', value: '$432' },
+    { label: 'Insurance', value: '$155' },
+    { label: 'HOA', value: '$0' },
+    { label: 'Total PITIA', value: '$2,658', highlight: true },
+    { label: 'Monthly Gross Rent', value: '$3,050', highlight: true },
+  ]}
+  dealDscr="1.15x"
+  dealDscrColor="text-emerald-500"
+  dealCashFlow="+$392/mo"
+  dealCashFlowPositive={true}
+  dealCloseTime="26 days"
+  dealMathLine="Monthly Rent ($3,050) ÷ Monthly PITIA ($2,658) = 1.15x DSCR"
+  dealQuote="I deposit $28K a month into my business account, but my tax returns show $62K after write-offs. No conventional lender would touch me. My broker used my bank statements alongside the DSCR ratio and I closed in under a month."
+  dealQuoteAttribution="Priya S., Arizona"
+  dealNote="Priya is self-employed, running an e-commerce business. Traditional lenders rejected her because her tax-return income could not support the DTI for a $311K loan. The bank statement program used her average deposits alongside the DSCR qualification."
+  comparePrograms={['Standard DSCR', 'Interest-Only DSCR']}
+  compareRows={[
+    { feature: 'Min DSCR', values: ['0.75x', '1.0x', '1.0x'] },
+    { feature: 'Min Down Payment', values: ['20%', '20%', '20%'] },
+    { feature: 'Min FICO', values: ['660', '660', '680'] },
+    { feature: 'Best For', values: ['Self-employed investors', 'Cash-flowing rentals', 'Cash flow maximizers'] },
+    { feature: 'Unique Feature', values: ['Bank deposits replace income docs', 'No income docs, no property cap', 'Lower payments boost DSCR'] },
+  ]}
+  compareLinks={[
+    { label: 'Learn more about Standard DSCR Loans', href: '/programs/standard-dscr' },
+    { label: 'Learn more about Interest-Only DSCR Loans', href: '/programs/interest-only-dscr' },
+  ]}
+  faqItems={[
+    { question: 'How many months of bank statements do I need?', answer: 'Most lenders require 12 months. Some require 24 months for higher loan amounts or lower DSCR ratios. Personal or business bank statements are accepted. If using business statements, you may need to show that you own at least 25% of the business.' },
+    { question: 'What if my deposits are irregular?', answer: 'Lenders average all deposits over the statement period. Irregular deposits are fine as long as the average is sufficient. Large one-time deposits (sale of an asset, inheritance) may be excluded. Your broker will review the statements before submission.' },
+    { question: 'Can I use this if I already have a DSCR above 1.0x?', answer: 'Yes, though if the property qualifies on its own with a 1.0x+ DSCR, a Standard DSCR loan would likely open up broader program options. The Bank Statement program is most valuable when the DSCR is between 0.75x and 1.0x and you need the bank deposits to make the deal work.' },
+    { question: 'Is this different from a traditional bank statement loan?', answer: 'Yes. A traditional bank statement loan qualifies the borrower only. This program qualifies both the property (DSCR) and the borrower (bank deposits). It is a hybrid that gives more flexibility than either approach alone.' },
+    { question: 'Do I need to be self-employed?', answer: 'The Bank Statement program is designed primarily for self-employed borrowers. W-2 employees can sometimes use it if they have substantial non-employment income (rental income from other properties, side business income). Your broker will confirm eligibility.' },
+  ]}
+  ctaCopy="Your tax returns do not define your income. Let your bank statements tell the real story. Match with a licensed DSCR specialist who structures the deal."
+  jsonLd={jsonLd}
+/>

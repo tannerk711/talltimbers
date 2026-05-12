@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DealAnalyzer from '../components/DealAnalyzer';
+import FinalCTA from '../components/FinalCTA.astro';
+
+const title = 'DSCR Deal Analyzer | Instant Property Cash Flow Analysis | DSCRBroker.com';
+const description = 'Analyze any rental property in seconds. Paste a Zillow URL or enter deal details to get an instant DSCR ratio and monthly cash flow projection, then see what your specialist will structure.';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "DSCR Deal Analyzer",
+  "description": "Free tool to analyze rental property deals. Get an instant DSCR ratio and cash flow projection, plus a preview of what a specialist will structure.",
+  "url": "https://dscrbroker.com/analyze/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "DSCRBroker.com"
+  }
+};
+---
+
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+
+  <!-- Hero / Tool Section -->
+  <section class="relative bg-navy pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 30%, #131C31 0%, #0B1120 70%);" aria-hidden="true"></div>
+
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center mb-10">
+        <span class="inline-flex items-center gap-2 rounded-full bg-amber/10 border border-amber/20 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-amber mb-6">
+          <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L14.09 8.26L20 9.27L15.55 13.97L16.91 20L12 16.9L7.09 20L8.45 13.97L4 9.27L9.91 8.26L12 2Z" />
+          </svg>
+          Free Tool
+        </span>
+        <h1 class="text-4xl font-bold tracking-tight text-white md:text-5xl">Instantly Analyze Your Deal</h1>
+        <p class="mt-5 text-lg text-slate-400 max-w-2xl mx-auto">
+          Paste a Zillow or Redfin URL, describe your deal in plain English, or enter the numbers manually. Get an instant DSCR verdict, monthly cash flow projection, and a preview of what your specialist will structure.
+        </p>
+      </div>
+
+      <div class="mx-auto max-w-4xl">
+        <DealAnalyzer client:load />
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="bg-off-white py-16 md:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center mb-12">
+        <h2 class="text-3xl font-bold tracking-tight text-navy md:text-4xl">How the Deal Analyzer Works</h2>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-3">
+        <div class="text-center">
+          <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue/10 border border-blue/20 text-blue mb-4">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-navy mb-2">1. Enter Your Deal</h3>
+          <p class="text-sm text-gray-500">
+            Paste a property listing URL, type a description like "400K duplex in Tampa, rents $2,400/mo," or fill in the quick form with property value and rent.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue/10 border border-blue/20 text-blue mb-4">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-navy mb-2">2. Get Instant Results</h3>
+          <p class="text-sm text-gray-500">
+            We calculate your DSCR ratio, project your monthly cash flow, and preview what a specialist will structure. All in under 2 seconds, with no personal information required.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue/10 border border-blue/20 text-blue mb-4">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-navy mb-2">3. Get the Deal Structured</h3>
+          <p class="text-sm text-gray-500">
+            Like what you see? Click "Get This Deal Structured" and your details pre-fill the application. Your matched specialist structures the file and routes it to the right lender from 50+ in our network.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Is DSCR Section -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="text-3xl font-bold tracking-tight text-navy md:text-4xl mb-8">What Is DSCR and Why Does It Matter?</h2>
+
+        <div class="prose prose-lg text-gray-600 max-w-none">
+          <p>
+            DSCR stands for <strong class="text-navy">Debt Service Coverage Ratio</strong>. It measures whether a rental property generates enough income to cover its mortgage payment. The formula is simple:
+          </p>
+
+          <div class="my-8 rounded-xl bg-off-white border border-gray-200 p-6 text-center">
+            <p class="text-sm font-semibold uppercase tracking-[0.1em] text-gray-400 mb-2">The Formula</p>
+            <p class="text-2xl font-bold text-navy">DSCR = Monthly Rent / Monthly PITIA</p>
+            <p class="text-sm text-gray-500 mt-2">PITIA = Principal + Interest + Taxes + Insurance + Association Dues</p>
+          </div>
+
+          <h3 class="text-xl font-semibold text-navy mt-8 mb-4">What the Numbers Mean</h3>
+
+          <div class="grid gap-3 not-prose">
+            <div class="flex items-start gap-3 rounded-lg border border-gray-200 p-4">
+              <span class="flex-shrink-0 inline-flex items-center justify-center w-16 rounded-md bg-green/10 border border-green/20 px-2 py-1 text-sm font-bold text-green">1.25x+</span>
+              <div>
+                <p class="font-semibold text-navy">Strong Deal</p>
+                <p class="text-sm text-gray-500">The property generates 25%+ more rent than the mortgage costs. Qualifies for the broadest set of DSCR programs across our lender network.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 rounded-lg border border-gray-200 p-4">
+              <span class="flex-shrink-0 inline-flex items-center justify-center w-16 rounded-md bg-green/10 border border-green/20 px-2 py-1 text-sm font-bold text-green">1.0x</span>
+              <div>
+                <p class="font-semibold text-navy">Workable Deal</p>
+                <p class="text-sm text-gray-500">Rent covers the full mortgage payment. Qualifies for Standard DSCR programs across our lender network.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 rounded-lg border border-gray-200 p-4">
+              <span class="flex-shrink-0 inline-flex items-center justify-center w-16 rounded-md bg-amber/10 border border-amber/20 px-2 py-1 text-sm font-bold text-amber">0.75x</span>
+              <div>
+                <p class="font-semibold text-navy">No-Ratio Eligible</p>
+                <p class="text-sm text-gray-500">Rent does not fully cover the mortgage. Still qualifies for a No-Ratio DSCR program with 30%+ down payment. Common in high-appreciation markets.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 rounded-lg border border-gray-200 p-4">
+              <span class="flex-shrink-0 inline-flex items-center justify-center w-16 rounded-md bg-amber/10 border border-amber/20 px-2 py-1 text-sm font-bold text-amber">&lt;0.75x</span>
+              <div>
+                <p class="font-semibold text-navy">Specialist Review</p>
+                <p class="text-sm text-gray-500">A DSCR specialist can review your deal and find the right program. Options may include higher down payment, interest-only, or bridge-to-DSCR.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold text-navy mt-10 mb-4">Assumptions in This Tool</h3>
+          <p>
+            The Deal Analyzer uses conservative default assumptions to give you a realistic starting point:
+          </p>
+          <ul class="text-gray-600">
+            <li><strong class="text-navy">30-year fixed term:</strong> Standard amortization assumption used to compute monthly PITIA.</li>
+            <li><strong class="text-navy">Property taxes:</strong> 1.25% of property value annually (varies by state and county).</li>
+            <li><strong class="text-navy">Insurance:</strong> $150/month (varies by location, property type, and coverage).</li>
+            <li><strong class="text-navy">Down payment:</strong> 25% unless you specify otherwise.</li>
+          </ul>
+          <p>
+            For exact numbers on your deal, click "Get This Deal Structured" and your matched specialist will run the calculation with real lender data, the right program for your scenario, and a structured file ready for underwriting.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <FinalCTA />
+
+</BaseLayout>

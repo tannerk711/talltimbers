@@ -1,0 +1,111 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  noIndex?: boolean;
+  jsonLd?: object | object[];
+  hideHeader?: boolean;
+  hideFooter?: boolean;
+}
+
+const { title, description, canonical, noIndex = false, jsonLd, hideHeader = false, hideFooter = false } = Astro.props;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://dscrbroker.com';
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noIndex && <meta name="robots" content="noindex, follow" />}
+
+    <!-- OG Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={`${siteUrl}/og-default.png`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Font preload -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <!-- Google Tag Manager -->
+    {import.meta.env.PUBLIC_GTM_ID && (
+      <script set:html={`
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','${import.meta.env.PUBLIC_GTM_ID}');
+      `} />
+    )}
+
+    <slot name="head" />
+  </head>
+  <body class="bg-navy min-h-screen text-white antialiased" style="font-family: 'Inter', system-ui, sans-serif;">
+    {/* GTM noscript fallback */}
+    {import.meta.env.PUBLIC_GTM_ID && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${import.meta.env.PUBLIC_GTM_ID}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    )}
+    {!hideHeader && (
+      <header class="relative z-50 py-4 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-xl font-bold text-white tracking-tight">
+            DSCR<span class="text-blue">Broker</span><span class="text-white/40 font-normal">.com</span>
+          </a>
+          <a href="/" class="text-sm text-white/40 hover:text-white/60 transition-colors">
+            ← Back to Home
+          </a>
+        </div>
+      </header>
+    )}
+
+    <main>
+      <slot />
+    </main>
+
+    {!hideFooter && (
+      <footer class="py-8 px-4 sm:px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto text-center">
+          <p class="text-white/30 text-xs leading-relaxed max-w-2xl mx-auto">
+            DSCRBroker.com is a lead matching service, not a lender, bank, or mortgage broker. We connect borrowers with licensed loan originators. We do not make credit decisions, approve loans, set loan terms, or fund mortgages. All loan inquiries and applications are handled by the matched licensed broker.
+          </p>
+          <div class="flex items-center justify-center gap-4 mt-4 text-white/20 text-xs">
+            <a href="/privacy-policy/" class="hover:text-white/40 transition-colors">Privacy Policy</a>
+            <span>|</span>
+            <a href="/terms-of-service/" class="hover:text-white/40 transition-colors">Terms</a>
+            <span>|</span>
+            <span>Equal Housing Opportunity</span>
+          </div>
+        </div>
+      </footer>
+    )}
+  </body>
+</html>

@@ -1,0 +1,430 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import ProgramGrid from '../components/ProgramGrid.astro';
+import WhoQualifies from '../components/WhoQualifies.astro';
+import StateCoverage from '../components/StateCoverage.astro';
+import TestimonialCarousel from '../components/TestimonialCarousel';
+import FAQAccordion from '../components/FAQAccordion';
+import FinalCTA from '../components/FinalCTA.astro';
+import DSCRForm from '../components/form/DSCRForm';
+import DealAnalyzer from '../components/DealAnalyzer';
+
+const title = 'DSCR Loans | Specialist Brokers in All 50 States | DSCRBroker.com';
+const description = 'DSCR loans for real estate investors, structured by licensed specialists across all 50 states. No income verification. No tax returns. Soft pull, 2-minute match.';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FinancialService",
+  "name": "DSCRBroker.com",
+  "description": "DSCR loan matching service connecting real estate investors with licensed brokers across all 50 states.",
+  "url": "https://dscrbroker.com",
+  "areaServed": {
+    "@type": "Country",
+    "name": "United States"
+  },
+  "serviceType": "DSCR Loan Matching",
+  "provider": {
+    "@type": "Organization",
+    "name": "DSCRBroker.com"
+  }
+};
+
+const faqItems = [
+  {
+    question: 'What is a DSCR loan?',
+    answer: 'A DSCR (Debt Service Coverage Ratio) loan qualifies you based on the property\'s rental income, not your personal income. The lender divides the monthly rent by the monthly mortgage payment (PITIA). If the ratio is 1.0x or higher, the property qualifies. No W-2s, no tax returns, no employment verification. Available on single-family homes, 2-8 unit properties, condos, and townhomes in all 50 states.',
+  },
+  {
+    question: 'What credit score do I need for a DSCR loan?',
+    answer: 'Most DSCR lenders require a 660 FICO minimum. Some programs go as low as 620. A 740+ score opens up the broadest set of programs across our lender network. The credit check starts as a soft pull that does not affect your score. A hard pull only happens if you choose to proceed with a formal application.',
+  },
+  {
+    question: 'How much do I need for a down payment?',
+    answer: 'Standard DSCR loans require 20% down (80% LTV). No-Ratio programs require 30% down. Foreign National programs require 25-30% down. Higher down payments expand your program options and improve your DSCR. There are no zero-down DSCR programs.',
+  },
+  {
+    question: 'Can I get a DSCR loan with negative cash flow?',
+    answer: 'Yes. The No-Ratio DSCR program allows negative cash flow at 30% or more down. The lender does not calculate the DSCR ratio. Investors use this in appreciation markets where purchase prices outpace rents.',
+  },
+  {
+    question: 'How long does it take to close a DSCR loan?',
+    answer: 'The average close time across our broker network is 21 days from completed application to funded loan. Some deals close in as few as 14 days. Portfolio loans and foreign national loans may take 28-35 days due to additional documentation.',
+  },
+  {
+    question: 'Can I close in an LLC?',
+    answer: 'Yes. Most DSCR lenders allow closing in an LLC, corporation, or revocable trust. The individual borrower typically signs a personal guarantee even when the title is in the entity name. Your broker will confirm lender-specific requirements.',
+  },
+  {
+    question: 'How is DSCRBroker.com different from going direct to a lender?',
+    answer: 'When you go direct, you get one lender\'s program, and a loan officer whose job is to fit your file into that lender\'s box. When you use DSCRBroker.com, your matched broker is a DSCR specialist who structures your deal for approval and matches it to the right lender from 50+ in our network. The difference is judgment: which lender\'s overlays fit your scenario, how to position the file, and how to handle exceptions when automation breaks.',
+  },
+  {
+    question: 'Does submitting the form affect my credit score?',
+    answer: 'No. The initial inquiry is a soft pull only. It does not affect your credit score. A hard credit pull only happens if you decide to move forward with a formal loan application through your matched broker.',
+  },
+  {
+    question: 'Can I use Airbnb income to qualify?',
+    answer: 'Yes. The Short-Term Rental DSCR program accepts Airbnb and VRBO income. For new purchases, lenders use AirDNA market projections. For refinances of existing STRs, lenders accept your trailing 12-month booking history.',
+  },
+  {
+    question: 'I am not a US citizen. Can I still get a DSCR loan?',
+    answer: 'Yes. The Foreign National DSCR program is built for non-US investors. No SSN required. Lenders accept a foreign credit report or bank reference letter from your home country. You will need a US bank account and an ITIN for tax purposes.',
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer,
+    },
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <!-- FAQ Schema -->
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <!-- Section 1: Hero -->
+  <section class="relative overflow-hidden bg-navy pt-24 pb-16 md:pt-32 md:pb-24">
+    <!-- Subtle radial gradient background -->
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 40%, #131C31 0%, #0B1120 70%);" aria-hidden="true"></div>
+
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-8 md:grid-cols-12 md:gap-12 lg:gap-16">
+        <!-- Left column -->
+        <div class="md:col-span-7">
+          <span data-hero="badge" class="inline-flex items-center gap-2 rounded-full bg-amber/10 border border-amber/20 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-amber">
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            50+ DSCR Lenders. All 50 States.
+          </span>
+
+          <h1 data-hero="title" class="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[56px]" style="line-height: 1.1;">
+            DSCR Loans, Structured<br />by a Specialist.
+          </h1>
+
+          <p data-hero="subhead" class="mt-6 text-lg leading-relaxed text-slate-300 max-w-xl">
+            DSCR loans qualify the property, not you. No income verification. No employment check. No tax returns. Just your credit score, your down payment, and a property that generates rent. Our network of licensed DSCR specialists structures your deal for approval and matches it to the right lender from 50+ in our network. One application. Soft pull only.
+          </p>
+
+          <!-- Trust badges -->
+          <div data-hero="trust" class="mt-8 flex flex-wrap gap-3">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/[0.08] px-3.5 py-2 text-xs font-medium text-slate-300">
+              <svg class="h-4 w-4 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              Soft Pull Only
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/[0.08] px-3.5 py-2 text-xs font-medium text-slate-300">
+              <svg class="h-4 w-4 text-blue-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Close in 21 Days
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/[0.08] px-3.5 py-2 text-xs font-medium text-slate-300">
+              <svg class="h-4 w-4 text-blue-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              All 50 States
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/[0.08] px-3.5 py-2 text-xs font-medium text-slate-300">
+              <svg class="h-4 w-4 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              No Income Docs
+            </span>
+          </div>
+        </div>
+
+        <!-- Right column (form) -->
+        <div data-hero="form" class="md:col-span-5" id="lead-form">
+          <div class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 md:p-8">
+            <h2 class="text-xl font-semibold text-white mb-1">Get Your Deal Reviewed</h2>
+            <p class="text-sm text-slate-400 mb-6">2 minutes. No SSN. No hard credit pull.</p>
+            <div>
+              <DSCRForm client:load />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Trust Bar -->
+  <section class="bg-off-white py-12 md:py-16">
+    <div class="mx-auto max-w-[1080px] px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12">
+        <div data-gsap="stat" class="text-center md:border-r md:border-gray-200">
+          <p class="text-4xl font-bold text-navy md:text-5xl" style="font-variant-numeric: tabular-nums;" data-count-to="50" data-count-suffix="+">50+</p>
+          <p class="mt-1 text-xs font-medium uppercase tracking-[0.08em] text-gray-500">Lenders in Network</p>
+          <p class="mt-0.5 text-[13px] text-gray-400">More ways to structure your deal</p>
+        </div>
+        <div data-gsap="stat" class="text-center md:border-r md:border-gray-200">
+          <p class="text-4xl font-bold text-navy md:text-5xl" style="font-variant-numeric: tabular-nums;" data-count-to="50">50</p>
+          <p class="mt-1 text-xs font-medium uppercase tracking-[0.08em] text-gray-500">States Covered</p>
+          <p class="mt-0.5 text-[13px] text-gray-400">Licensed in every state</p>
+        </div>
+        <div data-gsap="stat" class="text-center md:border-r md:border-gray-200">
+          <p class="text-4xl font-bold text-navy md:text-5xl" style="font-variant-numeric: tabular-nums;" data-count-to="21">21</p>
+          <p class="mt-1 text-xs font-medium uppercase tracking-[0.08em] text-gray-500">Day Avg Close</p>
+          <p class="mt-0.5 text-[13px] text-gray-400">Application to funded</p>
+        </div>
+        <div data-gsap="stat" class="text-center">
+          <p class="text-4xl font-bold text-navy md:text-5xl" style="font-variant-numeric: tabular-nums;" data-count-to="0" data-count-prefix="$">$0</p>
+          <p class="mt-1 text-xs font-medium uppercase tracking-[0.08em] text-gray-500">Upfront Fees</p>
+          <p class="mt-0.5 text-[13px] text-gray-400">No application or junk fees</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: How It Works -->
+  <HowItWorks />
+
+  <!-- Section 4: Loan Programs -->
+  <ProgramGrid />
+
+  <!-- Section 5: Deal Analyzer -->
+  <section id="deal-analyzer" class="relative bg-navy py-16 md:py-24 overflow-hidden">
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 30%, #131C31 0%, #0B1120 70%);" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center mb-10">
+        <p data-gsap="eyebrow" class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">DEAL ANALYZER</p>
+        <h2 data-gsap="heading" class="text-3xl font-bold tracking-tight text-white md:text-4xl">Instantly Analyze Your Deal</h2>
+        <p data-gsap="subhead" class="mt-4 text-lg text-slate-400">Paste a property URL, describe your deal, or enter the numbers. Get an instant DSCR verdict, monthly cash flow projection, and a preview of what your specialist will structure, before you apply.</p>
+      </div>
+      <div data-gsap="calculator" class="mx-auto max-w-4xl">
+        <DealAnalyzer client:visible />
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Who Qualifies -->
+  <WhoQualifies />
+
+  <!-- Section 7: State Coverage -->
+  <StateCoverage />
+
+  <!-- Section 8: Testimonials -->
+  <section id="testimonials" class="bg-off-white py-16 md:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center">
+        <p data-gsap="eyebrow" class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">RESULTS</p>
+        <h2 data-gsap="heading" class="text-3xl font-bold tracking-tight text-navy md:text-4xl">What Investors Say After Closing</h2>
+        <p data-gsap="subhead" class="mt-4 text-lg text-gray-500">Real deals. Real numbers. Real investors who closed through our broker network.</p>
+      </div>
+      <div class="mt-12">
+        <TestimonialCarousel client:visible />
+      </div>
+      <p class="text-xs text-gray-400 mt-8 text-center max-w-2xl mx-auto">
+        Results may vary. Individual loan terms depend on borrower qualifications, property characteristics, and lender guidelines. Past results do not guarantee future performance. Testimonials reflect the individual experiences of specific borrowers and are not representative of all borrowers.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 9: FAQ -->
+  <section id="faq" class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-3xl text-center">
+        <p data-gsap="eyebrow" class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">FAQ</p>
+        <h2 data-gsap="heading" class="text-3xl font-bold tracking-tight text-navy md:text-4xl">What Investors Ask About DSCR Loans</h2>
+        <p data-gsap="subhead" class="mt-4 text-lg text-gray-500">Straight answers. No bank-speak.</p>
+      </div>
+      <div class="mx-auto mt-12 max-w-3xl">
+        <FAQAccordion items={faqItems} client:visible />
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 10: Final CTA -->
+  <FinalCTA />
+
+  <!-- GSAP Animations (vanilla script, not inside React) -->
+  <script>
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Respect prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReducedMotion) {
+      // =====================
+      // 1. HERO ENTRANCE TIMELINE
+      // =====================
+      const heroElements = {
+        badge: document.querySelector('[data-hero="badge"]'),
+        title: document.querySelector('[data-hero="title"]'),
+        subhead: document.querySelector('[data-hero="subhead"]'),
+        trust: document.querySelector('[data-hero="trust"]'),
+        form: document.querySelector('[data-hero="form"]'),
+      };
+
+      // Set initial hidden state
+      Object.values(heroElements).forEach((el) => {
+        if (el) gsap.set(el, { opacity: 0, y: 30 });
+      });
+
+      // Build timeline
+      const heroTl = gsap.timeline({ delay: 0.2 });
+
+      if (heroElements.badge) heroTl.to(heroElements.badge, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+      if (heroElements.title) heroTl.to(heroElements.title, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.3');
+      if (heroElements.subhead) heroTl.to(heroElements.subhead, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4');
+      if (heroElements.trust) heroTl.to(heroElements.trust, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3');
+      if (heroElements.form) heroTl.to(heroElements.form, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.3');
+
+      // =====================
+      // 2. SCROLL REVEAL ANIMATIONS
+      // =====================
+
+      // Standard reveals: eyebrow, heading, subhead
+      document.querySelectorAll('[data-gsap="eyebrow"], [data-gsap="heading"], [data-gsap="subhead"]').forEach((el) => {
+        gsap.set(el, { opacity: 0, y: 30 });
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
+
+      // Cards: staggered reveal
+      const cardGroups = new Map<Element, Element[]>();
+      document.querySelectorAll('[data-gsap="card"]').forEach((el) => {
+        const parent = el.parentElement;
+        if (parent) {
+          if (!cardGroups.has(parent)) cardGroups.set(parent, []);
+          cardGroups.get(parent)!.push(el);
+        }
+      });
+
+      cardGroups.forEach((cards) => {
+        gsap.set(cards, { opacity: 0, y: 50 });
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: cards[0],
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
+
+      // Tiles: staggered reveal (snappier)
+      const tileGroups = new Map<Element, Element[]>();
+      document.querySelectorAll('[data-gsap="tile"]').forEach((el) => {
+        const parent = el.parentElement;
+        if (parent) {
+          if (!tileGroups.has(parent)) tileGroups.set(parent, []);
+          tileGroups.get(parent)!.push(el);
+        }
+      });
+
+      tileGroups.forEach((tiles) => {
+        gsap.set(tiles, { opacity: 0, y: 60 });
+        gsap.to(tiles, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: tiles[0],
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
+
+      // Calculator / Deal Analyzer
+      document.querySelectorAll('[data-gsap="calculator"]').forEach((el) => {
+        gsap.set(el, { opacity: 0, y: 40 });
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
+
+      // CTA button bounce (final section)
+      document.querySelectorAll('[data-gsap="cta"]').forEach((el) => {
+        gsap.set(el, { opacity: 0, y: 20, scale: 0.95 });
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: 'back.out(1.4)',
+          delay: 0.3,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
+
+      // =====================
+      // 3. STAT COUNTER ANIMATION
+      // =====================
+      document.querySelectorAll('[data-gsap="stat"]').forEach((statBlock) => {
+        const numberEl = statBlock.querySelector('[data-count-to]') as HTMLElement | null;
+        if (!numberEl) return;
+
+        const target = parseInt(numberEl.dataset.countTo || '0', 10);
+        const prefix = numberEl.dataset.countPrefix || '';
+        const suffix = numberEl.dataset.countSuffix || '';
+
+        gsap.set(statBlock, { opacity: 0, y: 30 });
+
+        const counter = { val: 0 };
+
+        ScrollTrigger.create({
+          trigger: statBlock,
+          start: 'top 85%',
+          once: true,
+          onEnter: () => {
+            // Fade in the stat block
+            gsap.to(statBlock, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' });
+
+            // Animate the number counting up
+            gsap.to(counter, {
+              val: target,
+              duration: 1.2,
+              ease: 'power2.out',
+              onUpdate: () => {
+                numberEl.textContent = prefix + Math.round(counter.val) + suffix;
+              },
+            });
+          },
+        });
+      });
+    }
+  </script>
+</BaseLayout>

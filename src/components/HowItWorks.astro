@@ -1,0 +1,56 @@
+---
+const steps = [
+  {
+    number: '01',
+    title: 'Tell Us About Your Property',
+    description: 'Property type, location, estimated value, down payment, and credit range. Takes 2 minutes. No SSN required.',
+    icon: 'building',
+  },
+  {
+    number: '02',
+    title: 'Get Matched with a Specialist',
+    description: 'We route your inquiry to a licensed DSCR broker in your state. You hear from them within 1 business hour. One broker, not five companies calling.',
+    icon: 'users',
+  },
+  {
+    number: '03',
+    title: 'Your Specialist Structures the Deal',
+    description: 'Your broker structures your file for approval and matches it to the right lender from 50+ in our network. You close in as few as 21 days. Exceptions, edge cases, and complex scenarios get human judgment, not an algorithm.',
+    icon: 'chart',
+  },
+];
+---
+
+<section id="how-it-works" class="relative bg-white py-16 md:py-24 overflow-hidden">
+  <!-- Background image with heavy tint -->
+  <div class="absolute inset-0" aria-hidden="true">
+    <img src="/images/sections/how-it-works.jpg" alt="" class="w-full h-full object-cover opacity-[0.04]" />
+  </div>
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="mx-auto max-w-3xl text-center">
+      <p data-gsap="eyebrow" class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">HOW IT WORKS</p>
+      <h2 data-gsap="heading" class="text-3xl font-bold tracking-tight text-navy md:text-4xl">Three Steps to a Structured Deal</h2>
+      <p data-gsap="subhead" class="mt-4 text-lg text-gray-500">One form. A licensed DSCR specialist. A deal structured for approval.</p>
+    </div>
+
+    <!-- Steps grid -->
+    <div class="relative mt-12 grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-12">
+      <!-- Connector lines (desktop only) -->
+      <div class="absolute top-6 left-[calc(33.333%-1rem)] hidden w-[calc(33.333%+2rem)] border-t-2 border-dashed border-gray-200 md:block" aria-hidden="true"></div>
+      <div class="absolute top-6 left-[calc(66.666%-1rem)] hidden w-[calc(33.333%+2rem)] border-t-2 border-dashed border-gray-200 md:block" aria-hidden="true"></div>
+
+      {steps.map((step) => (
+        <div data-gsap="card" class="relative flex flex-col items-center text-center md:items-start md:text-left">
+          <!-- Number badge -->
+          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-amber/10 text-sm font-semibold text-amber">
+            {step.number}
+          </div>
+
+          <h3 class="mt-4 text-lg font-semibold text-navy">{step.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-500">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

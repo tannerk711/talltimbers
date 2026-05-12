@@ -1,0 +1,123 @@
+---
+import ProgramLayout from '../../layouts/ProgramLayout.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "Bridge-to-DSCR Loan",
+    "description": "Short-term bridge financing that converts to a permanent DSCR loan after rehab. Designed for the BRRRR strategy: buy, rehab, rent, refinance, repeat. Available in all 50 states.",
+    "url": "https://dscrbroker.com/programs/bridge-to-dscr",
+    "provider": { "@type": "Organization", "name": "DSCRBroker.com", "url": "https://dscrbroker.com" },
+    "offers": { "@type": "AggregateOffer", "priceCurrency": "USD", "lowPrice": "75000", "highPrice": "2000000", "description": "Two-phase bridge-to-DSCR program: short-term bridge financing during rehab, then permanent DSCR refinance after stabilization." },
+    "areaServed": { "@type": "Country", "name": "United States" },
+    "category": "DSCR Mortgage Loan",
+    "feesAndCommissionsSpecification": "Loan terms and fees vary by lender. DSCRBroker.com does not charge borrowers any fees."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How long do I need to wait before refinancing from the bridge to the DSCR loan?", "acceptedAnswer": { "@type": "Answer", "text": "Most DSCR lenders require a 6-month seasoning period to use the new appraised value (ARV). If you refinance before 6 months, the loan amount will be based on the lower of your total cost or the appraised value, which limits your cash-out potential." } },
+      { "@type": "Question", "name": "Does the bridge lender fund the rehab upfront?", "acceptedAnswer": { "@type": "Answer", "text": "Rehab funds are released in draws as work is completed. The bridge lender sends an inspector to verify completed milestones before releasing each draw. The initial funding covers the purchase price portion." } },
+      { "@type": "Question", "name": "What if the ARV comes in lower than expected?", "acceptedAnswer": { "@type": "Answer", "text": "Your DSCR refinance loan amount is based on the actual appraised value, not your projected ARV. If the appraisal comes in lower, you get less cash out (or may need to bring cash to close the refinance). Accurate ARV estimation before the purchase is critical." } },
+      { "@type": "Question", "name": "Can I use one broker for both the bridge and the DSCR refinance?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Brokers in our network can structure both phases. Using the same broker for both saves time because they already have your file and the property details." } },
+      { "@type": "Question", "name": "What if the property does not rent for enough to hit 1.0x DSCR?", "acceptedAnswer": { "@type": "Answer", "text": "You can use the No-Ratio program for the permanent phase if you have 30%+ equity in the property post-rehab. Since BRRRR deals often create significant equity, the No-Ratio option is a reliable fallback if the rent does not fully cover PITIA." } }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dscrbroker.com" },
+      { "@type": "ListItem", "position": 2, "name": "Loan Programs", "item": "https://dscrbroker.com/programs" },
+      { "@type": "ListItem", "position": 3, "name": "Bridge-to-DSCR Loans", "item": "https://dscrbroker.com/programs/bridge-to-dscr" }
+    ]
+  }
+];
+---
+
+<ProgramLayout
+  title="Bridge-to-DSCR Loans | DSCRBroker.com"
+  description="Bridge-to-DSCR loans for rehab-to-rental BRRRR strategies. Short-term financing that converts to a permanent DSCR loan. Match with a licensed specialist who structures both phases."
+  slug="bridge-to-dscr"
+  heroImage="/images/programs/bridge-to-dscr.jpg"
+  programName="Bridge-to-DSCR"
+  h1="Bridge-to-DSCR Loans"
+  subhead="Buy. Rehab. Rent. Refinance. The full BRRRR cycle in one lending relationship. Start with a bridge loan for acquisition and rehab, then convert to permanent DSCR financing."
+  stats={[
+    { value: '85% LTC', label: 'Max Bridge' },
+    { value: '80% LTV', label: 'Max Perm DSCR' },
+    { value: '660', label: 'Min FICO' },
+    { value: '6 mo', label: 'Refi Seasoning' },
+  ]}
+  howItWorks={[
+    "The Bridge-to-DSCR program is a two-phase loan structure designed for the BRRRR (Buy, Rehab, Rent, Refinance, Repeat) strategy.",
+    "Phase 1: Bridge loan. Short-term financing (12-24 months) to acquire and renovate a distressed property. The bridge lender funds up to 85% of the purchase price plus 100% of the rehab budget. Draws are released as rehab milestones are completed. Payments are interest-only during the bridge period. Bridge financing is short-term, higher-risk capital, so terms are structured around the rehab timeline rather than long-term hold.",
+    "Phase 2: DSCR refinance. After the rehab is complete and the property is stabilized (rented), you refinance into a permanent DSCR loan. The new loan is based on the after-repair value (ARV), not the original purchase price. If the ARV is significantly higher than the total cost (purchase + rehab), you pull cash out at refinance.",
+    "The 6-month seasoning period is the key timing factor. Most DSCR lenders require the property to be owned for at least 6 months before refinancing at the new appraised value. During months 0-6, the refinance would be based on the lower of cost or appraised value, which limits your cash-out potential. Plan your rehab timeline accordingly."
+  ]}
+  qualifyItems={[
+    { text: 'You are using the BRRRR strategy (buy, rehab, rent, refinance, repeat)' },
+    { text: 'You are buying a distressed property below market value with rehab potential' },
+    { text: 'Your FICO score is 660 or higher' },
+    { text: 'You have 15%+ of the purchase price in cash (bridge lender funds the rest + 100% rehab)' },
+    { text: 'The after-repair value supports a 75-80% LTV DSCR refinance' },
+    { text: 'The stabilized property will achieve a 1.0x+ DSCR (or 30%+ equity for No-Ratio)' },
+    { text: 'You want both phases (bridge + permanent) handled through one broker relationship' },
+  ]}
+  notRightItems={[
+    { text: 'You are buying a stabilized, rent-ready property (Standard DSCR is simpler and cheaper)' },
+    { text: 'You are doing a fix-and-flip with no intention to hold and rent' },
+    { text: "Your rehab scope exceeds the bridge lender's maximum budget" },
+    { text: 'The projected ARV does not support a refinance that pays off the bridge loan' },
+    { text: 'You need permanent financing immediately with no rehab period' },
+  ]}
+  dealInvestor="Angela D., North Carolina"
+  dealProperty="Single-family BRRRR deal in Charlotte, NC"
+  dealDetails={[
+    { label: 'Purchase Price', value: '$195,000' },
+    { label: 'Rehab Budget', value: '$65,000' },
+    { label: 'Bridge Loan', value: '$208,000' },
+    { label: 'After-Repair Value', value: '$340,000' },
+    { label: 'DSCR Refi Amount', value: '$255,000 (75% ARV)' },
+  ]}
+  dealBreakdown={[
+    { label: 'Monthly P&I (perm)', value: '$1,718' },
+    { label: 'Property Taxes', value: '$236' },
+    { label: 'Insurance', value: '$140' },
+    { label: 'HOA', value: '$0' },
+    { label: 'Total PITIA (perm)', value: '$2,094', highlight: true },
+    { label: 'Monthly Gross Rent', value: '$2,500', highlight: true },
+  ]}
+  dealDscr="1.19x"
+  dealDscrColor="text-emerald-500"
+  dealCashFlow="+$406/mo"
+  dealCashFlowPositive={true}
+  dealCloseTime="21 days (refi)"
+  dealMathLine="Monthly Rent ($2,500) ÷ Monthly PITIA ($2,094) = 1.19x DSCR"
+  dealQuote="Bought it ugly, rehabbed it in 4 months, rented it at $2,500, then my broker refinanced me into a 30-year DSCR loan. I got almost all my cash back. That's the BRRRR strategy actually working."
+  dealQuoteAttribution="Angela D., North Carolina"
+  dealNote="Total cash invested: $260,000. DSCR refinance proceeds: $255,000. Cash left in deal: ~$5,000 plus closing costs. Investor recovers nearly all capital while retaining a cash-flowing asset worth $340,000."
+  comparePrograms={['Standard DSCR', 'Portfolio DSCR']}
+  compareRows={[
+    { feature: 'Min DSCR', values: ['None (bridge) / 1.0x (perm)', '1.0x', '1.0x (aggregate)'] },
+    { feature: 'Min Down Payment', values: ['15% (bridge) / 20% (perm)', '20%', '25%'] },
+    { feature: 'Min FICO', values: ['660', '660', '680'] },
+    { feature: 'Best For', values: ['BRRRR investors', 'Cash-flowing rentals', '3+ property bundles'] },
+    { feature: 'Unique Feature', values: ['Two-phase: bridge + permanent', 'No income docs, no property cap', 'Aggregate DSCR across portfolio'] },
+  ]}
+  compareLinks={[
+    { label: 'Learn more about Standard DSCR Loans', href: '/programs/standard-dscr' },
+    { label: 'Learn more about Portfolio DSCR Loans', href: '/programs/portfolio-dscr' },
+  ]}
+  faqItems={[
+    { question: 'How long do I need to wait before refinancing from the bridge to the DSCR loan?', answer: 'Most DSCR lenders require a 6-month seasoning period to use the new appraised value (ARV). If you refinance before 6 months, the loan amount will be based on the lower of your total cost or the appraised value, which limits your cash-out potential.' },
+    { question: 'Does the bridge lender fund the rehab upfront?', answer: 'Rehab funds are released in draws as work is completed. The bridge lender sends an inspector to verify completed milestones before releasing each draw. The initial funding covers the purchase price portion.' },
+    { question: 'What if the ARV comes in lower than expected?', answer: 'Your DSCR refinance loan amount is based on the actual appraised value, not your projected ARV. If the appraisal comes in lower, you get less cash out (or may need to bring cash to close the refinance). Accurate ARV estimation before the purchase is critical.' },
+    { question: 'Can I use one broker for both the bridge and the DSCR refinance?', answer: 'Yes. Brokers in our network can structure both phases. Using the same broker for both saves time because they already have your file and the property details. Some bridge lenders offer guaranteed DSCR refinance terms if you use their permanent product.' },
+    { question: 'What if the property does not rent for enough to hit 1.0x DSCR?', answer: 'You can use the No-Ratio program for the permanent phase if you have 30%+ equity in the property post-rehab. Since BRRRR deals often create significant equity, the No-Ratio option is a reliable fallback if the rent does not fully cover PITIA.' },
+  ]}
+  ctaCopy="The BRRRR strategy works when the financing is right. Get matched with a specialist who structures both bridge and permanent phases."
+  jsonLd={jsonLd}
+/>

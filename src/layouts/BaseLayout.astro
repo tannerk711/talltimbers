@@ -1,0 +1,122 @@
+---
+import '../styles/global.css';
+import Header from '../components/global/Header.astro';
+import Footer from '../components/global/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: string;
+  jsonLd?: object;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical = Astro.url.href,
+  ogImage = '/og-default.png',
+  ogType = 'website',
+  jsonLd,
+  noIndex = false,
+} = Astro.props;
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://dscrbroker.com';
+const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+
+  {noIndex ? (
+    <meta name="robots" content="noindex, nofollow" />
+  ) : (
+    <meta name="robots" content="index, follow" />
+  )}
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={fullOgImage} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content="DSCRBroker.com" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={fullOgImage} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Font loading: Inter 400-800 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </noscript>
+
+  <!-- JSON-LD Structured Data -->
+  {jsonLd && (
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  )}
+
+  <!-- Google Tag Manager -->
+  {import.meta.env.PUBLIC_GTM_ID && (
+    <script set:html={`
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','${import.meta.env.PUBLIC_GTM_ID}');
+    `} />
+  )}
+
+  <slot name="head" />
+</head>
+<body class="min-h-screen bg-off-white font-sans text-navy">
+  {/* GTM noscript fallback */}
+  {import.meta.env.PUBLIC_GTM_ID && (
+    <noscript>
+      <iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${import.meta.env.PUBLIC_GTM_ID}`}
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe>
+    </noscript>
+  )}
+
+  <Header />
+
+  <main>
+    <slot />
+  </main>
+
+  <Footer />
+</body>
+</html>

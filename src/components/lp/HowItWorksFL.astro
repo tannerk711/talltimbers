@@ -1,0 +1,48 @@
+---
+const steps = [
+  {
+    number: '01',
+    title: 'Tell us about your Florida deal',
+    description: 'Property type, metro, estimated value, down payment, credit range. One question at a time. 60 seconds. No SSN required.',
+  },
+  {
+    number: '02',
+    title: 'Get matched to John, your FL specialist',
+    description: 'Florida submissions route to John Peisner / Barrett Financial Group, NMLS #239185. He (or a licensed member of his team) reviews your scenario within 1 business hour.',
+  },
+  {
+    number: '03',
+    title: 'Your specialist structures your file',
+    description: 'John pre-runs FL insurance quotes, verifies STR zoning, checks condo warrantability, and matches your file to the right lender across 50+ DSCR sources. You close in as few as 14-21 days.',
+  },
+];
+---
+
+<section id="how-it-works" class="relative bg-white py-16 md:py-20 overflow-hidden">
+  <div class="absolute inset-0" aria-hidden="true">
+    <img src="/images/sections/how-it-works.jpg" alt="" class="w-full h-full object-cover opacity-[0.04]" />
+  </div>
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">HOW IT WORKS</p>
+      <h2 class="text-3xl font-bold tracking-tight text-navy md:text-4xl">From Florida Deal to Closing in 3 Steps</h2>
+      <p class="mt-4 text-lg text-gray-500">One form. A licensed Florida DSCR specialist. A deal structured for approval before it ever hits underwriting.</p>
+    </div>
+
+    <div class="relative mt-12 grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-12">
+      <div class="absolute top-6 left-[calc(33.333%-1rem)] hidden w-[calc(33.333%+2rem)] border-t-2 border-dashed border-gray-200 md:block" aria-hidden="true"></div>
+      <div class="absolute top-6 left-[calc(66.666%-1rem)] hidden w-[calc(33.333%+2rem)] border-t-2 border-dashed border-gray-200 md:block" aria-hidden="true"></div>
+
+      {steps.map((step) => (
+        <div class="relative flex flex-col items-center text-center md:items-start md:text-left">
+          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-amber/10 text-sm font-semibold text-amber">
+            {step.number}
+          </div>
+
+          <h3 class="mt-4 text-lg font-semibold text-navy">{step.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-gray-500">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

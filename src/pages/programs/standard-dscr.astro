@@ -1,0 +1,122 @@
+---
+import ProgramLayout from '../../layouts/ProgramLayout.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "Standard DSCR Loan",
+    "description": "The core DSCR loan product for real estate investors. Qualify based on rental income with no personal income documentation. Minimum 660 FICO, 20% down payment, and 1.0x DSCR ratio required. Available on 1-8 unit residential investment properties in all 50 states.",
+    "url": "https://dscrbroker.com/programs/standard-dscr",
+    "provider": { "@type": "Organization", "name": "DSCRBroker.com", "url": "https://dscrbroker.com" },
+    "offers": { "@type": "AggregateOffer", "priceCurrency": "USD", "lowPrice": "75000", "highPrice": "3000000", "description": "DSCR loan program for real estate investors. Qualifies on property cash flow, not personal income" },
+    "areaServed": { "@type": "Country", "name": "United States" },
+    "category": "DSCR Mortgage Loan",
+    "feesAndCommissionsSpecification": "Loan terms and fees vary by lender. DSCRBroker.com does not charge borrowers any fees. Standard prepayment penalty applies (typically 3-2-1 step-down structure)."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Do I need to show income or tax returns for a Standard DSCR loan?", "acceptedAnswer": { "@type": "Answer", "text": "No. The lender qualifies the property based on its rental income, not your personal income. You will not submit W-2s, tax returns, or pay stubs. The only financial documentation is proof of down payment funds and reserves." } },
+      { "@type": "Question", "name": "Can I close in my LLC?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Most DSCR lenders allow vesting in an LLC, corporation, or revocable trust. Some require the individual borrower to personally guarantee the loan even when the title is in the LLC name." } },
+      { "@type": "Question", "name": "What counts as rental income for DSCR calculation?", "acceptedAnswer": { "@type": "Answer", "text": "For leased properties, the lender uses the current lease amount. For vacant properties, the appraiser provides a market rent estimate on Form 1007 (single-family) or Form 1025 (2-4 unit). The lower of the lease amount or appraised rent is typically used." } },
+      { "@type": "Question", "name": "How many DSCR loans can I have at the same time?", "acceptedAnswer": { "@type": "Answer", "text": "There is no universal cap. Most DSCR lenders allow 20+ simultaneous loans. Some have no limit at all. This is one of the primary reasons investors use DSCR loans instead of conventional financing, which caps at 10 financed properties." } },
+      { "@type": "Question", "name": "What is the typical prepayment penalty on a Standard DSCR loan?", "acceptedAnswer": { "@type": "Answer", "text": "Most DSCR loans carry a prepayment penalty for the first 3-5 years. A common structure is 3-2-1 (3% in year 1, 2% in year 2, 1% in year 3, none after). Some lenders offer no-prepay options under different program structures. Your specialist will walk you through the trade-offs." } }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dscrbroker.com" },
+      { "@type": "ListItem", "position": 2, "name": "Loan Programs", "item": "https://dscrbroker.com/programs" },
+      { "@type": "ListItem", "position": 3, "name": "Standard DSCR Loans", "item": "https://dscrbroker.com/programs/standard-dscr" }
+    ]
+  }
+];
+---
+
+<ProgramLayout
+  title="Standard DSCR Loans | DSCRBroker.com"
+  description="Standard DSCR loans from 660 FICO and 20% down. No income docs. No employment check. Match with a licensed DSCR specialist who structures your deal."
+  slug="standard-dscr"
+  heroImage="/images/programs/standard-dscr.jpg"
+  programName="Standard DSCR"
+  h1="Standard DSCR Loans"
+  subhead="The most popular DSCR loan program. Qualify with rental income alone. No tax returns, no W-2s, no bank statements. If your property cash-flows at 1.0x or better, you're in."
+  stats={[
+    { value: '1.0x', label: 'Min DSCR' },
+    { value: '20%', label: 'Min Down' },
+    { value: '660', label: 'Min FICO' },
+    { value: '80%', label: 'Max LTV' },
+  ]}
+  howItWorks={[
+    "The Standard DSCR loan is the workhorse of investor lending. The lender orders an appraisal that includes a rental income analysis (Form 1007 for single-family, Form 1025 for multi-unit). If the property is already rented, the lender uses the actual lease amount. If it is vacant, the appraiser provides a market rent estimate based on comparable rentals in the area.",
+    "The lender divides that monthly rental income by the total PITIA payment. If the result is 1.0x or higher, the property qualifies. No income docs. No tax returns. No employment verification. You provide a credit report (soft pull initially), proof of down payment or equity, and entity documentation if closing in an LLC.",
+    "Closings typically take 21-30 days from application to funding. Prepayment penalties are standard (3-2-1 step-down or 5-4-3-2-1 depending on the lender). Properties can be vested in an LLC, trust, or individual name.",
+    "Most lenders allow up to 20 financed DSCR properties simultaneously, with some having no cap at all. This is the primary advantage over conventional loans, which cap out at 10 financed properties per borrower."
+  ]}
+  qualifyItems={[
+    { text: 'Your property has a DSCR of 1.0x or higher (rent covers the mortgage payment)' },
+    { text: 'You have a 660+ FICO score (mid-score of three bureaus)' },
+    { text: 'You can put 20% or more down on a purchase (or have 20%+ equity for a refinance)' },
+    { text: 'You are buying a 1-8 unit non-owner-occupied residential property' },
+    { text: 'You are a US citizen, permanent resident, or eligible visa holder' },
+    { text: 'You have 6 months of PITIA in liquid reserves' },
+    { text: 'You want to close in an LLC, trust, or your personal name' },
+    { text: 'You need no limit on how many DSCR loans you can hold simultaneously' },
+  ]}
+  notRightItems={[
+    { text: 'Your property has negative cash flow (DSCR below 1.0x). See No-Ratio DSCR instead.' },
+    { text: 'You are a first-time homebuyer looking for an owner-occupied primary residence' },
+    { text: 'Your FICO score is below 660' },
+    { text: 'You are buying a fix-and-flip that is not yet stabilized. See Bridge-to-DSCR instead.' },
+    { text: 'You are purchasing vacant land or commercial property (non-residential)' },
+  ]}
+  dealInvestor="David R., Georgia"
+  dealProperty="Single-family rental in Atlanta suburbs (Kennesaw)"
+  dealDetails={[
+    { label: 'Purchase Price', value: '$325,000' },
+    { label: 'Down Payment', value: '25% ($81,250)' },
+    { label: 'Loan Amount', value: '$243,750' },
+    { label: 'Term', value: '30-year fixed' },
+  ]}
+  dealBreakdown={[
+    { label: 'Monthly P&I', value: '$1,601' },
+    { label: 'Property Taxes', value: '$271' },
+    { label: 'Insurance', value: '$135' },
+    { label: 'HOA', value: '$0' },
+    { label: 'Total PITIA', value: '$2,007', highlight: true },
+    { label: 'Monthly Gross Rent', value: '$2,450', highlight: true },
+  ]}
+  dealDscr="1.22x"
+  dealDscrColor="text-emerald-500"
+  dealCashFlow="+$443/mo"
+  dealCashFlowPositive={true}
+  dealCloseTime="24 days"
+  dealMathLine="Monthly Rent ($2,450) ÷ Monthly PITIA ($2,007) = 1.22x DSCR"
+  dealQuote="I was tired of explaining my tax returns to underwriters. With DSCR, the property spoke for itself. Twenty-four days from application to keys."
+  dealQuoteAttribution="David R., Georgia"
+  comparePrograms={['Interest-Only DSCR', 'Bank Statement DSCR']}
+  compareRows={[
+    { feature: 'Min DSCR', values: ['1.0x', '1.0x', '0.75x'] },
+    { feature: 'Min Down Payment', values: ['20%', '20%', '20%'] },
+    { feature: 'Min FICO', values: ['660', '680', '660'] },
+    { feature: 'Best For', values: ['Cash-flowing rentals', 'Cash flow maximizers', 'Self-employed investors'] },
+    { feature: 'Unique Feature', values: ['No income docs, no property cap', 'Lower payments boost DSCR', 'Bank deposits replace income docs'] },
+  ]}
+  compareLinks={[
+    { label: 'Learn more about Interest-Only DSCR Loans', href: '/programs/interest-only-dscr' },
+    { label: 'Learn more about Bank Statement DSCR Loans', href: '/programs/bank-statement-dscr' },
+  ]}
+  faqItems={[
+    { question: 'Do I need to show income or tax returns for a Standard DSCR loan?', answer: 'No. The lender qualifies the property based on its rental income, not your personal income. You will not submit W-2s, tax returns, or pay stubs. The only financial documentation is proof of down payment funds and reserves.' },
+    { question: 'Can I close in my LLC?', answer: 'Yes. Most DSCR lenders allow vesting in an LLC, corporation, or revocable trust. Some require the individual borrower to personally guarantee the loan even when the title is in the LLC name.' },
+    { question: 'What counts as rental income for DSCR calculation?', answer: 'For leased properties, the lender uses the current lease amount. For vacant properties, the appraiser provides a market rent estimate on Form 1007 (single-family) or Form 1025 (2-4 unit). The lower of the lease amount or appraised rent is typically used.' },
+    { question: 'How many DSCR loans can I have at the same time?', answer: 'There is no universal cap. Most DSCR lenders allow 20+ simultaneous loans. Some have no limit at all. This is one of the primary reasons investors use DSCR loans instead of conventional financing, which caps at 10 financed properties.' },
+    { question: 'What is the typical prepayment penalty on a Standard DSCR loan?', answer: 'Most DSCR loans carry a prepayment penalty for the first 3-5 years. A common structure is 3-2-1 (3% of the loan balance if paid off in year 1, 2% in year 2, 1% in year 3, none after). Some lenders offer no-prepay options under different program structures. Your specialist will walk you through the trade-offs.' },
+  ]}
+  ctaCopy="One application. 50+ DSCR lenders in our network. Your specialist structures the file for the right one. get matched with a specialist in under 2 minutes. Soft pull only."
+  jsonLd={jsonLd}
+/>

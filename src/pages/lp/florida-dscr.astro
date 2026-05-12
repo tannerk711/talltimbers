@@ -1,0 +1,115 @@
+---
+import LandingLayout from '../../layouts/LandingLayout.astro';
+import LPHeader from '../../components/lp/LPHeader.astro';
+import HeroFL from '../../components/lp/HeroFL.astro';
+import BenefitsFL from '../../components/lp/BenefitsFL.astro';
+import HowItWorksFL from '../../components/lp/HowItWorksFL.astro';
+import FloridaUnderwritingReality from '../../components/lp/FloridaUnderwritingReality.astro';
+import TestimonialCarouselFL from '../../components/lp/TestimonialCarouselFL.tsx';
+import BarrettReviews from '../../components/lp/BarrettReviews.astro';
+import SpecialistCard from '../../components/lp/SpecialistCard.astro';
+import ComparisonTable from '../../components/lp/ComparisonTable.astro';
+import FAQAccordion from '../../components/FAQAccordion.tsx';
+import FinalCTAFL from '../../components/lp/FinalCTAFL.astro';
+import LPFooter from '../../components/lp/LPFooter.astro';
+import StickyMobileCTA from '../../components/lp/StickyMobileCTA.astro';
+import { floridaFAQ } from '../../data/lp/florida-faq';
+
+const title = 'Florida DSCR Loans Approved in 14 Days | DSCRBroker.com';
+const description = "Match with a Florida DSCR specialist who pre-runs insurance, knows non-warrantable condos, and has closed 1,000+ FL deals. Qualify on rents, not tax returns.";
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: floridaFAQ.map((q) => ({
+    '@type': 'Question',
+    name: q.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: q.answer,
+    },
+  })),
+};
+
+const serviceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FinancialService',
+  name: 'DSCRBroker.com Florida DSCR Specialist Matching',
+  description,
+  url: 'https://dscrbroker.com/lp/florida-dscr/',
+  areaServed: {
+    '@type': 'State',
+    name: 'Florida',
+  },
+  provider: {
+    '@type': 'Organization',
+    name: 'DSCRBroker.com',
+  },
+};
+---
+
+<LandingLayout
+  title={title}
+  description={description}
+  noIndex={true}
+  hideHeader={true}
+  hideFooter={true}
+  jsonLd={[serviceJsonLd, faqJsonLd]}
+>
+  <LPHeader phoneNumber="(855) 738-1557" phoneLabel="Talk to a FL DSCR Specialist" />
+
+  <HeroFL />
+
+  <BenefitsFL />
+
+  <HowItWorksFL />
+
+  <FloridaUnderwritingReality />
+
+  <!-- FL Deal Stories -->
+  <section class="bg-white py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <p class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">FLORIDA DEAL STORIES</p>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-navy">Real Florida Deals, Real Outcomes</h2>
+        <p class="mt-4 text-lg text-gray-500 leading-relaxed max-w-3xl mx-auto">
+          A snapshot of recent Florida deals our specialist network closed, including the file-rescue ones other brokers walked away from.
+        </p>
+      </div>
+      <TestimonialCarouselFL client:visible />
+    </div>
+  </section>
+
+  <BarrettReviews />
+
+  <!-- Meet the Specialist -->
+  <section class="bg-off-white py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <p class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">MEET YOUR SPECIALIST</p>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-navy">John Peisner, Florida DSCR Specialist</h2>
+      </div>
+      <SpecialistCard variant="full" theme="light" />
+    </div>
+  </section>
+
+  <ComparisonTable />
+
+  <!-- FAQ -->
+  <section class="bg-white py-16 md:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <p class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">QUESTIONS</p>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-navy">Florida DSCR Loan Questions</h2>
+        <p class="mt-4 text-base text-gray-500">The questions FL investors actually ask after their first lender said no.</p>
+      </div>
+      <FAQAccordion items={floridaFAQ} client:visible />
+    </div>
+  </section>
+
+  <FinalCTAFL phoneNumber="(855) 738-1557" />
+
+  <LPFooter />
+
+  <StickyMobileCTA phoneNumber="(855) 738-1557" />
+</LandingLayout>

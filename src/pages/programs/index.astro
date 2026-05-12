@@ -1,0 +1,342 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'DSCR Loan Programs | Compare 8 Programs | DSCRBroker.com';
+const description = 'Compare all 8 DSCR loan programs: Standard, No-Ratio, Foreign National, Interest-Only, Bank Statement, STR, Portfolio, and Bridge-to-DSCR. Find the right fit.';
+
+/*
+ * Program icon SVGs. Cohesive set, 24x24 viewBox, 1.5 stroke, round caps/joins.
+ * Each icon is designed to be legible at 20px and visually balanced within its
+ * frosted-glass badge on the photo banner.
+ */
+const icons: Record<string, string> = {
+  /* House + checkmark: the proven, standard program */
+  'standard-dscr': `<path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/><path d="M15 7V4h-2"/>`,
+  /* House + Ø slash: no ratio calculated */
+  'no-ratio-dscr': `<circle cx="12" cy="14" r="4"/><path d="M9.17 16.83l5.66-5.66"/><path d="M3 11l9-7 9 7"/>`,
+  /* Globe with meridian: international investors */
+  'foreign-national-dscr': `<circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8"/><ellipse cx="12" cy="12" rx="4" ry="9"/>`,
+  /* Trending-down arrow over dollar: lower payments */
+  'interest-only-dscr': `<path d="M3 7l4 4 4-4 6 6"/><path d="M17 13V7h-6"/><line x1="3" y1="20" x2="21" y2="20"/>`,
+  /* Document with chart bars: bank statement financials */
+  'bank-statement-dscr': `<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><rect x="8" y="14" width="2" height="4" rx="0.5"/><rect x="11" y="12" width="2" height="6" rx="0.5"/><rect x="14" y="10" width="2" height="8" rx="0.5"/>`,
+  /* Calendar with star: vacation rental bookings */
+  'str-dscr': `<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M16 2v4M8 2v4"/><path d="M12 14.5l-1.5 1.5h3L12 14.5zM12 14.5l1.5-1.5h-3l1.5 1.5z"/>`,
+  /* Three stacked layers: bundled portfolio */
+  'portfolio-dscr': `<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/>`,
+  /* Arrow bridging two boxes: bridge → permanent */
+  'bridge-to-dscr': `<rect x="2" y="7" width="6" height="10" rx="1"/><rect x="16" y="7" width="6" height="10" rx="1"/><path d="M8 12h8"/><path d="M13 9l3 3-3 3"/>`,
+};
+
+const programs = [
+  {
+    name: 'Standard DSCR',
+    slug: 'standard-dscr',
+    oneLiner: 'The core DSCR loan. Qualify with rental income, not personal income.',
+    minDscr: '1.0x',
+    minDown: '20%',
+    minFico: '660',
+    maxLTV: '80%',
+    bestFor: 'Cash-flowing rentals',
+    highlight: true,
+    image: '/images/programs/standard-dscr.jpg',
+    imageAlt: 'Single-family rental home at golden hour with warm sunlight',
+  },
+  {
+    name: 'No-Ratio DSCR',
+    slug: 'no-ratio-dscr',
+    oneLiner: 'Cash flow negative? Still closeable at 30% down.',
+    minDscr: 'None',
+    minDown: '30%',
+    minFico: '680',
+    maxLTV: '70%',
+    bestFor: 'Negative cash flow deals',
+    image: '/images/programs/no-ratio-dscr.jpg',
+    imageAlt: 'Modern luxury home at dusk with glowing interior lights',
+  },
+  {
+    name: 'Foreign National DSCR',
+    slug: 'foreign-national-dscr',
+    oneLiner: 'No US credit history required. No SSN. No US employment.',
+    minDscr: '1.0x',
+    minDown: '25%',
+    minFico: 'No US Credit',
+    maxLTV: '75%',
+    bestFor: 'Non-US investors',
+    image: '/images/programs/foreign-national-dscr.jpg',
+    imageAlt: 'Aerial view of waterfront properties along a tropical coastline',
+  },
+  {
+    name: 'Interest-Only DSCR',
+    slug: 'interest-only-dscr',
+    oneLiner: 'Lower payments. Higher DSCR. More cash flow in your pocket.',
+    minDscr: '1.0x',
+    minDown: '20%',
+    minFico: '680',
+    maxLTV: '80%',
+    bestFor: 'Cash flow maximizers',
+    image: '/images/programs/interest-only-dscr.jpg',
+    imageAlt: 'Gold house keys and coins representing lower monthly payments',
+  },
+  {
+    name: 'Bank Statement DSCR',
+    slug: 'bank-statement-dscr',
+    oneLiner: 'Self-employed? Your bank deposits prove your income.',
+    minDscr: '0.75x',
+    minDown: '20%',
+    minFico: '660',
+    maxLTV: '80%',
+    bestFor: 'Self-employed investors',
+    image: '/images/programs/bank-statement-dscr.jpg',
+    imageAlt: 'Executive workspace with laptop showing financial charts and bank statements',
+  },
+  {
+    name: 'Short-Term Rental DSCR',
+    slug: 'str-dscr',
+    oneLiner: 'Airbnb and VRBO income counts. Finance your vacation rental.',
+    minDscr: '1.0x',
+    minDown: '20%',
+    minFico: '680',
+    maxLTV: '80%',
+    bestFor: 'Airbnb/VRBO operators',
+    image: '/images/programs/str-dscr.jpg',
+    imageAlt: 'Luxury cabin vacation rental interior with mountain view and warm fireplace',
+  },
+  {
+    name: 'Portfolio DSCR',
+    slug: 'portfolio-dscr',
+    oneLiner: 'One loan. One payment. One close. Finance your entire portfolio.',
+    minDscr: '1.0x (Agg.)',
+    minDown: '25%',
+    minFico: '680',
+    maxLTV: '75%',
+    bestFor: '3+ property bundles',
+    image: '/images/programs/portfolio-dscr.jpg',
+    imageAlt: 'Aerial view of suburban neighborhood with rows of rental homes at golden hour',
+  },
+  {
+    name: 'Bridge-to-DSCR',
+    slug: 'bridge-to-dscr',
+    oneLiner: 'Buy. Rehab. Rent. Refinance. The full BRRRR cycle financed.',
+    minDscr: 'None / 1.0x',
+    minDown: '15%',
+    minFico: '660',
+    maxLTV: '85%',
+    bestFor: 'BRRRR investors',
+    image: '/images/programs/bridge-to-dscr.jpg',
+    imageAlt: 'Before and after renovation of a BRRRR investment property',
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "DSCR Loan Programs",
+  "description": description,
+  "url": "https://dscrbroker.com/programs",
+  "provider": {
+    "@type": "Organization",
+    "name": "DSCRBroker.com",
+    "url": "https://dscrbroker.com"
+  }
+};
+---
+
+<BaseLayout title={title} description={description} canonical="https://dscrbroker.com/programs" jsonLd={jsonLd}>
+
+  <!-- Hero (Dark) -->
+  <section class="bg-[#0B1120] pt-16 pb-20">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <nav aria-label="Breadcrumb" class="text-sm text-slate-400">
+        <ol class="flex items-center gap-1.5">
+          <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+          <li class="text-slate-500">/</li>
+          <li class="text-white">Loan Programs</li>
+        </ol>
+      </nav>
+
+      <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mt-6">
+        DSCR Loan Programs
+      </h1>
+      <p class="text-lg text-slate-300 max-w-3xl mt-4 leading-relaxed">
+        Eight programs designed for real estate investors. No income verification on any of them. Find the one that fits your deal, your property, and your strategy.
+      </p>
+    </div>
+  </section>
+
+  <!-- Program Cards Grid -->
+  <section class="bg-[#F8F6F1] py-16 md:py-24">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="grid md:grid-cols-2 gap-6">
+        {programs.map((program) => (
+          <a
+            href={`/programs/${program.slug}`}
+            class={`group block bg-white border rounded-xl overflow-hidden hover:shadow-lg transition-shadow ${program.highlight ? 'border-blue-200 ring-1 ring-blue-100' : 'border-[#E8E4DD]'}`}
+          >
+            {/* Photo banner with icon overlay */}
+            <div class="relative h-44 overflow-hidden">
+              <img
+                src={program.image}
+                alt={program.imageAlt}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
+              {/* Gradient overlay for legibility */}
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              {/* Icon badge, top-left */}
+              <div class="absolute top-3 left-3 w-10 h-10 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
+                <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[program.slug]} />
+              </div>
+              {/* Most Popular badge, top-right */}
+              {program.highlight && (
+                <span class="absolute top-3 right-3 bg-blue-500 text-white text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded shadow-sm">
+                  Most Popular
+                </span>
+              )}
+            </div>
+
+            {/* Card content */}
+            <div class="p-6">
+              <h2 class="text-xl font-bold text-[#0B1120]">{program.name}</h2>
+              <p class="text-sm text-slate-500 mt-1">{program.oneLiner}</p>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
+                <div>
+                  <div class="text-xs text-slate-400 uppercase tracking-wider">Min DSCR</div>
+                  <div class="text-sm font-semibold text-[#0B1120] mt-0.5">{program.minDscr}</div>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400 uppercase tracking-wider">Min Down</div>
+                  <div class="text-sm font-semibold text-[#0B1120] mt-0.5">{program.minDown}</div>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400 uppercase tracking-wider">Min FICO</div>
+                  <div class="text-sm font-semibold text-[#0B1120] mt-0.5">{program.minFico}</div>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400 uppercase tracking-wider">Max LTV</div>
+                  <div class="text-sm font-semibold text-[#0B1120] mt-0.5">{program.maxLTV}</div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between mt-5 pt-4 border-t border-[#F0EDE8]">
+                <span class="text-xs text-slate-500">Best for: <span class="font-medium text-[#0B1120]">{program.bestFor}</span></span>
+                <span class="text-sm text-blue-500 font-semibold group-hover:translate-x-0.5 transition-transform">View Details →</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <p class="text-xs text-slate-400 mt-6 text-center">
+        Max LTV varies by program guidelines and lender overlays. Bridge-to-DSCR permanent phase max LTV is 80%; bridge phase up to 85% LTC.
+      </p>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-500 mb-3">COMPARE ALL PROGRAMS</p>
+      <h2 class="text-3xl font-bold text-[#0B1120] mb-8">Side-by-Side Comparison</h2>
+
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full border-collapse min-w-[900px]">
+          <thead>
+            <tr class="bg-[#F8F6F1]">
+              <th class="text-xs uppercase tracking-wider text-slate-500 font-semibold py-3 px-3 text-left">Feature</th>
+              <th class="text-xs uppercase tracking-wider text-slate-500 font-semibold py-3 px-3 text-left">Standard</th>
+              <th class="text-xs uppercase tracking-wider text-slate-500 font-semibold py-3 px-3 text-left">No-Ratio</th>
+              <th class="text-xs uppercase tracking-wider text-slate-500 font-semibold py-3 px-3 text-left">Foreign Nat'l</th>
+              <th class="text-xs uppercase tracking-wider text-slate-500 font-semibold py-3 px-3 text-left">Int-Only</th>
+              <th class="text-xs uppercase tracking-wider text-slate-500 font-semibold py-3 px-3 text-left">Bank Stmt</th>
+              <th class="text-xs uppercase tracking-wider text-slate-500 font-semibold py-3 px-3 text-left">STR</th>
+              <th class="text-xs uppercase tracking-wider text-slate-500 font-semibold py-3 px-3 text-left">Portfolio</th>
+              <th class="text-xs uppercase tracking-wider text-slate-500 font-semibold py-3 px-3 text-left">Bridge</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-sm text-slate-500 py-3 px-3 border-b border-[#E8E4DD] font-medium">Min DSCR</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">1.0x</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">None</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">1.0x</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">1.0x</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">0.75x</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">1.0x</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">1.0x (agg.)</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">N/A / 1.0x</td>
+            </tr>
+            <tr>
+              <td class="text-sm text-slate-500 py-3 px-3 border-b border-[#E8E4DD] font-medium">Min Down</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">20%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">30%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">25-30%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">20%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">20%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">20-25%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">25%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">15%</td>
+            </tr>
+            <tr>
+              <td class="text-sm text-slate-500 py-3 px-3 border-b border-[#E8E4DD] font-medium">Min FICO</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">660</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">680</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">N/A</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">680</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">660</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">680</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">680</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">660</td>
+            </tr>
+            <tr>
+              <td class="text-sm text-slate-500 py-3 px-3 border-b border-[#E8E4DD] font-medium">Max LTV</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">80%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">70%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">75%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">80%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">80%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">80%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">75%</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">85% LTC / 80% LTV</td>
+            </tr>
+            <tr>
+              <td class="text-sm text-slate-500 py-3 px-3 border-b border-[#E8E4DD] font-medium">Best For</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">Cash-flowing rentals</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">Neg. cash flow</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">Non-US investors</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">Max cash flow</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">Self-employed</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">Airbnb/VRBO</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">3+ properties</td>
+              <td class="text-sm text-[#0B1120] py-3 px-3 border-b border-[#E8E4DD]">BRRRR strategy</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-xs text-slate-400 mt-6 max-w-3xl">
+        Program eligibility and LTV caps vary by lender guidelines and your full scenario. This is not a loan offer or commitment to lend. Your matched specialist will confirm fit and structure your file.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-[#0B1120] py-16 md:py-24">
+    <div class="mx-auto max-w-2xl px-4 sm:px-6 text-center">
+      <p class="text-xs font-semibold uppercase tracking-widest text-amber-400 mb-3">NOT SURE WHICH PROGRAM?</p>
+      <h2 class="text-3xl font-bold text-white mb-4">Tell Us About Your Deal</h2>
+      <p class="text-slate-300 text-base leading-relaxed mb-8">
+        Answer a few questions and we will match you with the right DSCR program and broker for your deal. Takes 2 minutes. Soft pull only.
+      </p>
+      <a
+        href="/qualify"
+        class="inline-block bg-amber-500 hover:bg-amber-600 text-[#0B1120] font-semibold text-sm uppercase tracking-wider px-8 py-4 rounded transition-colors"
+      >
+        Match Me With a Specialist
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

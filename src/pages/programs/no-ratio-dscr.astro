@@ -1,0 +1,121 @@
+---
+import ProgramLayout from '../../layouts/ProgramLayout.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "No-Ratio DSCR Loan",
+    "description": "DSCR loans with no cash flow requirement. 30% down payment eliminates the DSCR ratio requirement entirely. Negative cash flow properties qualify. Available in all 50 states.",
+    "url": "https://dscrbroker.com/programs/no-ratio-dscr",
+    "provider": { "@type": "Organization", "name": "DSCRBroker.com", "url": "https://dscrbroker.com" },
+    "offers": { "@type": "AggregateOffer", "priceCurrency": "USD", "lowPrice": "75000", "highPrice": "2000000", "description": "DSCR loan program for real estate investors. Qualifies on property cash flow, not personal income" },
+    "areaServed": { "@type": "Country", "name": "United States" },
+    "category": "DSCR Mortgage Loan",
+    "feesAndCommissionsSpecification": "Loan terms and fees vary by lender. DSCRBroker.com does not charge borrowers any fees."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Is there really no minimum DSCR?", "acceptedAnswer": { "@type": "Answer", "text": "Correct. The lender does not calculate or evaluate the DSCR ratio. The property can have negative cash flow, zero cash flow, or no rental income at all. The 30% down payment replaces the cash flow requirement." } },
+      { "@type": "Question", "name": "Why would I buy a property with negative cash flow?", "acceptedAnswer": { "@type": "Answer", "text": "Appreciation markets, rent growth potential, and strategic portfolio positioning. Many of the best-performing investment markets in the US have DSCR ratios below 1.0x at purchase. Investors accept short-term negative cash flow in exchange for long-term equity gains and future rent increases." } },
+      { "@type": "Question", "name": "Can I use the No-Ratio program for a cash-out refinance?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. If you own a property with at least 30% equity, you can do a cash-out refinance under the No-Ratio program regardless of the property's current DSCR ratio." } },
+      { "@type": "Question", "name": "What is the trade-off on No-Ratio DSCR loans?", "acceptedAnswer": { "@type": "Answer", "text": "Pricing reflects the additional risk lenders take on by waiving the cash flow requirement. The trade-off is offset by the ability to qualify properties that would otherwise be declined under Standard DSCR. Your specialist will compare program structures so you understand the full picture." } },
+      { "@type": "Question", "name": "Can I convert a No-Ratio loan to a Standard DSCR loan later?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Once the property achieves a 1.0x+ DSCR (through rent increases or market changes), you can refinance into a Standard DSCR loan with more flexible program terms." } }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://dscrbroker.com" },
+      { "@type": "ListItem", "position": 2, "name": "Loan Programs", "item": "https://dscrbroker.com/programs" },
+      { "@type": "ListItem", "position": 3, "name": "No-Ratio DSCR Loans", "item": "https://dscrbroker.com/programs/no-ratio-dscr" }
+    ]
+  }
+];
+---
+
+<ProgramLayout
+  title="No-Ratio DSCR Loans | DSCRBroker.com"
+  description="No-ratio DSCR loans for negative cash flow properties. 30% down, no DSCR requirement. Match with a licensed DSCR specialist who structures your deal.com."
+  slug="no-ratio-dscr"
+  heroImage="/images/programs/no-ratio-dscr.jpg"
+  programName="No-Ratio DSCR"
+  h1="No-Ratio DSCR Loans"
+  subhead="When the property doesn't cash-flow but the deal still makes sense. No minimum DSCR required. Put 30% down and close, even on negative cash flow properties."
+  stats={[
+    { value: 'None', label: 'Min DSCR' },
+    { value: '30%', label: 'Min Down' },
+    { value: '680', label: 'Min FICO' },
+    { value: '70%', label: 'Max LTV' },
+  ]}
+  howItWorks={[
+    "The No-Ratio DSCR program removes the cash flow requirement entirely. The lender does not calculate a DSCR ratio. They do not require a lease or rental income analysis. The trade-off is more skin in the game: 30% minimum down payment (70% max LTV).",
+    "This program exists because not every deal cash flows on day one. Properties in high-appreciation markets like Phoenix, Austin, or Miami often have purchase prices that outpace rents. An investor might buy a $500,000 property that rents for $2,800/month. That DSCR would be well below 1.0x. Under a Standard DSCR program, that deal is dead. Under No-Ratio, it closes.",
+    "Investors also use this program when they plan to raise rents after acquisition, when buying newly built properties with no rental history, or when converting a property from owner-occupied to rental. The FICO minimum is 680 and reserves are 9 months of PITIA.",
+    "Once the property achieves a 1.0x+ DSCR through rent increases or market changes, you can refinance into a Standard DSCR loan with more flexible program terms. There is no seasoning requirement between DSCR loans at most lenders, though the prepayment penalty from the original loan still applies during the penalty period."
+  ]}
+  qualifyItems={[
+    { text: 'You can put 30% or more down (or have 30%+ equity for a refinance)' },
+    { text: 'Your FICO score is 680 or higher' },
+    { text: 'You are buying in an appreciation market where rents do not cover PITIA yet' },
+    { text: 'You are acquiring a property with below-market rents and plan to raise them' },
+    { text: 'You are buying a newly constructed or renovated property with no rental history' },
+    { text: 'You want to close without any cash flow evaluation' },
+    { text: 'You have 9 months of PITIA in liquid reserves' },
+  ]}
+  notRightItems={[
+    { text: 'You have less than 30% to put down' },
+    { text: 'Your FICO score is below 680' },
+    { text: 'Your property already cash-flows at 1.0x+ (Standard DSCR opens up broader program options)' },
+    { text: 'You are looking for an owner-occupied residence' },
+  ]}
+  dealInvestor="Sarah M., California"
+  dealProperty="Single-family residence in Pasadena"
+  dealDetails={[
+    { label: 'Purchase Price', value: '$685,000' },
+    { label: 'Down Payment', value: '30% ($205,500)' },
+    { label: 'Loan Amount', value: '$479,500' },
+    { label: 'Term', value: '30-year fixed' },
+  ]}
+  dealBreakdown={[
+    { label: 'Monthly P&I', value: '$3,354' },
+    { label: 'Property Taxes', value: '$713' },
+    { label: 'Insurance', value: '$195' },
+    { label: 'HOA', value: '$0' },
+    { label: 'Total PITIA', value: '$4,262', highlight: true },
+    { label: 'Monthly Gross Rent', value: '$3,400', highlight: true },
+  ]}
+  dealDscr="0.80x"
+  dealDscrColor="text-amber-500"
+  dealCashFlow="-$862/mo"
+  dealCashFlowPositive={false}
+  dealCloseTime="19 days"
+  dealMathLine="Monthly Rent ($3,400) ÷ Monthly PITIA ($4,262) = 0.80x DSCR"
+  dealQuote="My accountant thought I was crazy buying negative cash flow. But I'm betting on LA appreciation, not month-one rent. No-Ratio let me close when every other lender said no."
+  dealQuoteAttribution="Sarah M., California"
+  dealNote="Pasadena property values have appreciated 6-8% annually. At 7% annual appreciation, the property gains roughly $47,950 in equity in 12 months, far outpacing the $10,344 annual negative cash flow."
+  comparePrograms={['Standard DSCR', 'Interest-Only DSCR']}
+  compareRows={[
+    { feature: 'Min DSCR', values: ['None', '1.0x', '1.0x'] },
+    { feature: 'Min Down Payment', values: ['30%', '20%', '20%'] },
+    { feature: 'Min FICO', values: ['680', '660', '680'] },
+    { feature: 'Best For', values: ['Negative cash flow deals', 'Cash-flowing rentals', 'Cash flow maximizers'] },
+    { feature: 'Unique Feature', values: ['No DSCR calculated', 'No income docs, no property cap', 'Lower payments boost DSCR'] },
+  ]}
+  compareLinks={[
+    { label: 'Learn more about Standard DSCR Loans', href: '/programs/standard-dscr' },
+    { label: 'Learn more about Interest-Only DSCR Loans', href: '/programs/interest-only-dscr' },
+  ]}
+  faqItems={[
+    { question: 'Is there really no minimum DSCR?', answer: 'Correct. The lender does not calculate or evaluate the DSCR ratio. The property can have negative cash flow, zero cash flow, or no rental income at all. The 30% down payment replaces the cash flow requirement.' },
+    { question: 'Why would I buy a property with negative cash flow?', answer: 'Appreciation markets, rent growth potential, and strategic portfolio positioning. Many of the best-performing investment markets in the US have DSCR ratios below 1.0x at purchase. Investors accept short-term negative cash flow in exchange for long-term equity gains and future rent increases.' },
+    { question: 'Can I use the No-Ratio program for a cash-out refinance?', answer: 'Yes. If you own a property with at least 30% equity, you can do a cash-out refinance under the No-Ratio program regardless of the property\'s current DSCR ratio. This is common for investors who want to pull equity from an appreciated property that does not cash flow strongly.' },
+    { question: 'What is the trade-off on No-Ratio DSCR loans?', answer: 'Pricing reflects the additional risk lenders take on by waiving the cash flow requirement. The trade-off is offset by the ability to qualify properties that would otherwise be declined under Standard DSCR. Your specialist will compare program structures so you understand the full picture.' },
+    { question: 'Can I convert a No-Ratio loan to a Standard DSCR loan later?', answer: 'Yes. Once the property achieves a 1.0x+ DSCR (through rent increases or market changes), you can refinance into a Standard DSCR loan with more flexible program terms. There is no seasoning requirement between DSCR loans at most lenders, though the prepayment penalty from the original loan still applies if you are within the penalty period.' },
+  ]}
+  ctaCopy="Negative cash flow does not mean no deal. Get matched with a specialist who structures No-Ratio DSCR deals every week. Soft pull only."
+  jsonLd={jsonLd}
+/>
