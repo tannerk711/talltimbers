@@ -7,17 +7,17 @@ const { phoneNumber = '(855) 738-1557' } = Astro.props;
 const phoneHref = `tel:${phoneNumber.replace(/\D/g, '')}`;
 ---
 
-<section class="relative bg-navy py-16 md:py-24 overflow-hidden">
+<section data-fl-section="final-cta" class="relative bg-navy py-20 md:py-24 overflow-hidden">
   <div class="absolute inset-0">
-    <img src="/images/sections/final-cta.jpg" alt="" class="w-full h-full object-cover" aria-hidden="true" />
-    <div class="absolute inset-0 bg-[#0B1120]/80" />
+    <img src="/images/sections/fl-final-cta.jpg" alt="" class="w-full h-full object-cover" aria-hidden="true" loading="lazy" decoding="async" />
+    <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(11,17,32,0.78) 0%, rgba(11,17,32,0.55) 100%);"></div>
   </div>
   <div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white">
-      Ready to Get Your Florida Deal Structured?
+      Ready to Talk Through Your Florida Deal?
     </h2>
     <p class="mt-4 text-lg leading-relaxed text-slate-300 max-w-2xl mx-auto">
-      Tell us your scenario in 60 seconds. John or a licensed member of his team reviews every Florida submission within 1 business hour. No SSN. No hard credit pull. No obligation.
+      Check your eligibility in 60 seconds. John or a licensed member of his team reaches out the same business day to walk through your scenario. No SSN. No hard credit pull. No obligation.
     </p>
 
     <div class="mt-8 flex flex-col items-center gap-3 sm:gap-4 sm:flex-row sm:justify-center">
@@ -45,20 +45,20 @@ const phoneHref = `tel:${phoneNumber.replace(/\D/g, '')}`;
       </a>
     </div>
 
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6">
-      <span class="flex items-center gap-2 text-sm text-slate-400">
+    <div data-fl-finalcta-chips class="mt-10 flex flex-wrap items-center justify-center gap-3">
+      <span class="fl-reveal-chip chip chip-on-dark-soft text-sm">
         <svg class="h-4 w-4 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
         </svg>
         No hard credit pull
       </span>
-      <span class="flex items-center gap-2 text-sm text-slate-400">
+      <span class="fl-reveal-chip chip chip-on-dark-soft text-sm">
         <svg class="h-4 w-4 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
         </svg>
         No obligation
       </span>
-      <span class="flex items-center gap-2 text-sm text-slate-400">
+      <span class="fl-reveal-chip chip chip-on-dark-soft text-sm">
         <svg class="h-4 w-4 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
         </svg>

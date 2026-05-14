@@ -205,6 +205,92 @@ body {
   transform: scale(1.15);
 }
 
+/* === FL LP visual upgrade additions === */
+
+/* Chip pill primitives (Lawn Equipment Co inline trust chips) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.chip-dark {
+  background: var(--color-navy-light);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.chip-on-dark-soft {
+  background: rgba(19, 28, 49, 0.5);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.chip-green {
+  background: rgba(34, 197, 94, 0.10);
+  color: var(--color-green);
+  border-color: rgba(34, 197, 94, 0.30);
+}
+.chip-red {
+  background: rgba(239, 68, 68, 0.10);
+  color: var(--color-red);
+  border-color: rgba(239, 68, 68, 0.30);
+}
+.chip-amber {
+  background: rgba(212, 147, 13, 0.10);
+  color: var(--color-amber);
+  border-color: rgba(212, 147, 13, 0.30);
+}
+.chip-glyph {
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+
+/* Initial state for GSAP-driven reveals (hidden before JS runs).
+   A noscript fallback below force-shows them when JS is disabled. */
+.fl-reveal { opacity: 0; transform: translateY(24px); }
+.fl-reveal-chip { opacity: 0; transform: translateY(16px); }
+
+/* Hero parallax helper layer */
+.fl-hero-bg { will-change: transform; }
+
+/* Step circle glow */
+.step-circle-glow {
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.35);
+}
+
+/* Dashed connector with custom dash thickness */
+.connector-dashed {
+  border-top: 2px dashed rgba(59, 130, 246, 0.30);
+}
+
+/* Photo-topped pillar card overlay bar */
+.pillar-photo-bar {
+  background: rgba(11, 17, 32, 0.85);
+}
+
+/* Soft card shadow used by photo-topped pillars and reviews container */
+.card-soft-shadow {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Footer base override (Legacy Concrete almost-black) */
+.footer-black { background-color: #070B14; }
+
+/* Sticky mobile CTA chrome */
+.sticky-mobile-chrome {
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25);
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -214,4 +300,5 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .fl-reveal, .fl-reveal-chip { opacity: 1 !important; transform: none !important; }
 }

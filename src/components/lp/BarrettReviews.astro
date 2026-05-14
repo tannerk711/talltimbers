@@ -7,7 +7,7 @@
 // The script is async + lazy via data-elfsight-app-lazy.
 ---
 
-<section class="bg-white py-16 md:py-20 border-t border-gray-100">
+<section data-fl-section="barrett-reviews" class="bg-off-white py-16 md:py-20 border-t border-gray-100">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Header with Google badge + compliance attribution -->
     <div class="text-center mb-10">
@@ -28,8 +28,10 @@
       </p>
     </div>
 
-    <!-- Elfsight Google Reviews widget for John Peisner / Barrett Financial Group -->
-    <div class="elfsight-app-7ff3c732-355a-447c-9ac0-a053d1f81e83" data-elfsight-app-lazy></div>
+    <!-- Elfsight Google Reviews widget for John Peisner / Barrett Financial Group, wrapped in a soft white card container -->
+    <div class="rounded-2xl bg-white border border-gray-100 card-soft-shadow p-4 md:p-8">
+      <div class="elfsight-app-7ff3c732-355a-447c-9ac0-a053d1f81e83" data-elfsight-app-lazy></div>
+    </div>
   </div>
 </section>
 

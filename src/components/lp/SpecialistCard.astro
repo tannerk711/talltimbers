@@ -22,11 +22,11 @@ const {
   headshot = '/images/JP Headshot Final.jpg',
   brokerage = 'Barrett Financial Group',
   brokerageLogo = '/images/BFGLogo-Primary.png',
-  bio = "John Peisner has structured 1,000+ DSCR loans at Barrett Financial Group, and he's the FL specialist real estate investors call when their first lender said no. Insurance, condo warrantability, STR zoning, all pre-run before your file ever hits underwriting.",
+  bio = "John Peisner has closed 500+ DSCR loans at Barrett Financial Group, and he's the FL specialist real estate investors call when their first lender said no. Consultative on the first call: he walks you through condo warrantability, STR zoning, coastal exposure, and post-sale reassessment so you know what you're working with before you write the offer.",
   phoneNumber = '(855) 738-1557',
   stats = [
-    { label: 'FL Deals Closed', value: '1,000+' },
-    { label: 'Avg Close', value: '14 Days' },
+    { label: 'DSCR Loans Closed', value: '500+' },
+    { label: 'Typical Close', value: '3-4 Wks' },
     { label: 'Lender Network', value: '50+' },
     { label: 'NMLS', value: '#239185' },
   ],
@@ -34,6 +34,16 @@ const {
 
 const phoneHref = `tel:${phoneNumber.replace(/\D/g, '')}`;
 const isDark = theme === 'dark';
+
+// Icon path per stat label (Lawn Equipment Co trust-feature card pattern)
+const statIconForLabel = (label: string): string => {
+  const l = label.toLowerCase();
+  if (l.includes('close')) return 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z';
+  if (l.includes('lender') || l.includes('network')) return 'M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z';
+  if (l.includes('nmls')) return 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z';
+  // default: home (loans closed)
+  return 'M3 12l2-2 4 4 8-8 4 4M3 21h18';
+};
 ---
 
 {variant === 'compact' ? (
@@ -53,16 +63,16 @@ const isDark = theme === 'dark';
     </div>
   </div>
 ) : (
-  <div class="grid md:grid-cols-[280px_1fr] gap-8 items-start">
-    <div class="relative">
+  <div class="grid md:grid-cols-[280px_1fr] gap-8 md:gap-10 items-start">
+    <div class="relative mx-auto md:mx-0">
       <img
         src={headshot}
         alt={`${name}, ${title}`}
-        class="w-full max-w-[280px] aspect-square rounded-2xl object-cover shadow-lg"
+        class="w-full max-w-[280px] aspect-square rounded-2xl object-cover ring-4 ring-white shadow-xl"
         loading="lazy"
       />
-      <div class="absolute -bottom-3 -right-3 hidden md:block bg-white rounded-xl shadow-md p-2 border border-gray-100">
-        <img src={brokerageLogo} alt={brokerage} class="h-10 w-auto" />
+      <div class="absolute -bottom-3 -right-3 hidden md:block bg-white rounded-xl shadow-md p-2 border border-gray-100" style="transform: translate(-24px, -24px);">
+        <img src={brokerageLogo} alt={brokerage} class="h-9 w-auto" />
       </div>
     </div>
 
@@ -73,11 +83,16 @@ const isDark = theme === 'dark';
 
       <p class="mt-5 text-base leading-relaxed text-gray-600">{bio}</p>
 
-      <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
         {stats.map((s) => (
-          <div class="rounded-lg bg-off-white border border-gray-100 px-3 py-3">
-            <div class="text-xl font-extrabold text-navy">{s.value}</div>
-            <div class="text-[11px] uppercase tracking-wider text-gray-500 mt-0.5">{s.label}</div>
+          <div class="rounded-xl bg-white border border-gray-100 px-4 py-4 shadow-sm flex flex-col items-start">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue/10 text-blue mb-3">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d={statIconForLabel(s.label)} />
+              </svg>
+            </div>
+            <div class="text-3xl font-extrabold text-navy leading-none" data-stat-value={s.value}>{s.value}</div>
+            <div class="text-[11px] uppercase tracking-wider text-gray-500 mt-2">{s.label}</div>
           </div>
         ))}
       </div>
