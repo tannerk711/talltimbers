@@ -7,8 +7,52 @@ import {
   $currentStep, $direction, $consent, $honeypot, $isSubmitting, $submitError,
   $submittedData, $matchedBroker, captureUTMParams, clearFormData, processURLParams,
 } from '../../stores/formStore';
-import { getBrokerForState, getBrokerConfig, formatPhoneE164, getDeviceType } from '../../utils/brokerRouting';
+import { getBrokerForState, getBrokerConfig, formatPhoneE164, getDeviceType, STATE_NAMES, PROPERTY_TYPE_NAMES } from '../../utils/brokerRouting';
 import { getDealVerdict, getRecommendedProgram } from '../../utils/rateEstimation';
+
+// Human-readable labels for each multiple-choice field. Mirrors the option
+// labels rendered in the Step* components so Adam sees readable values in GHL
+// instead of raw codes like "700_739" or "25_pct".
+const LOAN_GOAL_LABELS: Record<string, string> = {
+  purchase: 'Purchase a Property',
+  refinance: 'Refinance',
+  flip: 'Fix & Flip',
+};
+const CASH_FLOW_LABELS: Record<string, string> = {
+  positive: 'Positive Cash Flow',
+  break_even: 'Break-Even',
+  negative: 'Negative Cash Flow',
+};
+const CREDIT_LABELS: Record<string, string> = {
+  '740_plus': '740+',
+  '700_739': '700-739',
+  '640_699': '640-699',
+  below_640: 'Below 640',
+};
+const CITIZENSHIP_LABELS: Record<string, string> = {
+  yes: 'US Citizen',
+  permanent_resident: 'Permanent Resident',
+  foreign_national: 'Non-Permanent / Foreign National',
+};
+const TIMELINE_LABELS: Record<string, string> = {
+  ready_now: 'Ready Now',
+  within_30_days: 'Within 30 Days',
+  within_90_days: 'Within 90 Days',
+  just_researching: 'Just Researching',
+};
+const DOWN_PAYMENT_LABELS: Record<string, string> = {
+  '20': '20%',
+  '25': '25%',
+  '30': '30%',
+  '35_plus': '35%+',
+};
+
+function formatCurrency(raw: string): string {
+  if (!raw) return '';
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n <= 0) return raw;
+  return `$${n.toLocaleString('en-US')}`;
+}
 import ProgressBar from './ProgressBar';
 import StepLoanGoal from './StepLoanGoal';
 import StepPropertyType from './StepPropertyType';
@@ -236,35 +280,87 @@ export default function DSCRForm() {
     let utmParsed: Record<string, string | null> = {};
     try { utmParsed = JSON.parse($utmParams.get()); } catch {}
 
+    const firstName = $firstName.get().trim();
+    const lastName = $lastName.get().trim();
+    const stateCode = $state.get();
+    const propertyTypeCode = $propertyType.get();
+    const loanGoalCode = $loanGoal.get();
+    const downPaymentCode = $downPayment.get();
+    const cashFlowCode = $cashFlow.get();
+    const creditCode = $creditScore.get();
+    const citizenshipCode = $usCitizen.get();
+    const timelineCode = $timeline.get();
+    const propertyValueRaw = $propertyValue.get();
+    const loanBalanceRaw = $loanBalance.get();
+    const rehabBudgetRaw = $rehabBudget.get();
+
+    // Flat payload. Every field at the top level so Adam can map each one
+    // directly in Zapier/GHL without traversing nested objects. Each
+    // multiple-choice field is sent as both a raw code (for logic) and a
+    // human-readable label (for the GHL contact record and notification emails).
     const payload = {
-      firstName: $firstName.get().trim(),
-      lastName: $lastName.get().trim(),
+      // Contact
+      firstName,
+      lastName,
+      fullName: [firstName, lastName].filter(Boolean).join(' '),
       email: $email.get().trim().toLowerCase(),
       phone: formatPhoneE164($phone.get()),
-      loanGoal: $loanGoal.get(),
-      propertyType: $propertyType.get(),
-      state: $state.get(),
-      propertyValue: $propertyValue.get(),
-      downPayment: $downPayment.get(),
-      loanBalance: $loanBalance.get(),
-      rehabBudget: $rehabBudget.get(),
-      cashFlow: $cashFlow.get(),
-      creditScore: $creditScore.get(),
-      usCitizen: $usCitizen.get(),
-      timeline: $timeline.get(),
+      phoneDisplay: $phone.get(),
+
+      // Loan goal
+      loanGoal: loanGoalCode,
+      loanGoalLabel: LOAN_GOAL_LABELS[loanGoalCode] || loanGoalCode,
+
+      // Property
+      propertyType: propertyTypeCode,
+      propertyTypeLabel: PROPERTY_TYPE_NAMES[propertyTypeCode] || propertyTypeCode,
+      state: stateCode,
+      stateName: STATE_NAMES[stateCode] || stateCode,
+
+      // Money
+      propertyValue: propertyValueRaw,
+      propertyValueFormatted: formatCurrency(propertyValueRaw),
+      downPayment: downPaymentCode,
+      downPaymentLabel: DOWN_PAYMENT_LABELS[downPaymentCode] || downPaymentCode,
+      loanBalance: loanBalanceRaw,
+      loanBalanceFormatted: formatCurrency(loanBalanceRaw),
+      rehabBudget: rehabBudgetRaw,
+      rehabBudgetFormatted: formatCurrency(rehabBudgetRaw),
+
+      // Borrower profile
+      cashFlow: cashFlowCode,
+      cashFlowLabel: CASH_FLOW_LABELS[cashFlowCode] || cashFlowCode,
+      creditScore: creditCode,
+      creditScoreLabel: CREDIT_LABELS[creditCode] || creditCode,
+      usCitizen: citizenshipCode,
+      usCitizenLabel: CITIZENSHIP_LABELS[citizenshipCode] || citizenshipCode,
+      timeline: timelineCode,
+      timelineLabel: TIMELINE_LABELS[timelineCode] || timelineCode,
+
+      // Deal verdict (computed)
       dealTier: dealVerdict.tier,
+      dealLabel: dealVerdict.label,
+      dealHeadline: dealVerdict.headline,
+      recommendedProgram: programRec.program,
+      recommendedProgramBadge: programRec.badge,
+
+      // Attribution (flat, not nested under "source")
+      utmSource: utmParsed.utm_source || '',
+      utmMedium: utmParsed.utm_medium || '',
+      utmCampaign: utmParsed.utm_campaign || '',
+      utmTerm: utmParsed.utm_term || '',
+      utmContent: utmParsed.utm_content || '',
+      gclid: utmParsed.gclid || '',
+      fbclid: utmParsed.fbclid || '',
+      landingPageUrl: window.location.href,
+      referrer: typeof document !== 'undefined' ? document.referrer : '',
+      deviceType: getDeviceType(),
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+
+      // Routing (still useful for downstream automation)
       matchedBroker: brokerKey,
-      source: {
-        utmSource: utmParsed.utm_source || null,
-        utmMedium: utmParsed.utm_medium || null,
-        utmCampaign: utmParsed.utm_campaign || null,
-        utmTerm: utmParsed.utm_term || null,
-        utmContent: utmParsed.utm_content || null,
-        gclid: utmParsed.gclid || null,
-        fbclid: utmParsed.fbclid || null,
-        landingPageUrl: window.location.href,
-        deviceType: getDeviceType(),
-      },
+
+      // Timestamp
       submittedAt: new Date().toISOString(),
     };
 
