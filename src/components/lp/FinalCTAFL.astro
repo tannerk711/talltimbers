@@ -3,21 +3,21 @@ interface Props {
   phoneNumber?: string;
 }
 
-const { phoneNumber = '(855) 738-1557' } = Astro.props;
+const { phoneNumber = '(888) 931-0211' } = Astro.props;
 const phoneHref = `tel:${phoneNumber.replace(/\D/g, '')}`;
 ---
 
 <section data-fl-section="final-cta" class="relative bg-navy py-20 md:py-24 overflow-hidden">
   <div class="absolute inset-0">
-    <img src="/images/sections/fl-final-cta.jpg" alt="" class="w-full h-full object-cover" aria-hidden="true" loading="lazy" decoding="async" />
-    <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(11,17,32,0.78) 0%, rgba(11,17,32,0.55) 100%);"></div>
+    <img src="/images/sections/florida-final-cta.jpg" alt="" class="w-full h-full object-cover" aria-hidden="true" loading="lazy" decoding="async" />
+    <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(7,38,15,0.82) 0%, rgba(7,38,15,0.58) 100%);"></div>
   </div>
   <div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white">
-      Ready to Talk Through Your Florida Deal?
+      Ready to Talk Through Your Deal?
     </h2>
     <p class="mt-4 text-lg leading-relaxed text-slate-300 max-w-2xl mx-auto">
-      Check your eligibility in 60 seconds. John or a licensed member of his team reaches out the same business day to walk through your scenario. No SSN. No hard credit pull. No obligation.
+      Check your eligibility in 60 seconds. We reach out the same business day to walk through your scenario. No SSN. No credit pull. No obligation.
     </p>
 
     <div class="mt-8 flex flex-col items-center gap-3 sm:gap-4 sm:flex-row sm:justify-center">
@@ -27,7 +27,7 @@ const phoneHref = `tel:${phoneNumber.replace(/\D/g, '')}`;
         data-location="final_cta"
         class="inline-flex items-center justify-center rounded-lg bg-blue px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-dark w-full sm:w-auto"
       >
-        Match Me With My FL Specialist
+        Check Your Eligibility
         <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
@@ -50,7 +50,7 @@ const phoneHref = `tel:${phoneNumber.replace(/\D/g, '')}`;
         <svg class="h-4 w-4 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
         </svg>
-        No hard credit pull
+        No credit pull
       </span>
       <span class="fl-reveal-chip chip chip-on-dark-soft text-sm">
         <svg class="h-4 w-4 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">

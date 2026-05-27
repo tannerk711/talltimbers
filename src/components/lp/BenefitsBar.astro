@@ -1,0 +1,138 @@
+---
+// BenefitsBar — 3-card benefit row that sits between Hero and ComparisonTable.
+// Replaces the deleted lower BenefitsFL and DSCRUnderwritingReality sections by
+// folding their substance into result-language. Tall Timbers "we" voice.
+//
+// Icons are hand-drawn inline SVGs (Lucide-style line work, 1.6 stroke,
+// rounded caps/joins) with a single emerald accent per icon. Designed for the
+// dark forest-green card surface defined in global.css.
+
+const benefits = [
+  {
+    title: 'Qualify on the Property, Not Your Taxes',
+    body: "We use the property's rents to qualify your loan, not your W-2s or tax returns. Write-offs that wreck conventional DTI stop being a problem, and a property running below break-even still has a path.",
+    icon: 'property-doc',
+  },
+  {
+    title: 'Fast Closings on Clean Files',
+    body: "We move fast when title and docs come back clean. You get a real timeline on the first call, not a marketing promise that slips at week three.",
+    icon: 'stopwatch-home',
+  },
+  {
+    title: 'Scale Past the Fannie 10-Loan Cap',
+    body: "DSCR doesn't count against conventional limits. 11th door, 20th door, 30th door, same process. Buy distressed, refinance on the new appraised value, no seasoning wait.",
+    icon: 'portfolio-growth',
+  },
+];
+---
+
+<section data-fl-section="benefits-bar" class="bg-navy py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center mb-12">
+      <p data-fl-reveal class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">WHY INVESTORS CHOOSE TALL TIMBERS</p>
+      <h2 data-fl-reveal class="text-3xl md:text-4xl font-bold tracking-tight text-white">Built for the Way Investors Actually Buy</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7">
+      {benefits.map((b) => (
+        <div data-fl-reveal class="benefit-card flex flex-col items-center text-center rounded-2xl p-7 md:p-8">
+          <div class="benefit-icon-wrap mb-6">
+            {b.icon === 'property-doc' && (
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                {/* Document outline */}
+                <path d="M20 12 H50 L60 22 V66 A2 2 0 0 1 58 68 H22 A2 2 0 0 1 20 66 Z" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M50 12 V22 H60" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+                {/* House icon at top of document */}
+                <path d="M32 36 L40 30 L48 36" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M34 35 V44 H46 V35" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M38 44 V40 H42 V44" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                {/* Data lines */}
+                <line x1="27" y1="51" x2="53" y2="51" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                <line x1="27" y1="56" x2="49" y2="56" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                {/* Emerald accent: approval check badge */}
+                <circle cx="55" cy="61" r="5" fill="#1E9E6E"/>
+                <path d="M53 61 L54.5 62.5 L57 60" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            )}
+            {b.icon === 'stopwatch-home' && (
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                {/* Top crown */}
+                <line x1="36" y1="14" x2="44" y2="14" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                <line x1="40" y1="14" x2="40" y2="20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                {/* Side buttons */}
+                <line x1="20" y1="22" x2="24" y2="26" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                <line x1="60" y1="22" x2="56" y2="26" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                {/* Stopwatch body */}
+                <circle cx="40" cy="46" r="22" stroke="#FFFFFF" stroke-width="2"/>
+                {/* Tick marks (12, 3, 6, 9) */}
+                <line x1="40" y1="26" x2="40" y2="29" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                <line x1="60" y1="46" x2="57" y2="46" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                <line x1="40" y1="66" x2="40" y2="63" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                <line x1="20" y1="46" x2="23" y2="46" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                {/* House inside */}
+                <path d="M32 47 L40 41 L48 47" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M34 46 V55 H46 V46" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M38 55 V51 H42 V55" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                {/* Emerald accent: hand pointing to "fast" */}
+                <circle cx="40" cy="46" r="2.4" fill="#1E9E6E"/>
+                <line x1="40" y1="46" x2="51" y2="35" stroke="#1E9E6E" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+            )}
+            {b.icon === 'portfolio-growth' && (
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                {/* Ground line */}
+                <line x1="14" y1="64" x2="66" y2="64" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                {/* Small house (left) */}
+                <path d="M16 52 L22 47 L28 52" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18 51 V64 H26 V51" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="20.5" y="55" width="3" height="3" stroke="#FFFFFF" stroke-width="1.4"/>
+                {/* Medium house (center) */}
+                <path d="M32 44 L40 38 L48 44" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M34 43 V64 H46 V43" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="37" y="48" width="3.5" height="3.5" stroke="#FFFFFF" stroke-width="1.4"/>
+                <rect x="42" y="48" width="3.5" height="3.5" stroke="#FFFFFF" stroke-width="1.4"/>
+                <path d="M38.5 58 V64 H41.5 V58" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                {/* Tall house (right) */}
+                <path d="M50 36 L58 30 L66 36" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M52 35 V64 H64 V35" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="55" y="40" width="3.5" height="3.5" stroke="#FFFFFF" stroke-width="1.4"/>
+                <rect x="60" y="40" width="3.5" height="3.5" stroke="#FFFFFF" stroke-width="1.4"/>
+                <rect x="55" y="48" width="3.5" height="3.5" stroke="#FFFFFF" stroke-width="1.4"/>
+                <rect x="60" y="48" width="3.5" height="3.5" stroke="#FFFFFF" stroke-width="1.4"/>
+                {/* Trend arrow (emerald) */}
+                <path d="M18 26 L30 22 L42 18 L54 14" stroke="#1E9E6E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <path d="M48 13 L55 13 L55 20" stroke="#1E9E6E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <circle cx="55" cy="13" r="2.4" fill="#1E9E6E"/>
+              </svg>
+            )}
+          </div>
+          <h3 class="text-lg md:text-xl font-bold text-white">{b.title}</h3>
+          <p class="mt-3 text-sm md:text-[15px] leading-relaxed text-white/70">{b.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .benefit-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.015) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+  .benefit-card:hover {
+    border-color: rgba(63, 199, 147, 0.35);
+    transform: translateY(-2px);
+  }
+  .benefit-icon-wrap {
+    width: 88px;
+    height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .benefit-icon-wrap svg {
+    width: 100%;
+    height: 100%;
+  }
+</style>

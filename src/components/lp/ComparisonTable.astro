@@ -1,13 +1,17 @@
 ---
+// Universal "Specialist vs. the rest" capability table. State-agnostic so every state LP
+// reuses it without a rebuild. 8 rows describe DSCR-specialist capability vs. generic
+// DSCR lender vs. big-bank. No close-day-counts, no rate language.
+
 const rows = [
-  { feature: 'Funds non-warrantable FL condos', us: 'yes', generic: 'maybe', bank: 'no' },
-  { feature: 'Funds FL coastal / flood-zone properties', us: 'yes', generic: 'maybe', bank: 'no' },
-  { feature: 'Flags STR zoning issues before you write an offer', us: 'yes', generic: 'no', bank: 'na' },
-  { feature: 'Accepts AirDNA for STR income', us: 'yes', generic: 'maybe', bank: 'no' },
+  { feature: 'No seasoning for cash-out or new appraised value', us: 'yes', generic: 'maybe', bank: 'no' },
+  { feature: 'Accepts STR / short-term rental income', us: 'yes', generic: 'maybe', bank: 'no' },
+  { feature: 'No-ratio program to 70% LTV', us: 'yes', generic: 'maybe', bank: 'no' },
+  { feature: 'Funds non-warrantable condos', us: 'yes', generic: 'maybe', bank: 'no' },
   { feature: 'Tax returns required', us: 'no', generic: 'no', bank: 'yes' },
-  { feature: 'Typical close in 21-30 days', us: 'yes', generic: 'maybe', bank: 'no' },
+  { feature: 'Fast closings on clean files', us: 'yes', generic: 'maybe', bank: 'no' },
   { feature: 'Consultative on the first call', us: 'yes', generic: 'no', bank: 'no' },
-  { feature: 'Lender options on your deal', us: '50+', generic: 'Single program', bank: 'Single program' },
+  { feature: 'Lender options on your deal', us: '70+', generic: 'Single program', bank: 'Single program' },
 ];
 
 type GlyphCell = { kind: 'glyph'; chipClass: string; label: string };
@@ -26,20 +30,20 @@ function renderCell(value: string): Cell {
 <section data-fl-section="comparison" class="bg-off-white py-16 md:py-20">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-10">
-      <p class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">JOHN VS. THE REST</p>
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-navy">Why a FL Specialist Beats Going Direct</h2>
+      <p class="text-xs font-medium uppercase tracking-[0.1em] text-amber mb-3">TALL TIMBERS VS. THE REST</p>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-navy">Why a DSCR Specialist Beats Going Direct</h2>
       <p class="mt-4 text-lg text-gray-500 leading-relaxed max-w-3xl mx-auto">
-        Most generic DSCR lenders only place loans through one program with one set of overlays. Big banks need W-2s. John's network beats both, particularly on the FL-specific stuff that kills deals at underwriting.
+        Most generic DSCR lenders only place loans through one program with one set of overlays. Big banks need W-2s. Our 70+ lender network beats both, particularly on the deals that get stuck at underwriting.
       </p>
     </div>
 
     <!-- Table, desktop -->
     <div class="hidden md:block rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] text-white text-sm font-semibold uppercase" style="background: linear-gradient(90deg, #0B1120 0%, #1A2540 100%); letter-spacing: 0.05em;">
+      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] text-white text-sm font-semibold uppercase" style="background: linear-gradient(90deg, #07260F 0%, #16502A 100%); letter-spacing: 0.05em;">
         <div class="px-5 py-5">Capability</div>
         <div class="px-5 py-5 text-center bg-blue/25 border-l border-white/10 flex items-center justify-center gap-2">
           <span class="inline-block h-2.5 w-2.5 rounded-sm bg-blue"></span>
-          <span>John Peisner + Barrett Network</span>
+          <span>Tall Timbers + 70+ Lender Network</span>
         </div>
         <div class="px-5 py-5 text-center border-l border-white/10">Generic DSCR Lender</div>
         <div class="px-5 py-5 text-center border-l border-white/10">Big-Bank Mortgage</div>
@@ -94,7 +98,7 @@ function renderCell(value: string): Cell {
                 ) : (
                   <span class="text-navy font-bold text-base">{us.label}</span>
                 )}
-                <div class="text-[10px] uppercase tracking-wider text-gray-500">John + Barrett</div>
+                <div class="text-[10px] uppercase tracking-wider text-gray-500">Tall Timbers</div>
               </div>
               <div class="rounded-lg bg-gray-50 py-3 flex flex-col items-center gap-1">
                 {generic.kind === 'glyph' ? (
@@ -118,7 +122,7 @@ function renderCell(value: string): Cell {
       })}
     </div>
 
-    <!-- Legend + CTA -->
+    <!-- Legend -->
     <div class="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
       <span class="flex items-center gap-1.5"><span class="chip chip-glyph chip-green text-xs">✓</span> Standard</span>
       <span class="flex items-center gap-1.5"><span class="chip chip-glyph chip-amber text-xs">~</span> Sometimes</span>

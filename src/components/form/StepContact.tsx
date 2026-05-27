@@ -235,7 +235,7 @@ export default function StepContact({
           <p className="text-red-400 text-xs mt-1 ml-8 animate-[fadeIn_150ms_ease-out]">{errors.consent}</p>
         )}
         <p className="text-white/40 text-xs leading-relaxed mt-2 ml-8">
-          By clicking "Match Me With a Specialist," I consent to receive calls, texts, and emails from a licensed loan specialist. Standard message and data fees may apply. Reply STOP to opt out.
+          By clicking "Check My Eligibility," I consent to receive calls, texts, and emails from a licensed loan specialist. Standard message and data fees may apply. Reply STOP to opt out.
         </p>
       </div>
 
@@ -296,10 +296,10 @@ export default function StepContact({
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
             </svg>
-            Matching You With a Specialist...
+            Checking Your Eligibility...
           </span>
         ) : (
-          'Match Me With a Specialist'
+          'Check My Eligibility'
         )}
       </button>
 

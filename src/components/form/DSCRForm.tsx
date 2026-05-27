@@ -268,6 +268,19 @@ export default function DSCRForm() {
       submittedAt: new Date().toISOString(),
     };
 
+    // Fire Adam's GHL webhook (Zapier) on every submit. Tall Timbers is single-broker;
+    // Adam gets every lead regardless of state routing. Fire-and-forget so a slow Zap
+    // never blocks the user's redirect to /thank-you/.
+    const ADAM_GHL_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/7361629/4ovjjmn/';
+    try {
+      fetch(ADAM_GHL_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true,
+      }).catch(() => {});
+    } catch {}
+
     const config = getBrokerConfig(brokerKey);
     let success = false;
 

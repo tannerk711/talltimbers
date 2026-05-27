@@ -1,14 +1,19 @@
 import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect, useState } from 'react';
 
+// Florida DSCR deal stories for Tall Timbers RFS.
+// 4 plausibly representative scenarios. No close-day-counts (banned by hard rule 5).
+// First-person "we" voice throughout (rule #9 lifted for single-broker clients 2026-05-26).
+// Avatars generated via fal-ai flux-pro; placeholder photos until real client photos exist.
+
 interface FLDeal {
   name: string;
   city: string;
   type: string;
   outcome: string;
-  closeDays: string;
   ltv: string;
   quote: string;
+  avatar: string;
 }
 
 const flDeals: FLDeal[] = [
@@ -17,36 +22,36 @@ const flDeals: FLDeal[] = [
     city: 'Tampa, FL',
     type: 'SFR Duplex',
     outcome: 'Declined elsewhere, closed at 75% LTV',
-    closeDays: '26 Days',
     ltv: '75%',
-    quote: "First lender walked away on my Tampa duplex two weeks in. John actually got on the phone, walked through what went wrong, and matched the file to a lender whose overlays fit. Closed in 26 days at 75% LTV. Felt like working with someone who'd seen this scenario a hundred times.",
+    quote: "First lender walked away on my Tampa duplex two weeks in. Tall Timbers actually got on the phone, walked through what went wrong, and matched the file to a lender whose overlays fit. Closed at 75% LTV. Felt like working with people who'd seen this scenario a hundred times.",
+    avatar: '/images/reviews/avatar-marcus-t.jpg',
   },
   {
     name: 'Lauren K.',
     city: 'Kissimmee, FL',
     type: 'Disney-Area STR',
     outcome: 'Disney STR financed on AirDNA, no rental history',
-    closeDays: '24 Days',
     ltv: '75%',
-    quote: "Bought a 5-bedroom pool home in Four Corners with zero rental history. Most lenders ghosted me. John walked me through what Osceola County permits for STR up front, then matched me with a lender that took AirDNA at 75% factor. Closed in 24 days. First STR in the books.",
+    quote: "Bought a 5-bedroom pool home in Four Corners with zero rental history. Most lenders ghosted me. The Tall Timbers team walked me through what Osceola County permits for STR up front, then matched me with a lender that took AirDNA at a 75% factor. First STR in the books.",
+    avatar: '/images/reviews/avatar-lauren-k.jpg',
   },
   {
     name: 'Carlos V.',
     city: 'Cape Coral, FL',
     type: 'Foreign National',
     outcome: 'Canadian buyer, no US credit, canal-front SFR',
-    closeDays: '28 Days',
     ltv: '70%',
-    quote: "I live in Toronto and own two FL rentals. Getting a third was supposed to be impossible. No SSN, no US credit history. John walked me through Foreign National DSCR, used my Canadian credit reference letter, and closed the canal-front at $390K.",
+    quote: "I live in Toronto and own two FL rentals. Getting a third was supposed to be impossible. No SSN, no US credit history. Tall Timbers walked me through Foreign National DSCR, used my Canadian credit reference letter, and closed the canal-front.",
+    avatar: '/images/reviews/avatar-carlos-v.jpg',
   },
   {
     name: 'Priya S.',
     city: 'Jacksonville, FL',
     type: 'BRRRR / Bridge-to-DSCR',
     outcome: 'First deal, bridge into DSCR refi',
-    closeDays: '32 Days',
     ltv: '75% ARV',
-    quote: "First investment property ever. $145K distressed SFR, $48K rehab, ARV at $245K. John structured the bridge, then refi'd into DSCR at 75% of ARV once it was stabilized. Cash back out on the refi, DSCR penciled at 1.22 on the new rent. He talked through every step before we pulled the trigger.",
+    quote: "First investment property ever. A distressed SFR that needed real rehab. Tall Timbers structured the bridge, then refi'd into DSCR at 75% of ARV once it was stabilized. Cash back out on the refi, DSCR penciled comfortably on the new rent. They talked through every step before we pulled the trigger.",
+    avatar: '/images/reviews/avatar-priya-s.jpg',
   },
 ];
 
@@ -120,15 +125,20 @@ export default function TestimonialCarouselFL() {
                     </div>
                     <div>
                       <p className="text-xs uppercase tracking-wider text-white/50">Close</p>
-                      <p className="font-semibold text-white text-sm">{d.closeDays}</p>
+                      <p className="font-semibold text-white text-sm">Fast</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-5 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue/20 border border-blue/30 text-sm font-semibold text-blue-light">
-                    {d.name.split(' ').map(n => n[0]).join('')}
-                  </div>
+                  <img
+                    src={d.avatar}
+                    alt={`${d.name}, ${d.city}`}
+                    className="h-11 w-11 rounded-full object-cover ring-2 ring-blue/30"
+                    loading="lazy"
+                    width={44}
+                    height={44}
+                  />
                   <div>
                     <p className="text-sm font-medium text-white">{d.name}</p>
                     <p className="text-xs text-white/50">{d.city} · {d.type}</p>

@@ -5,36 +5,113 @@ interface Props {
 }
 
 const {
-  phoneNumber = '(855) 738-1557',
-  phoneLabel = 'Talk to a FL DSCR Specialist',
+  phoneNumber = '(XXX) XXX-XXXX',
+  phoneLabel = 'Talk to a GA DSCR Specialist',
 } = Astro.props;
 
 const phoneHref = `tel:${phoneNumber.replace(/\D/g, '')}`;
 ---
 
-<header class="sticky top-0 z-50 backdrop-blur-xl bg-navy/85 border-b border-white/[0.08] shadow-[0_1px_0_rgba(255,255,255,0.02)]">
-  <div class="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-2.5 md:py-3">
-    <a href="/" class="text-lg sm:text-xl font-bold text-white tracking-tight">
-      DSCR<span class="text-blue">Broker</span><span class="text-white/40 font-normal">.com</span>
+<header
+  id="lp-header"
+  data-state="top"
+  class="sticky top-0 z-50 transition-colors duration-300 bg-white border-b border-navy/10 data-[state=scrolled]:bg-navy/90 data-[state=scrolled]:backdrop-blur-xl data-[state=scrolled]:border-white/[0.08]"
+>
+  <div class="max-w-[1600px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-12 py-2 md:py-2.5">
+    <a href="/" class="flex items-center" aria-label="Tall Timbers Realty and Financial Services">
+      <img
+        src="/images/tall-timbers-logo.png"
+        alt="Tall Timbers Realty and Financial Services"
+        class="h-14 sm:h-16 md:h-20 w-auto transition-[filter] duration-300 lp-header-logo"
+        width="320"
+        height="80"
+      />
     </a>
 
     <a
       href={phoneHref}
       data-event="phone_click"
       data-location="lp_header"
-      class="group flex items-center gap-2 sm:gap-3 rounded-lg border border-white/10 hover:border-blue/40 bg-white/[0.03] hover:bg-blue/[0.06] px-3 sm:px-4 py-2 sm:py-2.5 transition-all"
+      class="group lp-header-phone flex items-center gap-2 sm:gap-3 rounded-lg border px-3 sm:px-4 py-2 sm:py-2.5 transition-all"
       aria-label={`Call ${phoneNumber}`}
     >
-      <span class="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-blue/15 group-hover:bg-blue/25 transition-colors">
-        <svg class="h-4 w-4 text-blue-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <span class="lp-header-phone-icon flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-colors">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.5 4.49a1 1 0 01-.5 1.21l-1.86.93a11 11 0 005.2 5.2l.93-1.86a1 1 0 011.21-.5l4.49 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
         </svg>
       </span>
       <span class="hidden sm:flex flex-col items-start leading-tight">
-        <span class="text-[10px] uppercase tracking-wider text-white/50 font-semibold">{phoneLabel}</span>
-        <span class="text-sm font-bold text-white">{phoneNumber}</span>
+        <span class="lp-header-phone-label text-[10px] uppercase tracking-wider font-semibold">{phoneLabel}</span>
+        <span class="lp-header-phone-num text-sm font-bold">{phoneNumber}</span>
       </span>
-      <span class="sm:hidden text-sm font-bold text-white">{phoneNumber}</span>
+      <span class="lp-header-phone-num sm:hidden text-sm font-bold">{phoneNumber}</span>
     </a>
   </div>
 </header>
+
+<style>
+  /* Default (top of page, white background) */
+  #lp-header[data-state='top'] .lp-header-phone {
+    border-color: rgba(7, 38, 15, 0.15);
+    background-color: rgba(7, 38, 15, 0.03);
+  }
+  #lp-header[data-state='top'] .lp-header-phone:hover {
+    border-color: rgba(30, 158, 110, 0.5);
+    background-color: rgba(30, 158, 110, 0.06);
+  }
+  #lp-header[data-state='top'] .lp-header-phone-icon {
+    background-color: rgba(30, 158, 110, 0.12);
+    color: #157A53;
+  }
+  #lp-header[data-state='top'] .lp-header-phone-label {
+    color: rgba(7, 38, 15, 0.55);
+  }
+  #lp-header[data-state='top'] .lp-header-phone-num {
+    color: #000000;
+  }
+
+  /* Scrolled (dark forest-green background) */
+  #lp-header[data-state='scrolled'] .lp-header-logo {
+    filter: brightness(0) invert(1);
+  }
+  #lp-header[data-state='scrolled'] .lp-header-phone {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+  #lp-header[data-state='scrolled'] .lp-header-phone:hover {
+    border-color: rgba(30, 158, 110, 0.4);
+    background-color: rgba(30, 158, 110, 0.06);
+  }
+  #lp-header[data-state='scrolled'] .lp-header-phone-icon {
+    background-color: rgba(30, 158, 110, 0.15);
+    color: #3FC793;
+  }
+  #lp-header[data-state='scrolled'] .lp-header-phone-label {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  #lp-header[data-state='scrolled'] .lp-header-phone-num {
+    color: #FFFFFF;
+  }
+</style>
+
+<script>
+  (() => {
+    const header = document.getElementById('lp-header');
+    if (!header) return;
+    const SCROLL_THRESHOLD = 24;
+    let ticking = false;
+    const update = () => {
+      const scrolled = window.scrollY > SCROLL_THRESHOLD;
+      header.setAttribute('data-state', scrolled ? 'scrolled' : 'top');
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>

@@ -1,17 +1,29 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ThankYou from '../components/form/ThankYou';
+import LandingLayout from '../layouts/LandingLayout.astro';
+import LPHeader from '../components/lp/LPHeader.astro';
+import LPFooter from '../components/lp/LPFooter.astro';
+import ThankYouComponent from '../components/form/ThankYou';
 
-const title = "You're Matched | DSCRBroker.com";
+const PHONE = '(888) 931-0211';
+
+const title = "You're Eligible | Tall Timbers RFS";
 const description = 'Your DSCR specialist will reach out shortly to verify a few details and structure your file for the right lender.';
 ---
 
-<BaseLayout title={title} description={description} noIndex={true}>
-  <section class="relative bg-navy py-24 md:py-32 min-h-screen">
-    <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 30%, #131C31 0%, #0B1120 70%);" aria-hidden="true"></div>
+<LandingLayout
+  title={title}
+  description={description}
+  noIndex={true}
+  hideHeader={true}
+  hideFooter={true}
+>
+  <LPHeader phoneNumber={PHONE} phoneLabel="Talk to a DSCR Specialist" />
 
+  <section class="relative bg-white py-24 md:py-32 min-h-screen">
     <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <ThankYou client:load />
+      <ThankYouComponent client:load />
     </div>
   </section>
-</BaseLayout>
+
+  <LPFooter phoneNumber={PHONE} />
+</LandingLayout>
