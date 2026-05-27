@@ -268,18 +268,23 @@ export default function DSCRForm() {
       submittedAt: new Date().toISOString(),
     };
 
-    // Fire Adam's GHL webhook (Zapier) on every submit. Tall Timbers is single-broker;
-    // Adam gets every lead regardless of state routing. Fire-and-forget so a slow Zap
-    // never blocks the user's redirect to /thank-you/.
+    // Send Adam's GHL webhook (Zapier) on every submit. Tall Timbers is single-broker;
+    // Adam gets every lead regardless of state routing. We await this (with a short
+    // timeout) so the same-tab redirect to /thank-you/ doesn't cancel the in-flight
+    // request before the browser flushes it to the network.
     const ADAM_GHL_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/7361629/4ovjjmn/';
     try {
-      fetch(ADAM_GHL_WEBHOOK, {
+      await fetch(ADAM_GHL_WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        keepalive: true,
-      }).catch(() => {});
-    } catch {}
+        signal: AbortSignal.timeout(5000),
+      });
+    } catch (err) {
+      // Don't block the user if Zapier is slow or down. The lead is still captured
+      // in sessionStorage and the user proceeds to /thank-you/.
+      console.warn('[GHL webhook] failed:', err);
+    }
 
     const config = getBrokerConfig(brokerKey);
     let success = false;
