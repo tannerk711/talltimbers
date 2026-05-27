@@ -365,20 +365,20 @@ export default function DSCRForm() {
     };
 
     // Send Adam's GHL webhook (Zapier) on every submit. Tall Timbers is single-broker;
-    // Adam gets every lead regardless of state routing. We await this (with a short
-    // timeout) so the same-tab redirect to /thank-you/ doesn't cancel the in-flight
-    // request before the browser flushes it to the network.
+    // Adam gets every lead regardless of state routing. Sent as a CORS-safe "simple
+    // request" (text/plain body containing JSON) so the browser does not fire a
+    // preflight OPTIONS that Zapier's catch hook rejects, which was silently
+    // dropping submissions from the live site.
     const ADAM_GHL_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/7361629/4ovjjmn/';
     try {
       await fetch(ADAM_GHL_WEBHOOK, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
         body: JSON.stringify(payload),
         signal: AbortSignal.timeout(5000),
+        keepalive: true,
       });
     } catch (err) {
-      // Don't block the user if Zapier is slow or down. The lead is still captured
-      // in sessionStorage and the user proceeds to /thank-you/.
       console.warn('[GHL webhook] failed:', err);
     }
 
