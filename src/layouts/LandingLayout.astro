@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { title, description, canonical, noIndex = false, jsonLd, hideHeader = false, hideFooter = false } = Astro.props;
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://dscrbroker.com';
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://talltimbersrfs.com';
 const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 ---
 
@@ -78,7 +78,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       <header class="relative z-50 py-4 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
           <a href="/" class="text-xl font-bold text-white tracking-tight">
-            DSCR<span class="text-blue">Broker</span><span class="text-white/40 font-normal">.com</span>
+            Tall <span class="text-blue">Timbers</span> <span class="text-white/40 font-normal">RFS</span>
           </a>
           <a href="/" class="text-sm text-white/40 hover:text-white/60 transition-colors">
             ← Back to Home
@@ -95,7 +95,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       <footer class="py-8 px-4 sm:px-6 border-t border-white/5">
         <div class="max-w-7xl mx-auto text-center">
           <p class="text-white/30 text-xs leading-relaxed max-w-2xl mx-auto">
-            DSCRBroker.com is a lead matching service, not a lender, bank, or mortgage broker. We connect borrowers with licensed loan originators. We do not make credit decisions, approve loans, set loan terms, or fund mortgages. All loan inquiries and applications are handled by the matched licensed broker.
+            Tall Timbers Realty and Financial Services. Loans originated by Adam C. Cunningham, NMLS #312817 (CA DRE #01961343). DSCR and non-QM investment-property loans only. Not a commitment to lend. All loans subject to underwriting approval. Terms, conditions, and program availability subject to change without notice. Equal Housing Opportunity.
           </p>
           <div class="flex items-center justify-center gap-4 mt-4 text-white/20 text-xs">
             <a href="/privacy-policy/" class="hover:text-white/40 transition-colors">Privacy Policy</a>

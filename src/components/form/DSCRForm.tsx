@@ -259,7 +259,7 @@ export default function DSCRForm() {
         program: fakeProgram,
         isFake: true,
       };
-      sessionStorage.setItem('dscrbroker_submission', JSON.stringify(payload));
+      sessionStorage.setItem('tall_timbers_submission', JSON.stringify(payload));
       window.location.href = '/thank-you/';
       return;
     }
@@ -426,7 +426,7 @@ export default function DSCRForm() {
 
       // Persist submission for the thank-you page to render the verdict + broker context.
       const successPayload = { ...payload, dealVerdict, program: programRec };
-      sessionStorage.setItem('dscrbroker_submission', JSON.stringify(successPayload));
+      sessionStorage.setItem('tall_timbers_submission', JSON.stringify(successPayload));
       $submittedData.set(successPayload);
       clearFormData();
 

@@ -27,7 +27,6 @@ pnpm-debug.log*
 # internal docs (kept local)
 CLAUDE.md
 .claude/
-dscrbroker-design.md
-DSCRbrokers-apr2.vtt
 context/
 scripts/
+*.vtt

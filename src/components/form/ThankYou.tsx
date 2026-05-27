@@ -59,7 +59,7 @@ export default function ThankYou() {
 
   useEffect(() => {
     try {
-      const raw = sessionStorage.getItem('dscrbroker_submission');
+      const raw = sessionStorage.getItem('tall_timbers_submission');
       if (raw) {
         setData(JSON.parse(raw));
       } else if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('demo') === '1') {

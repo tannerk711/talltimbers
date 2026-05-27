@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://dscrbroker.com',
+  site: 'https://talltimbersrfs.com',
   output: 'static',
   adapter: vercel(),
   integrations: [
