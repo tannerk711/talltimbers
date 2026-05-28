@@ -2,6 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { STATE_NAMES, PROPERTY_TYPE_NAMES } from '../../utils/brokerRouting';
 import type { DealVerdict, ProgramRecommendation } from '../../utils/rateEstimation';
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 interface SubmissionPayload {
   loanGoal?: string;
   state?: string;
@@ -56,6 +62,7 @@ export default function ThankYou() {
   const [data, setData] = useState<SubmissionPayload | null>(null);
   const [loaded, setLoaded] = useState(false);
   const confettiRef = useRef(false);
+  const conversionRef = useRef(false);
 
   useEffect(() => {
     try {
@@ -86,6 +93,14 @@ export default function ThankYou() {
     }
     setLoaded(true);
   }, []);
+
+  useEffect(() => {
+    if (!data || data.isFake || conversionRef.current) return;
+    conversionRef.current = true;
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', { send_to: 'AW-18132955750/Tbu1CMmLkrUcEObku8ZD' });
+    }
+  }, [data]);
 
   useEffect(() => {
     if (!data || data.isFake || confettiRef.current) return;
