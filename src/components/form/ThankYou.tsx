@@ -14,11 +14,11 @@ interface SubmissionPayload {
   propertyType?: string;
   creditScore?: string;
   cashFlow?: string;
-  matchedBroker?: string;
   firstName?: string;
   dealVerdict?: DealVerdict;
   program?: ProgramRecommendation;
   isFake?: boolean;
+  isDemo?: boolean;
 }
 
 const TIER_STYLES: Record<DealVerdict['tier'], { ring: string; pill: string; pillText: string }> = {
@@ -76,6 +76,7 @@ export default function ThankYou() {
           propertyType: 'single_family',
           firstName: 'Marcus',
           isFake: true,
+          isDemo: true,
           dealVerdict: {
             tier: 'strong',
             label: 'Strong Deal',
@@ -94,8 +95,13 @@ export default function ThankYou() {
     setLoaded(true);
   }, []);
 
+  // Fire the Google Ads New Lead conversion. Fires for real submissions AND the ?demo=1
+  // preview (so Google Tag Assistant can verify the tag on /thank-you/?demo=1), but never
+  // for the honeypot/bot path, which sets isFake WITHOUT isDemo.
   useEffect(() => {
-    if (!data || data.isFake || conversionRef.current) return;
+    if (!data || conversionRef.current) return;
+    const isBot = data.isFake && !data.isDemo;
+    if (isBot) return;
     conversionRef.current = true;
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event', 'conversion', { send_to: 'AW-18132955750/Tbu1CMmLkrUcEObku8ZD' });

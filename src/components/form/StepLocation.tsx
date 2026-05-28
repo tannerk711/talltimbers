@@ -29,7 +29,7 @@ export default function StepLocation({ value, onSelect }: StepLocationProps) {
   return (
     <div>
       <h3 className="text-lg font-semibold text-white mb-1">Where is the property located?</h3>
-      <p className="text-sm text-white/50 mb-6">We have licensed specialists in all 50 states.</p>
+      <p className="text-sm text-white/50 mb-6">We structure DSCR loans for investors across the states we cover.</p>
 
       <select
         value={value}
@@ -55,7 +55,7 @@ export default function StepLocation({ value, onSelect }: StepLocationProps) {
           <svg className="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <span>We have a licensed DSCR specialist in {STATE_NAMES[value]}.</span>
+          <span>We structure DSCR loans in {STATE_NAMES[value]}.</span>
         </div>
       )}
     </div>

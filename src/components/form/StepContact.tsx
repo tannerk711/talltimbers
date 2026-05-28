@@ -305,7 +305,7 @@ export default function StepContact({
 
       {/* Privacy note */}
       <p className="text-white/30 text-xs text-center mt-3">
-        Your information is shared only with the licensed broker matched to your inquiry. We do not sell your data.
+        Your information is shared only with your licensed Tall Timbers specialist. We do not sell your data.
       </p>
     </div>
   );

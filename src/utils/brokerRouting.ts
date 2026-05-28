@@ -1,56 +1,9 @@
-// State-to-broker routing map
-// Note: HI, NY, NM, OH, MI, LA, ND, SD, AK, MS, MO, UT, MT excluded from form (2026-04-27).
-const STATE_TO_BROKER: Record<string, string> = {
-  AL: 'broker_a', AR: 'broker_a', CT: 'broker_a',
-  DE: 'broker_a', ID: 'broker_a', IN: 'broker_a',
-  IA: 'broker_a', KS: 'broker_a', KY: 'broker_a', ME: 'broker_a',
-  MN: 'broker_a',
-  NE: 'broker_a', NH: 'broker_a', OR: 'broker_a',
-  RI: 'broker_a', VT: 'broker_a', WI: 'broker_a',
-  WY: 'broker_a',
-  AZ: 'broker_b', CA: 'broker_b', CO: 'broker_b', NV: 'broker_b',
-  WA: 'broker_b',
-  FL: 'broker_c', GA: 'broker_c', NC: 'broker_c', SC: 'broker_c',
-  TN: 'broker_c', VA: 'broker_c',
-  TX: 'broker_d', OK: 'broker_d',
-  MD: 'broker_d',
-  NJ: 'broker_e', PA: 'broker_e', MA: 'broker_e',
-  IL: 'broker_e', DC: 'broker_e', WV: 'broker_e',
-};
-
-// States excluded from the form (broker network does not currently cover).
+// Tall Timbers is single-broker: Adam Cunningham handles every lead regardless of state.
+// There is no per-state routing. This file only holds display names, the covered-states
+// list, and form formatting helpers.
+//
+// States excluded from the form (network does not currently cover). Set 2026-04-27.
 const EXCLUDED_STATES = new Set(['HI', 'NY', 'NM', 'OH', 'MI', 'LA', 'ND', 'SD', 'AK', 'MS', 'MO', 'UT', 'MT']);
-
-// Broker config with webhook URLs from env vars
-interface BrokerConfig {
-  webhookUrl: string;
-  apiKey: string;
-  fallbackEmail: string;
-}
-
-const BROKER_ENV_MAP: Record<string, { webhook: string; apiKey: string; email: string }> = {
-  broker_a: { webhook: 'WEBHOOK_BROKER_A', apiKey: 'API_KEY_BROKER_A', email: 'EMAIL_BROKER_A' },
-  broker_b: { webhook: 'WEBHOOK_BROKER_B', apiKey: 'API_KEY_BROKER_B', email: 'EMAIL_BROKER_B' },
-  broker_c: { webhook: 'WEBHOOK_BROKER_C', apiKey: 'API_KEY_BROKER_C', email: 'EMAIL_BROKER_C' },
-  broker_d: { webhook: 'WEBHOOK_BROKER_D', apiKey: 'API_KEY_BROKER_D', email: 'EMAIL_BROKER_D' },
-  broker_e: { webhook: 'WEBHOOK_BROKER_E', apiKey: 'API_KEY_BROKER_E', email: 'EMAIL_BROKER_E' },
-};
-
-export function getBrokerForState(stateAbbr: string): string {
-  return STATE_TO_BROKER[stateAbbr.toUpperCase()] || 'broker_a';
-}
-
-export function getBrokerConfig(brokerKey: string): BrokerConfig {
-  const envMap = BROKER_ENV_MAP[brokerKey];
-  if (!envMap) {
-    return { webhookUrl: '', apiKey: '', fallbackEmail: '' };
-  }
-  return {
-    webhookUrl: (typeof import.meta !== 'undefined' && (import.meta as any).env?.[envMap.webhook]) || '',
-    apiKey: (typeof import.meta !== 'undefined' && (import.meta as any).env?.[envMap.apiKey]) || '',
-    fallbackEmail: (typeof import.meta !== 'undefined' && (import.meta as any).env?.[envMap.email]) || '',
-  };
-}
 
 // Full state names for display
 export const STATE_NAMES: Record<string, string> = {

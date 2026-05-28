@@ -5,9 +5,9 @@ import {
   $rehabBudget, $cashFlow, $creditScore, $usCitizen, $timeline,
   $firstName, $lastName, $phone, $email, $utmParams,
   $currentStep, $direction, $consent, $honeypot, $isSubmitting, $submitError,
-  $submittedData, $matchedBroker, captureUTMParams, clearFormData, processURLParams,
+  $submittedData, captureUTMParams, clearFormData, processURLParams,
 } from '../../stores/formStore';
-import { getBrokerForState, getBrokerConfig, formatPhoneE164, getDeviceType, STATE_NAMES, PROPERTY_TYPE_NAMES } from '../../utils/brokerRouting';
+import { formatPhoneE164, getDeviceType, STATE_NAMES, PROPERTY_TYPE_NAMES } from '../../utils/brokerRouting';
 import { getDealVerdict, getRecommendedProgram } from '../../utils/rateEstimation';
 
 // Human-readable labels for each multiple-choice field. Mirrors the option
@@ -183,8 +183,6 @@ export default function DSCRForm() {
   // Location, auto-advance with confirmation delay
   const handleLocationSelect = useCallback((value: string) => {
     $state.set(value);
-    const broker = getBrokerForState(value);
-    $matchedBroker.set(broker);
     setTimeout(() => {
       $direction.set('forward');
       $currentStep.set($currentStep.get() + 1);
@@ -267,7 +265,6 @@ export default function DSCRForm() {
     $isSubmitting.set(true);
     $submitError.set(null);
 
-    const brokerKey = $matchedBroker.get() || getBrokerForState($state.get());
     // Use cashFlow as the second arg for the verdict (negative = no-ratio path)
     const dealVerdict = getDealVerdict($creditScore.get(), $cashFlow.get());
     const programRec = getRecommendedProgram({
@@ -357,19 +354,17 @@ export default function DSCRForm() {
       deviceType: getDeviceType(),
       userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
 
-      // Routing (still useful for downstream automation)
-      matchedBroker: brokerKey,
-
       // Timestamp
       submittedAt: new Date().toISOString(),
     };
 
     // Send Adam's GHL webhook (Zapier) on every submit. Tall Timbers is single-broker;
-    // Adam gets every lead regardless of state routing. Sent as a CORS-safe "simple
-    // request" (text/plain body containing JSON) so the browser does not fire a
-    // preflight OPTIONS that Zapier's catch hook rejects, which was silently
-    // dropping submissions from the live site.
+    // Adam gets every lead regardless of state. Sent as a CORS-safe "simple request"
+    // (text/plain body containing JSON) so the browser does not fire a preflight OPTIONS
+    // that Zapier's catch hook rejects, which was silently dropping submissions from the
+    // live site.
     const ADAM_GHL_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/7361629/4ovjjmn/';
+    let success = false;
     try {
       await fetch(ADAM_GHL_WEBHOOK, {
         method: 'POST',
@@ -378,45 +373,15 @@ export default function DSCRForm() {
         signal: AbortSignal.timeout(5000),
         keepalive: true,
       });
+      success = true;
     } catch (err) {
       console.warn('[GHL webhook] failed:', err);
-    }
-
-    const config = getBrokerConfig(brokerKey);
-    let success = false;
-
-    if (config.webhookUrl) {
-      for (let attempt = 0; attempt < 2; attempt++) {
-        try {
-          const response = await fetch(config.webhookUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              ...(config.apiKey ? { 'x-api-key': config.apiKey } : {}),
-            },
-            body: JSON.stringify(payload),
-            signal: AbortSignal.timeout(10000),
-          });
-          if (response.ok) {
-            success = true;
-            break;
-          }
-        } catch {
-          if (attempt === 0) {
-            await new Promise((r) => setTimeout(r, 2000));
-          }
-        }
-      }
-    } else {
-      // No webhook configured. Treat as success for development.
-      success = true;
     }
 
     $isSubmitting.set(false);
 
     if (success) {
       trackEvent('generate_lead', {
-        broker: brokerKey,
         state: payload.state,
         property_type: payload.propertyType,
         loan_goal: payload.loanGoal,
@@ -424,13 +389,12 @@ export default function DSCRForm() {
         deal_tier: payload.dealTier,
       });
 
-      // Persist submission for the thank-you page to render the verdict + broker context.
+      // Persist submission for the thank-you page to render the verdict.
       const successPayload = { ...payload, dealVerdict, program: programRec };
       sessionStorage.setItem('tall_timbers_submission', JSON.stringify(successPayload));
       $submittedData.set(successPayload);
       clearFormData();
 
-      // Redirect to dedicated thank-you page (which can host a per-broker video).
       window.location.href = '/thank-you/';
     } else {
       trackEvent('form_error', { error_type: 'webhook_failed', step: currentStep });

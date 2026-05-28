@@ -34,7 +34,6 @@ export const $honeypot = atom('');
 export const $isSubmitting = atom(false);
 export const $submitError = atom<string | null>(null);
 export const $submittedData = atom<Record<string, unknown> | null>(null);
-export const $matchedBroker = atom<string | null>(null);
 
 // UTM capture
 export function captureUTMParams() {
