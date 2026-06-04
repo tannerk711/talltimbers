@@ -8,11 +8,11 @@ export default function ProgressBar({ currentStep, totalSteps }: ProgressBarProp
 
   return (
     <div className="mb-8">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-white/40 mb-2" style={{ fontFamily: 'var(--font-sans)' }}>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-navy/45 mb-2" style={{ fontFamily: 'var(--font-sans)' }}>
         Step {currentStep} of {totalSteps}
       </p>
       <div
-        className="h-1.5 bg-white/10 rounded-full overflow-hidden"
+        className="h-1.5 bg-navy/[0.08] rounded-full overflow-hidden"
         role="progressbar"
         aria-valuenow={percent}
         aria-valuemin={0}

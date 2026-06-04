@@ -28,23 +28,23 @@ export default function StepLocation({ value, onSelect }: StepLocationProps) {
 
   return (
     <div>
-      <h3 className="text-lg font-semibold text-white mb-1">Where is the property located?</h3>
-      <p className="text-sm text-white/50 mb-6">We structure DSCR loans for investors across the states we cover.</p>
+      <h3 className="text-lg font-semibold text-navy mb-1">Where is the property located?</h3>
+      <p className="text-sm text-navy/55 mb-6">We structure DSCR loans for investors across the states we cover.</p>
 
       <select
         value={value}
         onChange={handleChange}
         aria-label="Select state"
-        className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white text-sm focus:outline-none focus:border-blue focus:ring-1 focus:ring-blue/30 transition-colors duration-150 appearance-none cursor-pointer"
+        className="w-full bg-navy/[0.03] border border-navy/15 rounded px-4 py-3 text-navy text-sm focus:outline-none focus:border-blue focus:ring-1 focus:ring-blue/30 transition-colors duration-150 appearance-none cursor-pointer"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(7,38,15,0.5)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'right 12px center',
         }}
       >
-        <option value="" disabled className="bg-[#131C31] text-white/50">Select a state...</option>
+        <option value="" disabled className="bg-white text-navy/50">Select a state...</option>
         {STATES_LIST.map((state) => (
-          <option key={state.value} value={state.value} className="bg-[#131C31] text-white">
+          <option key={state.value} value={state.value} className="bg-white text-navy">
             {state.label}
           </option>
         ))}

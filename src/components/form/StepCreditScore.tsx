@@ -15,7 +15,7 @@ const CREDIT_OPTIONS = [
 export default function StepCreditScore({ value, onSelect }: StepCreditScoreProps) {
   return (
     <div>
-      <h3 className="text-lg font-semibold text-white mb-6">What is your credit score range?</h3>
+      <h3 className="text-lg font-semibold text-navy mb-6">What is your credit score range?</h3>
       <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Credit score range">
         {CREDIT_OPTIONS.map((opt) => (
           <SelectionCard

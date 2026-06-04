@@ -26,8 +26,8 @@ export default function StepPropertyValue({
 
   return (
     <div>
-      <h3 className="text-lg font-semibold text-white mb-1">{headline}</h3>
-      <p className="text-sm text-white/50 mb-6">{subhead}</p>
+      <h3 className="text-lg font-semibold text-navy mb-1">{headline}</h3>
+      <p className="text-sm text-navy/55 mb-6">{subhead}</p>
 
       <CurrencySlider
         value={numeric}

@@ -174,8 +174,8 @@ body {
     to right,
     var(--color-blue) 0%,
     var(--color-blue) var(--range-progress, 0%),
-    rgba(255, 255, 255, 0.1) var(--range-progress, 0%),
-    rgba(255, 255, 255, 0.1) 100%
+    rgba(7, 38, 15, 0.12) var(--range-progress, 0%),
+    rgba(7, 38, 15, 0.12) 100%
   );
   outline: none;
   cursor: pointer;

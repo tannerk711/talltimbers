@@ -21,10 +21,10 @@ export default function SelectionCard({ value, label, selected, onSelect, icon, 
         onClick={() => onSelect(value)}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(value); } }}
         className={`
-          px-4 py-2.5 text-sm rounded border cursor-pointer transition-all duration-150 text-center
+          px-4 py-2.5 text-sm rounded border cursor-pointer transition-all duration-150 text-center font-semibold
           ${selected
-            ? 'bg-blue/10 border-blue text-white'
-            : 'bg-white/5 border-white/10 text-white/80 hover:bg-white/10 hover:border-white/20'
+            ? 'bg-blue/10 border-blue text-navy'
+            : 'bg-navy/[0.03] border-navy/15 text-navy hover:bg-blue/10 hover:border-blue'
           }
         `}
       >
@@ -45,21 +45,21 @@ export default function SelectionCard({ value, label, selected, onSelect, icon, 
           group flex items-center gap-4 w-full px-5 py-4 rounded-lg border cursor-pointer transition-all duration-200
           ${selected
             ? 'bg-blue/10 border-blue ring-1 ring-blue/30'
-            : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.06] hover:border-white/[0.15]'
+            : 'bg-navy/[0.03] border-navy/[0.12] hover:bg-blue/10 hover:border-blue hover:ring-1 hover:ring-blue/30'
           }
         `}
       >
         {icon && (
-          <div className={`w-10 h-10 flex-shrink-0 transition-colors duration-200 ${selected ? 'text-blue' : 'text-white/50 group-hover:text-white/70'}`}>
+          <div className="w-10 h-10 flex-shrink-0 text-blue">
             {icon}
           </div>
         )}
         <div className="text-left">
-          <span className={`text-[15px] font-semibold block transition-colors duration-200 ${selected ? 'text-white' : 'text-white/80'}`}>
+          <span className="text-[15px] font-semibold block text-navy">
             {label}
           </span>
           {subtitle && (
-            <span className={`text-xs mt-0.5 block transition-colors duration-200 ${selected ? 'text-white/50' : 'text-white/30'}`}>
+            <span className="text-xs mt-0.5 block text-navy/65">
               {subtitle}
             </span>
           )}
@@ -68,13 +68,11 @@ export default function SelectionCard({ value, label, selected, onSelect, icon, 
         <div className={`ml-auto w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 ${
           selected
             ? 'border-blue bg-blue'
-            : 'border-white/20 group-hover:border-white/30'
+            : 'border-navy/25 group-hover:border-blue group-hover:bg-blue'
         }`}>
-          {selected && (
-            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          )}
+          <svg className={`w-3 h-3 text-white transition-opacity duration-200 ${selected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
         </div>
       </button>
     );
@@ -88,20 +86,20 @@ export default function SelectionCard({ value, label, selected, onSelect, icon, 
       onClick={() => onSelect(value)}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(value); } }}
       className={`
-        flex flex-col items-center gap-3 p-6 rounded-md border cursor-pointer transition-all duration-200
+        group flex flex-col items-center gap-3 p-6 rounded-md border cursor-pointer transition-all duration-200
         ${selected
           ? 'bg-blue/10 border-2 border-blue ring-1 ring-blue/30'
-          : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
+          : 'bg-navy/[0.03] border border-navy/15 hover:bg-blue/10 hover:border-blue hover:ring-1 hover:ring-blue/30'
         }
       `}
     >
       {icon && (
-        <div className={`w-12 h-12 ${selected ? 'text-blue' : 'text-white/70'}`}>
+        <div className="w-12 h-12 text-blue">
           {icon}
         </div>
       )}
       <span
-        className={`text-[13px] font-semibold uppercase tracking-wider ${selected ? 'text-white' : 'text-white/80'}`}
+        className="text-[13px] font-semibold uppercase tracking-wider text-navy"
         style={{ fontFamily: 'var(--font-sans)' }}
       >
         {label}

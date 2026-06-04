@@ -16,8 +16,8 @@ export default function StepRehabBudget({ value, onChange, onContinue }: StepReh
 
   return (
     <div>
-      <h3 className="text-lg font-semibold text-white mb-1">What is your rehab budget?</h3>
-      <p className="text-sm text-white/50 mb-6">A rough estimate is fine. Your specialist will refine it on the scope of work.</p>
+      <h3 className="text-lg font-semibold text-navy mb-1">What is your rehab budget?</h3>
+      <p className="text-sm text-navy/55 mb-6">A rough estimate is fine. Your specialist will refine it on the scope of work.</p>
 
       <CurrencySlider
         value={numeric}
