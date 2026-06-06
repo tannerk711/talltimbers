@@ -6,9 +6,9 @@ interface StepCitizenshipProps {
 }
 
 const OPTIONS = [
-  { value: 'yes', label: 'Yes', subtitle: 'US Citizen' },
-  { value: 'permanent_resident', label: 'Permanent Resident', subtitle: 'Green card holder' },
-  { value: 'foreign_national', label: 'Non-Permanent / Foreign National', subtitle: 'Includes foreign nationals and non-permanent residents' },
+  { value: 'yes', label: 'Yes' },
+  { value: 'permanent_resident', label: 'Permanent Resident' },
+  { value: 'foreign_national', label: 'Non-Permanent / Foreign National' },
 ];
 
 export default function StepCitizenship({ value, onSelect }: StepCitizenshipProps) {
@@ -21,7 +21,6 @@ export default function StepCitizenship({ value, onSelect }: StepCitizenshipProp
             key={opt.value}
             value={opt.value}
             label={opt.label}
-            subtitle={opt.subtitle}
             selected={value === opt.value}
             onSelect={onSelect}
             horizontal

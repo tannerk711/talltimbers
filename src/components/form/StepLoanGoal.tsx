@@ -43,9 +43,9 @@ function FlipIcon() {
 }
 
 const GOAL_OPTIONS = [
-  { value: 'purchase', label: 'Purchase a Property', subtitle: 'Buy a new investment property', icon: <PurchaseIcon /> },
-  { value: 'refinance', label: 'Refinance', subtitle: 'Pull cash out or restructure an existing loan', icon: <RefinanceIcon /> },
-  { value: 'flip', label: 'Fix & Flip', subtitle: 'Buy, renovate, and sell for profit', icon: <FlipIcon /> },
+  { value: 'purchase', label: 'Purchase a Property', icon: <PurchaseIcon /> },
+  { value: 'refinance', label: 'Refinance', icon: <RefinanceIcon /> },
+  { value: 'flip', label: 'Fix & Flip', icon: <FlipIcon /> },
 ];
 
 export default function StepLoanGoal({ value, onSelect }: StepLoanGoalProps) {
@@ -58,7 +58,6 @@ export default function StepLoanGoal({ value, onSelect }: StepLoanGoalProps) {
             key={opt.value}
             value={opt.value}
             label={opt.label}
-            subtitle={opt.subtitle}
             selected={value === opt.value}
             onSelect={onSelect}
             icon={opt.icon}

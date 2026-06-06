@@ -110,7 +110,7 @@ export default function StepContact({
 
   return (
     <div>
-      <h3 className="text-lg font-semibold text-navy mb-6">Last step before we match you with the DSCR specialist.</h3>
+      <h3 className="text-lg font-semibold text-navy mb-6">What's the best info to send your eligibility to?</h3>
 
       {/* Name row */}
       <div className="grid grid-cols-2 gap-3 mb-4">
@@ -228,15 +228,12 @@ export default function StepContact({
               after:content-[''] after:absolute after:left-1.5 after:top-0.5 after:w-1.5 after:h-3 after:border-white after:border-r-2 after:border-b-2 after:rotate-45 after:opacity-0 checked:after:opacity-100"
           />
           <span className="text-navy/65 text-xs leading-relaxed">
-            I agree to be contacted by a licensed DSCR loan specialist about my deal. Soft credit pull only.
+            By clicking "Check My Eligibility," I consent to receive calls, texts, and emails from Tall Timbers. Standard message and data fees may apply. Reply STOP to opt out.
           </span>
         </label>
         {errors.consent && touched.consent && (
           <p className="text-red-400 text-xs mt-1 ml-8 animate-[fadeIn_150ms_ease-out]">{errors.consent}</p>
         )}
-        <p className="text-navy/45 text-xs leading-relaxed mt-2 ml-8">
-          By clicking "Check My Eligibility," I consent to receive calls, texts, and emails from a licensed loan specialist. Standard message and data fees may apply. Reply STOP to opt out.
-        </p>
       </div>
 
       {/* Honeypot */}

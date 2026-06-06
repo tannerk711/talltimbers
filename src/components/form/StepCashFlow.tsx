@@ -6,9 +6,9 @@ interface StepCashFlowProps {
 }
 
 const OPTIONS = [
-  { value: 'positive', label: 'Positive Cash Flow', subtitle: 'Rent comfortably exceeds the mortgage payment' },
-  { value: 'break_even', label: 'Break-Even', subtitle: 'Rent roughly matches the mortgage payment' },
-  { value: 'negative', label: 'Negative Cash Flow', subtitle: 'Mortgage payment exceeds the rent' },
+  { value: 'positive', label: 'Positive Cash Flow' },
+  { value: 'break_even', label: 'Break-Even' },
+  { value: 'negative', label: 'Negative Cash Flow' },
 ];
 
 export default function StepCashFlow({ value, onSelect }: StepCashFlowProps) {
@@ -21,7 +21,6 @@ export default function StepCashFlow({ value, onSelect }: StepCashFlowProps) {
             key={opt.value}
             value={opt.value}
             label={opt.label}
-            subtitle={opt.subtitle}
             selected={value === opt.value}
             onSelect={onSelect}
             horizontal

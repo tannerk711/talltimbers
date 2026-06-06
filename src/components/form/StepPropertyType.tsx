@@ -73,11 +73,11 @@ function MultiFamilyLargeIcon() {
 }
 
 const PROPERTY_TYPES = [
-  { value: 'single_family', label: 'Single Family Rental', subtitle: '1 unit, detached or attached', icon: <HouseIcon /> },
-  { value: 'warrantable_condo', label: 'Warrantable Condo', subtitle: 'Fannie/Freddie warrantable HOA', icon: <CondoIcon /> },
-  { value: 'non_warrantable_condo', label: 'Non-Warrantable Condo', subtitle: 'Outside agency guidelines', icon: <NonWarrantableIcon /> },
-  { value: 'multi_family_small', label: 'Multi-Family (2-4 Units)', subtitle: 'Duplex, triplex, or fourplex', icon: <MultiFamilySmallIcon /> },
-  { value: 'multi_family_large', label: 'Multi-Family (5+ Units)', subtitle: 'Apartment buildings', icon: <MultiFamilyLargeIcon /> },
+  { value: 'single_family', label: 'Single Family Rental', icon: <HouseIcon /> },
+  { value: 'warrantable_condo', label: 'Warrantable Condo', icon: <CondoIcon /> },
+  { value: 'non_warrantable_condo', label: 'Non-Warrantable Condo', icon: <NonWarrantableIcon /> },
+  { value: 'multi_family_small', label: 'Multi-Family (2-4 Units)', icon: <MultiFamilySmallIcon /> },
+  { value: 'multi_family_large', label: 'Multi-Family (5+ Units)', icon: <MultiFamilyLargeIcon /> },
 ];
 
 export default function StepPropertyType({ value, onSelect }: StepPropertyTypeProps) {
@@ -90,7 +90,6 @@ export default function StepPropertyType({ value, onSelect }: StepPropertyTypePr
             key={type.value}
             value={type.value}
             label={type.label}
-            subtitle={type.subtitle}
             selected={value === type.value}
             onSelect={onSelect}
             icon={type.icon}

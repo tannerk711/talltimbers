@@ -8,10 +8,9 @@ interface SelectionCardProps {
   icon?: ReactNode;
   compact?: boolean;
   horizontal?: boolean;
-  subtitle?: string;
 }
 
-export default function SelectionCard({ value, label, selected, onSelect, icon, compact, horizontal, subtitle }: SelectionCardProps) {
+export default function SelectionCard({ value, label, selected, onSelect, icon, compact, horizontal }: SelectionCardProps) {
   if (compact) {
     return (
       <button
@@ -58,11 +57,6 @@ export default function SelectionCard({ value, label, selected, onSelect, icon, 
           <span className="text-[15px] font-semibold block text-navy">
             {label}
           </span>
-          {subtitle && (
-            <span className="text-xs mt-0.5 block text-navy/65">
-              {subtitle}
-            </span>
-          )}
         </div>
         {/* Selection indicator */}
         <div className={`ml-auto w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-200 ${
