@@ -65,6 +65,7 @@ import StepCashFlow from './StepCashFlow';
 import StepCreditScore from './StepCreditScore';
 import StepCitizenship from './StepCitizenship';
 import StepTimeline from './StepTimeline';
+import StepVerdict from './StepVerdict';
 import StepContact from './StepContact';
 
 function trackEvent(eventName: string, params: Record<string, unknown> = {}) {
@@ -88,23 +89,24 @@ type StepKey =
   | 'credit'
   | 'citizenship'
   | 'timeline'
+  | 'verdict'
   | 'contact';
 
 const PATHS: Record<string, StepKey[]> = {
-  // Purchase: type → state → value → down → cash flow → credit → citizenship → timeline → contact
+  // Purchase: type → state → value → down → cash flow → credit → citizenship → timeline → verdict → contact
   purchase: [
     'loan_goal', 'property_type', 'state', 'property_value', 'down_payment',
-    'cash_flow', 'credit', 'citizenship', 'timeline', 'contact',
+    'cash_flow', 'credit', 'citizenship', 'timeline', 'verdict', 'contact',
   ],
-  // Refinance / Cash-Out: type → state → value → balance → cash flow → credit → timeline → contact
+  // Refinance / Cash-Out: type → state → value → balance → cash flow → credit → timeline → verdict → contact
   refinance: [
     'loan_goal', 'property_type', 'state', 'property_value', 'loan_balance',
-    'cash_flow', 'credit', 'timeline', 'contact',
+    'cash_flow', 'credit', 'timeline', 'verdict', 'contact',
   ],
-  // Fix & Flip: type → state → purchase price → rehab → credit → citizenship → timeline → contact
+  // Fix & Flip: type → state → purchase price → rehab → credit → citizenship → timeline → verdict → contact
   flip: [
     'loan_goal', 'property_type', 'state', 'property_value', 'rehab_budget',
-    'credit', 'citizenship', 'timeline', 'contact',
+    'credit', 'citizenship', 'timeline', 'verdict', 'contact',
   ],
 };
 
@@ -138,6 +140,18 @@ export default function DSCRForm() {
   const steps = useMemo(() => getPathSteps(loanGoal || 'purchase'), [loanGoal]);
   const totalSteps = steps.length;
   const stepKey = steps[Math.min(currentStep - 1, totalSteps - 1)];
+
+  // Verdict + program are pure functions of answers already collected before the
+  // verdict step. Compute them live so the earned result can be surfaced one step
+  // before contact (same values are recomputed at submit for the payload).
+  const dealVerdict = useMemo(
+    () => getDealVerdict(creditScore, cashFlow),
+    [creditScore, cashFlow],
+  );
+  const programRec = useMemo(
+    () => getRecommendedProgram({ loanGoal, cashFlow, usCitizen, propertyType }),
+    [loanGoal, cashFlow, usCitizen, propertyType],
+  );
 
   // Initialize on mount. Always start at step 1 unless we're on /qualify and the user has resumable state.
   useEffect(() => {
@@ -483,6 +497,14 @@ export default function DSCRForm() {
         )}
         {stepKey === 'timeline' && (
           <StepTimeline value={timeline} onSelect={handleTimelineSelect} />
+        )}
+        {stepKey === 'verdict' && (
+          <StepVerdict
+            verdict={dealVerdict}
+            program={programRec}
+            firstName={firstName}
+            onContinue={goForward}
+          />
         )}
         {stepKey === 'contact' && (
           <StepContact

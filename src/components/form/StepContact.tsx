@@ -110,7 +110,8 @@ export default function StepContact({
 
   return (
     <div>
-      <h3 className="text-lg font-semibold text-navy mb-6">What's the best info to send your eligibility to?</h3>
+      <h3 className="text-lg font-semibold text-navy mb-1">Where should we send your eligibility?</h3>
+      <p className="text-sm text-navy/55 mb-6">Last step. We review every file same business day.</p>
 
       {/* Name row */}
       <div className="grid grid-cols-2 gap-3 mb-4">
@@ -206,11 +207,18 @@ export default function StepContact({
         {errors.phone && touched.phone && (
           <p id="phone-error" className="text-red-400 text-xs mt-1 animate-[fadeIn_150ms_ease-out]">{errors.phone}</p>
         )}
+        {/* Reassurance lives where the objection fires: at the phone field. */}
+        <p className="flex items-start gap-1.5 text-navy/55 text-xs mt-2 leading-relaxed">
+          <svg className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          <span>Shared only with your licensed Tall Timbers specialist. We never sell your data.</span>
+        </p>
       </div>
 
-      {/* Consent */}
+      {/* Consent. Kept compliant but visually quiet so it does not read as a wall before submit. */}
       <div className="mb-4">
-        <label className="flex items-start gap-3 cursor-pointer">
+        <label className="flex items-start gap-2.5 cursor-pointer">
           <input
             type="checkbox"
             checked={consent}
@@ -224,15 +232,15 @@ export default function StepContact({
                 });
               }
             }}
-            className="mt-0.5 w-5 h-5 rounded border border-navy/25 bg-navy/[0.03] checked:bg-blue checked:border-blue appearance-none cursor-pointer flex-shrink-0 relative
-              after:content-[''] after:absolute after:left-1.5 after:top-0.5 after:w-1.5 after:h-3 after:border-white after:border-r-2 after:border-b-2 after:rotate-45 after:opacity-0 checked:after:opacity-100"
+            className="mt-0.5 w-4 h-4 rounded border border-navy/20 bg-navy/[0.03] checked:bg-blue checked:border-blue appearance-none cursor-pointer flex-shrink-0 relative
+              after:content-[''] after:absolute after:left-[5px] after:top-[1px] after:w-1 after:h-2.5 after:border-white after:border-r-2 after:border-b-2 after:rotate-45 after:opacity-0 checked:after:opacity-100"
           />
-          <span className="text-navy/65 text-xs leading-relaxed">
+          <span className="text-navy/45 text-[11px] leading-relaxed">
             By clicking "Check My Eligibility," I consent to receive calls, texts, and emails from Tall Timbers. Standard message and data fees may apply. Reply STOP to opt out.
           </span>
         </label>
         {errors.consent && touched.consent && (
-          <p className="text-red-400 text-xs mt-1 ml-8 animate-[fadeIn_150ms_ease-out]">{errors.consent}</p>
+          <p className="text-red-400 text-xs mt-1 ml-[26px] animate-[fadeIn_150ms_ease-out]">{errors.consent}</p>
         )}
       </div>
 
@@ -299,11 +307,6 @@ export default function StepContact({
           'Check My Eligibility'
         )}
       </button>
-
-      {/* Privacy note */}
-      <p className="text-navy/45 text-xs text-center mt-3">
-        Your information is shared only with your licensed Tall Timbers specialist. We do not sell your data.
-      </p>
     </div>
   );
 }
