@@ -1,4 +1,4 @@
-import CurrencySlider from './CurrencySlider';
+﻿import CurrencySlider from './CurrencySlider';
 
 interface StepLoanBalanceProps {
   value: string;
@@ -17,8 +17,8 @@ export default function StepLoanBalance({ value, propertyValue, onChange, onCont
 
   return (
     <div>
-      <h3 className="text-lg font-semibold text-navy mb-1">How much do you still owe?</h3>
-      <p className="text-sm text-navy/55 mb-6">Approximate is fine. Your specialist will pull the exact payoff.</p>
+      <h3 className="text-2xl font-bold text-navy text-center mb-1">How much do you still owe?</h3>
+      <p className="text-sm text-navy/55 text-center mb-6">Approximate is fine. Your specialist will pull the exact payoff.</p>
 
       <CurrencySlider
         value={numeric}

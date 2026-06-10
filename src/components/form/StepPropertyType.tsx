@@ -1,4 +1,4 @@
-import SelectionCard from './SelectionCard';
+﻿import SelectionCard from './SelectionCard';
 
 interface StepPropertyTypeProps {
   value: string;
@@ -83,7 +83,7 @@ const PROPERTY_TYPES = [
 export default function StepPropertyType({ value, onSelect }: StepPropertyTypeProps) {
   return (
     <div>
-      <h3 className="text-lg font-semibold text-navy mb-6">What type of property are you financing?</h3>
+      <h3 className="text-2xl font-bold text-navy text-center mb-6">What type of property are you financing?</h3>
       <div className="flex flex-col gap-3" role="radiogroup" aria-label="Property type">
         {PROPERTY_TYPES.map((type) => (
           <SelectionCard

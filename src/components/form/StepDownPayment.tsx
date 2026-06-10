@@ -1,4 +1,4 @@
-import SelectionCard from './SelectionCard';
+﻿import SelectionCard from './SelectionCard';
 
 interface StepDownPaymentProps {
   value: string;
@@ -15,7 +15,7 @@ const DOWN_OPTIONS = [
 export default function StepDownPayment({ value, onSelect }: StepDownPaymentProps) {
   return (
     <div>
-      <h3 className="text-lg font-semibold text-navy mb-6">How much are you putting down?</h3>
+      <h3 className="text-2xl font-bold text-navy text-center mb-6">How much are you putting down?</h3>
       <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Down payment">
         {DOWN_OPTIONS.map((opt) => (
           <SelectionCard

@@ -4,14 +4,10 @@ import DSCRForm from '../form/DSCRForm';
 
 interface Props {
   h1?: string;
-  formHeadline?: string;
-  formSubhead?: string;
 }
 
 const {
   h1 = 'Georgia DSCR Loans. Qualify on Rents, Not Tax Returns.',
-  formHeadline = "Check your eligibility",
-  formSubhead = 'Takes 60 seconds.',
 } = Astro.props;
 ---
 
@@ -47,8 +43,6 @@ const {
     <!-- Form widget under the headline -->
     <div class="mt-10 md:mt-12">
       <div class="rounded-xl bg-white border border-black/10 p-5 sm:p-6 md:p-7 shadow-2xl ring-1 ring-black/5">
-        <h2 class="text-xl sm:text-2xl font-bold text-navy mb-1 text-center">{formHeadline}</h2>
-        <p class="text-xs sm:text-sm text-navy/65 mb-5 text-center">{formSubhead}</p>
         <DSCRForm client:load />
       </div>
 

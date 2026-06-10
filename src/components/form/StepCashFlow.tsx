@@ -1,4 +1,4 @@
-import SelectionCard from './SelectionCard';
+﻿import SelectionCard from './SelectionCard';
 
 interface StepCashFlowProps {
   value: string;
@@ -14,7 +14,7 @@ const OPTIONS = [
 export default function StepCashFlow({ value, onSelect }: StepCashFlowProps) {
   return (
     <div>
-      <h3 className="text-lg font-semibold text-navy mb-6">What's the expected cash flow on this property?</h3>
+      <h3 className="text-2xl font-bold text-navy text-center mb-6">What's the expected cash flow on this property?</h3>
       <div className="flex flex-col gap-3" role="radiogroup" aria-label="Expected cash flow">
         {OPTIONS.map((opt) => (
           <SelectionCard

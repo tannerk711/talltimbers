@@ -1,4 +1,4 @@
-import SelectionCard from './SelectionCard';
+﻿import SelectionCard from './SelectionCard';
 
 interface StepCitizenshipProps {
   value: string;
@@ -14,7 +14,7 @@ const OPTIONS = [
 export default function StepCitizenship({ value, onSelect }: StepCitizenshipProps) {
   return (
     <div>
-      <h3 className="text-lg font-semibold text-navy mb-6">Are you a US citizen?</h3>
+      <h3 className="text-2xl font-bold text-navy text-center mb-6">Are you a US citizen?</h3>
       <div className="flex flex-col gap-3" role="radiogroup" aria-label="Citizenship status">
         {OPTIONS.map((opt) => (
           <SelectionCard

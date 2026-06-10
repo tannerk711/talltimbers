@@ -65,8 +65,9 @@ import StepCashFlow from './StepCashFlow';
 import StepCreditScore from './StepCreditScore';
 import StepCitizenship from './StepCitizenship';
 import StepTimeline from './StepTimeline';
-import StepVerdict from './StepVerdict';
-import StepContact from './StepContact';
+import StepName from './StepName';
+import StepEmail from './StepEmail';
+import StepPhone from './StepPhone';
 
 function trackEvent(eventName: string, params: Record<string, unknown> = {}) {
   if (typeof window !== 'undefined' && (window as any).gtag) {
@@ -89,24 +90,32 @@ type StepKey =
   | 'credit'
   | 'citizenship'
   | 'timeline'
-  | 'verdict'
-  | 'contact';
+  | 'name'
+  | 'email'
+  | 'phone';
 
+// State moved to the END of every path (right before contact) so the user types
+// it first, then stair-steps through name -> email -> phone, each its own step.
+// The pre-submission verdict reveal was removed: eligibility is shown only on the
+// thank-you page. Contact is split into three single-ask steps to lower friction.
 const PATHS: Record<string, StepKey[]> = {
-  // Purchase: type → state → value → down → cash flow → credit → citizenship → timeline → verdict → contact
+  // Purchase: type → value → down → cash flow → credit → citizenship → timeline → state → name → email → phone
   purchase: [
-    'loan_goal', 'property_type', 'state', 'property_value', 'down_payment',
-    'cash_flow', 'credit', 'citizenship', 'timeline', 'verdict', 'contact',
+    'loan_goal', 'property_type', 'property_value', 'down_payment',
+    'cash_flow', 'credit', 'citizenship', 'timeline',
+    'state', 'name', 'email', 'phone',
   ],
-  // Refinance / Cash-Out: type → state → value → balance → cash flow → credit → timeline → verdict → contact
+  // Refinance / Cash-Out: type → value → balance → cash flow → credit → timeline → state → name → email → phone
   refinance: [
-    'loan_goal', 'property_type', 'state', 'property_value', 'loan_balance',
-    'cash_flow', 'credit', 'timeline', 'verdict', 'contact',
+    'loan_goal', 'property_type', 'property_value', 'loan_balance',
+    'cash_flow', 'credit', 'timeline',
+    'state', 'name', 'email', 'phone',
   ],
-  // Fix & Flip: type → state → purchase price → rehab → credit → citizenship → timeline → verdict → contact
+  // Fix & Flip: type → purchase price → rehab → credit → citizenship → timeline → state → name → email → phone
   flip: [
-    'loan_goal', 'property_type', 'state', 'property_value', 'rehab_budget',
-    'credit', 'citizenship', 'timeline', 'verdict', 'contact',
+    'loan_goal', 'property_type', 'property_value', 'rehab_budget',
+    'credit', 'citizenship', 'timeline',
+    'state', 'name', 'email', 'phone',
   ],
 };
 
@@ -132,7 +141,6 @@ export default function DSCRForm() {
   const lastName = useStore($lastName);
   const phone = useStore($phone);
   const email = useStore($email);
-  const consent = useStore($consent);
   const honeypot = useStore($honeypot);
   const isSubmitting = useStore($isSubmitting);
   const submitError = useStore($submitError);
@@ -140,18 +148,6 @@ export default function DSCRForm() {
   const steps = useMemo(() => getPathSteps(loanGoal || 'purchase'), [loanGoal]);
   const totalSteps = steps.length;
   const stepKey = steps[Math.min(currentStep - 1, totalSteps - 1)];
-
-  // Verdict + program are pure functions of answers already collected before the
-  // verdict step. Compute them live so the earned result can be surfaced one step
-  // before contact (same values are recomputed at submit for the payload).
-  const dealVerdict = useMemo(
-    () => getDealVerdict(creditScore, cashFlow),
-    [creditScore, cashFlow],
-  );
-  const programRec = useMemo(
-    () => getRecommendedProgram({ loanGoal, cashFlow, usCitizen, propertyType }),
-    [loanGoal, cashFlow, usCitizen, propertyType],
-  );
 
   // Initialize on mount. Always start at step 1 unless we're on /qualify and the user has resumable state.
   useEffect(() => {
@@ -194,13 +190,12 @@ export default function DSCRForm() {
     }, 300);
   }, []);
 
-  // Location, auto-advance with confirmation delay
+  // Location is now a free type-in with its own Next button. The user has already
+  // committed by clicking Next, so advance immediately (no confirmation delay).
   const handleLocationSelect = useCallback((value: string) => {
     $state.set(value);
-    setTimeout(() => {
-      $direction.set('forward');
-      $currentStep.set($currentStep.get() + 1);
-    }, 500);
+    $direction.set('forward');
+    $currentStep.set($currentStep.get() + 1);
   }, []);
 
   // Down payment, auto-advance after a beat (so user sees the qualifier message)
@@ -251,6 +246,10 @@ export default function DSCRForm() {
   // Submit
   const handleSubmit = useCallback(async () => {
     trackEvent('form_submit_click', { step: currentStep });
+
+    // Consent is implicit: submitting the phone number IS the agreement (the
+    // TCPA language sits directly under the Submit button on the phone step).
+    $consent.set(true);
 
     // Honeypot check. Silently route to thank-you with fake data.
     if ($honeypot.get()) {
@@ -422,8 +421,6 @@ export default function DSCRForm() {
 
   return (
     <div className="min-h-[400px]">
-      <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-
       {currentStep > 1 && (
         <button
           type="button"
@@ -498,34 +495,39 @@ export default function DSCRForm() {
         {stepKey === 'timeline' && (
           <StepTimeline value={timeline} onSelect={handleTimelineSelect} />
         )}
-        {stepKey === 'verdict' && (
-          <StepVerdict
-            verdict={dealVerdict}
-            program={programRec}
+        {stepKey === 'name' && (
+          <StepName
             firstName={firstName}
+            lastName={lastName}
+            onFirstNameChange={(v) => $firstName.set(v)}
+            onLastNameChange={(v) => $lastName.set(v)}
             onContinue={goForward}
           />
         )}
-        {stepKey === 'contact' && (
-          <StepContact
-            firstName={firstName}
-            lastName={lastName}
+        {stepKey === 'email' && (
+          <StepEmail
             email={email}
+            onEmailChange={(v) => $email.set(v)}
+            onContinue={goForward}
+          />
+        )}
+        {stepKey === 'phone' && (
+          <StepPhone
             phone={phone}
-            consent={consent}
             honeypot={honeypot}
             isSubmitting={isSubmitting}
             submitError={submitError}
-            onFirstNameChange={(v) => $firstName.set(v)}
-            onLastNameChange={(v) => $lastName.set(v)}
-            onEmailChange={(v) => $email.set(v)}
             onPhoneChange={(v) => $phone.set(v)}
-            onConsentChange={(v) => $consent.set(v)}
             onHoneypotChange={(v) => $honeypot.set(v)}
             onSubmit={handleSubmit}
             onRetry={handleRetry}
           />
         )}
+      </div>
+
+      {/* Progress bar lives at the bottom, below the answer area. */}
+      <div className="mt-8">
+        <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
       </div>
     </div>
   );

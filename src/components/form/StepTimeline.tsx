@@ -1,4 +1,4 @@
-import SelectionCard from './SelectionCard';
+﻿import SelectionCard from './SelectionCard';
 
 interface StepTimelineProps {
   value: string;
@@ -15,7 +15,7 @@ const OPTIONS = [
 export default function StepTimeline({ value, onSelect }: StepTimelineProps) {
   return (
     <div>
-      <h3 className="text-lg font-semibold text-navy mb-6">When are you looking to close?</h3>
+      <h3 className="text-2xl font-bold text-navy text-center mb-6">When are you looking to close?</h3>
       <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Timeline">
         {OPTIONS.map((opt) => (
           <SelectionCard
