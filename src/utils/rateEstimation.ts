@@ -11,8 +11,8 @@ export interface DealVerdict {
 
 const CREDIT_LABELS_INTERNAL: Record<string, string> = {
   '740_plus': '740+ FICO',
-  '700_739': '700–739 FICO',
-  '640_699': '640–699 FICO',
+  '700_739': '700-739 FICO',
+  '640_699': '640-699 FICO',
   'below_640': 'Below 640 FICO',
 };
 
