@@ -287,7 +287,7 @@ export default function ThankYou() {
           element on the page. ===== */}
       <div
         data-reveal
-        className="mt-8 lg:w-[calc(100%+32rem)] lg:-ml-64 rounded-2xl border border-navy/10 bg-white overflow-hidden shadow-[0_1px_3px_rgba(7,38,15,0.06),0_10px_30px_-15px_rgba(7,38,15,0.15)]"
+        className="mt-8 lg:w-[calc(100%+32rem)] lg:-ml-64 rounded-2xl border border-navy/10 bg-white shadow-[0_1px_3px_rgba(7,38,15,0.06),0_10px_30px_-15px_rgba(7,38,15,0.15)]"
       >
         {/* First-party chrome header. This IS the transitional label above the calendar. */}
         <div className="flex items-start gap-3 px-6 py-4 border-b border-navy/10 bg-blue/[0.04]">
@@ -305,30 +305,39 @@ export default function ThankYou() {
           </div>
         </div>
 
-        {/* Iframe well. GHL's form_embed.js owns the iframe's height (see resize listener
-            above); we only mirror that height onto this wrapper's min-height so the card
-            grows with the content and the taller post-time-select contact form is never
-            clipped. Placeholder fades out on iframe load. Falls back to 900px until GHL
-            reports a height. The iframe height is set once via ref (uncontrolled) so React
-            never re-asserts a fixed height and fights GHL's resize. */}
-        <div
-          className="relative px-2 md:px-4 pb-3 pt-1"
-          style={{ minHeight: bookingHeight ? `${bookingHeight + 20}px` : '900px' }}
-        >
+        {/* Iframe well. Two things keep the booking flow reachable on every device:
+            (1) the iframe is allowed to scroll (scrolling="yes" + overflow auto), so even
+            when GHL under-sizes the iframe on mobile the calendar times and the taller
+            post-time-select contact form (and its submit button) are always reachable by
+            scrolling inside the widget; (2) the height follows what GHL reports via the
+            resize listener above, but is capped to the viewport so on a small screen it
+            becomes a scrollable area instead of a clipped one. Placeholder fades out on
+            load. On desktop the reported height easily fits, so the page scrolls, not the
+            iframe. */}
+        <div className="relative px-2 md:px-4 pb-3 pt-1">
           <div
             className={`absolute inset-0 flex items-center justify-center text-navy/40 text-sm pointer-events-none transition-opacity duration-300 ${bookingLoaded ? 'opacity-0' : 'opacity-100'}`}
           >
             Loading available times...
           </div>
           <iframe
-            ref={(el) => { if (el && !el.style.height) el.style.height = '900px'; }}
             src={BOOKING_WIDGET_SRC}
             id={`${BOOKING_WIDGET_ID}_1783124236181`}
             title="Schedule a call with Adam"
-            scrolling="no"
+            scrolling="yes"
             onLoad={() => setBookingLoaded(true)}
-            className="relative z-10 bg-white"
-            style={{ width: '100%', border: 'none', overflow: 'hidden', display: 'block' }}
+            className="relative z-10 bg-white rounded-b-xl"
+            style={{
+              width: '100%',
+              border: 'none',
+              display: 'block',
+              overflow: 'auto',
+              // Follow GHL's reported height, but never exceed the viewport so a small
+              // screen scrolls inside the widget instead of clipping it. Floor keeps the
+              // calendar comfortable before the first height message arrives.
+              height: `min(${bookingHeight ? bookingHeight : 900}px, calc(100vh - 120px))`,
+              minHeight: '520px',
+            }}
           />
         </div>
       </div>
