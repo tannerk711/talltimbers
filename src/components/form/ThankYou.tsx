@@ -76,6 +76,7 @@ export default function ThankYou() {
   const [data, setData] = useState<SubmissionPayload | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [bookingLoaded, setBookingLoaded] = useState(false);
+  const [bookingHeight, setBookingHeight] = useState(0);
   const confettiRef = useRef(false);
   const conversionRef = useRef(false);
   const bookingScriptRef = useRef(false);
@@ -138,6 +139,41 @@ export default function ThankYou() {
     script.type = 'text/javascript';
     script.async = true;
     document.body.appendChild(script);
+  }, [data]);
+
+  // GHL's form_embed.js owns the iframe's own height: it finds the iframe by id and
+  // writes iframe.style.height directly whenever the widget content resizes (e.g. the
+  // calendar swaps to the taller contact form after a time is picked). We must NOT set a
+  // React-controlled height on the iframe or we fight that and clip the submit button on
+  // mobile. Instead we let GHL size the iframe, and just MIRROR the iframe's live height
+  // into our wrapper's min-height so the card/well grows with it (no double scrollbar).
+  useEffect(() => {
+    if (!data || typeof window === 'undefined') return;
+    const iframeId = `${BOOKING_WIDGET_ID}_1783124236181`;
+    const readHeight = () => {
+      const el = document.getElementById(iframeId) as HTMLIFrameElement | null;
+      const h = el?.style.height ? parseInt(el.style.height, 10) : 0;
+      if (h > 200) setBookingHeight(h);
+    };
+    // GHL posts a colon-delimited "id:height:width:type" string; catching it lets us
+    // react instantly instead of waiting for the next poll tick.
+    const onMessage = (e: MessageEvent) => {
+      const origin = e.origin || '';
+      if (!/leadconnectorhq\.com|msgsndr\.com/.test(origin)) return;
+      if (typeof e.data === 'string' && e.data.includes(BOOKING_WIDGET_ID)) {
+        const parts = e.data.split(':');
+        const h = parseInt(parts[1], 10);
+        if (!Number.isNaN(h) && h > 200) setBookingHeight(h);
+      }
+      // Nudge a read on the next frame in case GHL wrote the style right after posting.
+      window.requestAnimationFrame(readHeight);
+    };
+    window.addEventListener('message', onMessage);
+    const poll = window.setInterval(readHeight, 750);
+    return () => {
+      window.removeEventListener('message', onMessage);
+      window.clearInterval(poll);
+    };
   }, [data]);
 
   // Confetti: one tuned-down brand-palette burst on a real submission. Gated behind
@@ -269,22 +305,30 @@ export default function ThankYou() {
           </div>
         </div>
 
-        {/* Iframe well with a loading placeholder that fades out on iframe load, so the
-            GHL resize handshake never leaves a visible artifact behind the live calendar. */}
-        <div className="relative px-2 md:px-4 pb-3 pt-1 min-h-[900px]">
+        {/* Iframe well. GHL's form_embed.js owns the iframe's height (see resize listener
+            above); we only mirror that height onto this wrapper's min-height so the card
+            grows with the content and the taller post-time-select contact form is never
+            clipped. Placeholder fades out on iframe load. Falls back to 900px until GHL
+            reports a height. The iframe height is set once via ref (uncontrolled) so React
+            never re-asserts a fixed height and fights GHL's resize. */}
+        <div
+          className="relative px-2 md:px-4 pb-3 pt-1"
+          style={{ minHeight: bookingHeight ? `${bookingHeight + 20}px` : '900px' }}
+        >
           <div
             className={`absolute inset-0 flex items-center justify-center text-navy/40 text-sm pointer-events-none transition-opacity duration-300 ${bookingLoaded ? 'opacity-0' : 'opacity-100'}`}
           >
             Loading available times...
           </div>
           <iframe
+            ref={(el) => { if (el && !el.style.height) el.style.height = '900px'; }}
             src={BOOKING_WIDGET_SRC}
             id={`${BOOKING_WIDGET_ID}_1783124236181`}
             title="Schedule a call with Adam"
             scrolling="no"
             onLoad={() => setBookingLoaded(true)}
             className="relative z-10 bg-white"
-            style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '900px', display: 'block' }}
+            style={{ width: '100%', border: 'none', overflow: 'hidden', display: 'block' }}
           />
         </div>
       </div>
