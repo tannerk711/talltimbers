@@ -1,5 +1,5 @@
 // ============================================================
-// FUNNEL CONFIG — the single file you edit per client.
+// FUNNEL CONFIG: the single file you edit per client.
 // Everything brandable, legal, or client-specific lives here.
 // ============================================================
 
@@ -102,7 +102,7 @@ export const usStates = [
 export const tcpaCopy =
   `By continuing you expressly consent to having ${brand.name} contact you about your inquiry by email, text message, or phone call to the number you provided, even if it is on a Do Not Call registry. Message and data rates may apply. Consent is not a condition of receiving services and can be revoked at any time.`;
 
-// Deal ticker — recently funded strip (edit per client, or leave generic)
+// Deal ticker: recently funded strip (edit per client, or leave generic)
 export const fundedDeals = [
   { amount: '$412,000', type: 'SFR', where: 'Tampa, FL', dscr: '1.34×', days: 16 },
   { amount: '$1.28M', type: '8-unit', where: 'Columbus, OH', dscr: '1.21×', days: 21 },

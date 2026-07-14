@@ -1,4 +1,4 @@
-# DSCR Funnel Template
+﻿# DSCR Funnel Template
 
 **The master DSCR funnel template going forward.** Built fresh 2026-07-13 with zero reuse of prior DSCR site/funnel patterns, as a Fable 5 capability demonstration and a fundamentally better funnel than the current production one.
 
@@ -8,10 +8,10 @@ Current production funnel (dscr.promortgagefunding.com, Pro Mortgage Funding, DS
 
 | Metric | April 2026 | May 2026 | Jul 2-8 2026 |
 | --- | --- | --- | --- |
-| LP conversion rate | 8.72% | 8.15% | — |
+| LP conversion rate | 8.72% | 8.15% | n/a |
 | Cost per lead | $70.16 | ~$80 | ~$85 |
-| Avg CPC | $6.12 | — | — |
-| CTR | 4.93% | — | — |
+| Avg CPC | $6.12 | n/a | n/a |
+| CTR | 4.93% | n/a | n/a |
 
 Targets: conversion rate 12-15%+, CPL under $50, and higher lead quality (loan size + down payment + equity data captured that the old funnel never asked for).
 
@@ -19,8 +19,8 @@ Targets: conversion rate 12-15%+, CPL under $50, and higher lead quality (loan s
 
 Astro 5 + React 19 islands + Tailwind v4 (via `@tailwindcss/vite`) + GSAP (ScrollTrigger) + `@astrojs/vercel` adapter. Static output; only `/api/lead` runs serverless.
 
-- `npm run dev` — port 4321
-- `npm run build` — must pass before any commit
+- `npm run dev`: port 4321
+- `npm run build`: must pass before any commit
 
 ## Design system ("private credit house")
 
@@ -30,9 +30,9 @@ Astro 5 + React 19 islands + Tailwind v4 (via `@tailwindcss/vite`) + GSAP (Scrol
 
 ## How to rebrand for a client (the whole point)
 
-1. Edit **`src/config/funnel.ts`** — brand name, NMLS, phone, address, proof numbers, funded-deal ticker rows, reviews, FAQs, specialist, booking embed URL, gtag IDs. Every customer-facing token lives here.
+1. Edit **`src/config/funnel.ts`**: brand name, NMLS, phone, address, proof numbers, funded-deal ticker rows, reviews, FAQs, specialist, booking embed URL, gtag IDs. Every customer-facing token lives here.
 2. Swap `public/images/hero-property.webp` + `aerial-golden.webp` (fal-generated; regenerate per client vibe). Keep WebP, keep filenames.
-3. Set `LEAD_WEBHOOK_URL` env var (Vercel project settings) — GHL inbound webhook. `/api/lead` forwards server-side (Astro/Vite secrets rule: never read webhooks in browser code).
+3. Set `LEAD_WEBHOOK_URL` env var (Vercel project settings): GHL inbound webhook. `/api/lead` forwards server-side (Astro/Vite secrets rule: never read webhooks in browser code).
 4. Replace `privacy.astro` / `legal.astro` placeholder copy.
 5. Colors: change the `@theme` tokens in `global.css` if the client needs a different palette.
 
@@ -45,7 +45,7 @@ Form flow: goal → property type → credit band (<620 = soft-stop screen) → 
 Conversion engineering built in:
 - Auto-advance on option click, back link, brass progress bar, scenario summary chips at phone step
 - gclid + UTM capture to sessionStorage → submitted with lead
-- Honeypot field (`website`) — bots get a silent 200 and are dropped in `/api/lead`
+- Honeypot field (`website`): bots get a silent 200 and are dropped in `/api/lead`
 - `dataLayer` events: `funnel_start`, `funnel_step`, `lead_submit` (wire GA4/Ads to these)
 - `secondsToComplete` submitted for lead-quality scoring
 - Thank-you personalizes from sessionStorage (name + scenario chips), fires `brand.gtagConversion` if set
@@ -64,4 +64,4 @@ Vercel. Root = this folder. Framework preset Astro; the `@astrojs/vercel` adapte
 
 ## Lessons Learned
 
-- **[2026-07-13] Tailwind v4 translate toggle:** JS show/hide of a `translate-y-full` element via `style.transform` does nothing — v4 uses the `translate` property. Set `style.translate`.
+- **[2026-07-13] Tailwind v4 translate toggle:** JS show/hide of a `translate-y-full` element via `style.transform` does nothing: v4 uses the `translate` property. Set `style.translate`.

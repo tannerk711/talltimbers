@@ -33,7 +33,7 @@ export const POST: APIRoute = async ({ request }) => {
       return json({ ok: false, error: 'webhook unreachable' }, 502);
     }
   } else {
-    console.log('[lead] LEAD_WEBHOOK_URL not set — payload:', JSON.stringify(data));
+    console.log('[lead] LEAD_WEBHOOK_URL not set; payload:', JSON.stringify(data));
   }
 
   return json({ ok: true }, 200);

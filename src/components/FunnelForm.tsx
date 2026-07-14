@@ -158,7 +158,7 @@ export default function FunnelForm() {
       ...attribution.current,
       landingPage: window.location.pathname + window.location.search,
       secondsToComplete: startedAt.current ? Math.round((Date.now() - startedAt.current) / 1000) : null,
-      website: honeypot || '', // honeypot — non-empty means bot
+      website: honeypot || '', // honeypot; non-empty means bot
       submittedAt: new Date().toISOString(),
     };
 
@@ -322,12 +322,12 @@ export default function FunnelForm() {
         : 'Roughly what do you still owe?',
     state: 'Where is the property?',
     contact: 'Where should we send your results?',
-    phone: 'Last step — best mobile number?',
+    phone: 'Last step: best mobile number?',
   };
 
   const subtitles: Partial<Record<StepId, string>> = {
     goal: 'Takes about 60 seconds. No credit pull, no obligation.',
-    credit: 'A soft estimate is fine — this never touches your credit.',
+    credit: 'A soft estimate is fine. This never touches your credit.',
     secondary: isPurchase ? 'Most DSCR programs start at 20% down.' : undefined,
     contact: 'Your eligibility summary lands in your inbox.',
     phone: "We won't sell your number. No games, no spam.",
@@ -444,7 +444,7 @@ export default function FunnelForm() {
                   </button>
                 ))}
                 {filteredStates.length === 0 && (
-                  <p className="text-sm text-ink/50 px-1 pt-1">No match — check the spelling?</p>
+                  <p className="text-sm text-ink/50 px-1 pt-1">No match. Check the spelling?</p>
                 )}
               </div>
             )}
@@ -475,7 +475,7 @@ export default function FunnelForm() {
               value={answers.email}
               onChange={(e) => set('email', e.target.value)}
             />
-            {/* honeypot — humans never see it */}
+            {/* honeypot; humans never see it */}
             <input
               id="ff-company"
               type="text"
@@ -492,7 +492,7 @@ export default function FunnelForm() {
                   return;
                 }
                 if (!validEmail(answers.email)) {
-                  setError('That email doesn’t look right — mind checking it?');
+                  setError('That email doesn’t look right. Mind checking it?');
                   return;
                 }
                 track('funnel_step', { step: 'contact' });
@@ -535,7 +535,7 @@ export default function FunnelForm() {
             {error && <p className="text-sm text-blush font-medium mt-2">{error}</p>}
             {submitError && (
               <p className="text-sm text-blush font-medium mt-2">
-                Hmm, that didn&rsquo;t go through. Give it one more try — your answers are saved.
+                Hmm, that didn&rsquo;t go through. Give it one more try. Your answers are saved.
               </p>
             )}
             <button
@@ -564,10 +564,10 @@ export default function FunnelForm() {
           <div className="mx-auto w-12 h-12 rounded-full border border-ink/20 flex items-center justify-center text-xl mb-4">
             ✕
           </div>
-          <h3 className="font-display text-2xl leading-tight mb-3">We can&rsquo;t qualify below 620 — yet.</h3>
+          <h3 className="font-display text-2xl leading-tight mb-3">We can&rsquo;t qualify below 620 yet.</h3>
           <p className="text-ink/65 text-[0.95rem] leading-relaxed max-w-sm mx-auto">
             Most DSCR programs require a 620+ score. If you&rsquo;re close, a few months of focused credit work
-            usually gets you there — and we&rsquo;d be glad to take another look when you are.
+            usually gets you there, and we&rsquo;d be glad to take another look when you are.
           </p>
           <button
             type="button"
