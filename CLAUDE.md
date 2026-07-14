@@ -65,3 +65,4 @@ Vercel. Root = this folder. Framework preset Astro; the `@astrojs/vercel` adapte
 ## Lessons Learned
 
 - **[2026-07-13] Tailwind v4 translate toggle:** JS show/hide of a `translate-y-full` element via `style.transform` does nothing: v4 uses the `translate` property. Set `style.translate`.
+- **[2026-07-13] Em-dash rule applied late:** wrote em-dashes through all funnel copy and caught it only near the end, costing a full sweep. Apply MEMORY.md hard rules at generation time, not cleanup time.
