@@ -141,26 +141,73 @@ export default function FunnelForm() {
     return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
   };
 
+  // display-ready strings ride along so the CRM never has to format numbers
+  // (GHL merge fields render these directly; see deliverables/WIRING.md)
+  const buildLeadPayload = (partial: boolean, honeypot = '') => {
+    const isRefiGoal = answers.goal === 'refinance' || answers.goal === 'cashout';
+    const clampedBalance = Math.min(answers.balance, answers.price);
+    const equity = isRefiGoal ? Math.max(answers.price - clampedBalance, 0) : null;
+    const downPayment =
+      answers.goal === 'purchase' ? Math.round((answers.downPct / 100) * answers.price) : null;
+    const priceDisplay = answers.price >= 2_000_000 ? '$2,000,000+' : fmt(answers.price);
+    const scenarioDetail =
+      answers.goal === 'purchase'
+        ? `${answers.downPct}% down (about ${fmt(downPayment ?? 0)})`
+        : answers.goal === 'bridge'
+          ? `Rehab budget around ${fmt(answers.rehab)}`
+          : `About ${fmt(clampedBalance)} owed, roughly ${fmt(equity ?? 0)} in equity`;
+
+    return {
+      ...answers,
+      phone: partial ? '' : phoneDigits,
+      partial,
+      price: answers.price >= 2_000_000 ? '2000000+' : answers.price,
+      downPayment,
+      goalLabel: goals.find((g) => g.value === answers.goal)?.label ?? answers.goal,
+      propertyTypeLabel:
+        propertyTypes.find((p) => p.value === answers.propertyType)?.label ?? answers.propertyType,
+      priceDisplay,
+      downPctDisplay: answers.goal === 'purchase' ? `${answers.downPct}%` : null,
+      downPaymentDisplay: downPayment !== null ? fmt(downPayment) : null,
+      balanceDisplay: isRefiGoal ? fmt(clampedBalance) : null,
+      equity,
+      equityDisplay: equity !== null ? fmt(equity) : null,
+      rehabDisplay: answers.goal === 'bridge' ? fmt(answers.rehab) : null,
+      scenarioDetail,
+      ...attribution.current,
+      landingPage: window.location.pathname + window.location.search,
+      secondsToComplete: startedAt.current ? Math.round((Date.now() - startedAt.current) / 1000) : null,
+      website: honeypot, // honeypot; non-empty means bot
+      submittedAt: new Date().toISOString(),
+    };
+  };
+
+  // fire-and-forget capture when the lead advances past name+email, so the
+  // promised eligibility summary still sends if they stall at the phone step.
+  // Workflow A branches on `partial` (see deliverables/WIRING.md).
+  const sendPartial = () => {
+    try {
+      fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildLeadPayload(true)),
+        keepalive: true,
+      }).catch(() => {});
+    } catch {
+      /* no-op */
+    }
+  };
+
   const submit = async () => {
     if (phoneDigits.length !== 10) {
-      setError('Enter a 10-digit mobile number so we can send your results.');
+      setError('Enter a 10-digit mobile number so your loan specialist can reach you.');
       return;
     }
     const honeypot = (document.getElementById('ff-company') as HTMLInputElement)?.value;
     setSubmitting(true);
     setSubmitError(false);
 
-    const payload = {
-      ...answers,
-      phone: phoneDigits,
-      price: answers.price >= 2_000_000 ? '2000000+' : answers.price,
-      downPayment: answers.goal === 'purchase' ? Math.round((answers.downPct / 100) * answers.price) : null,
-      ...attribution.current,
-      landingPage: window.location.pathname + window.location.search,
-      secondsToComplete: startedAt.current ? Math.round((Date.now() - startedAt.current) / 1000) : null,
-      website: honeypot || '', // honeypot; non-empty means bot
-      submittedAt: new Date().toISOString(),
-    };
+    const payload = buildLeadPayload(false, honeypot || '');
 
     try {
       const res = await fetch('/api/lead', {
@@ -496,6 +543,7 @@ export default function FunnelForm() {
                   return;
                 }
                 track('funnel_step', { step: 'contact' });
+                sendPartial();
                 go('fwd');
               }}
             />

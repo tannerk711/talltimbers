@@ -58,6 +58,40 @@ Conversion engineering built in:
 - Bare headless-Chrome `--screenshot` at mobile widths clamps window width (~500px) and produces false overflow horrors; use puppeteer-core viewport emulation for honest mobile shots.
 - GHL booking iframe embed on thank-you already applies the known fix: `scrolling="yes"`, height `min(1060px, calc(100vh - 120px))`, no `overflow-hidden` wrapper.
 
+## Deliverables (the promise chain, built 2026-07-13)
+
+The funnel promises the lead three things in its own copy: an eligibility
+summary email in their inbox, a strategy call priced across the lender
+network, and reply-to-book. `deliverables/` holds the assets that make those
+promises real the moment `/api/lead` fires:
+
+- **`deliverables/eligibility-summary-email.html`**: the core promise. GHL-ready
+  HTML email (600px tables, inline CSS, light mode, image-free), personalized
+  scenario ledger via `{{contact.dscr_*}}` merge fields, pre-qualification read,
+  educational DSCR math (illustration only, never a quote), book-the-call CTA.
+  Subject + 2 variants in the header comment.
+- **`deliverables/followup/`**: no-book branch. Day 1 email (hard pull /
+  commitment objection), day 3 email (the 1.25x worked example), day 5 email
+  (last note), plus `sms.md` (day 0 evening + day 4, both under 320 chars).
+- **`deliverables/call-prep-onepager.html`**: print-master prep sheet (letter,
+  one page). Live auto-branded twin ships in the funnel at **`/call-prep`**
+  (`src/pages/call-prep.astro`); keep copy changes in sync between the two.
+- **`deliverables/WIRING.md`**: payload-to-GHL field map + the A/B/C workflow
+  build (inbound webhook, immediate email 1, booked-goal exit, follow-up
+  timing). Written to be executed in one pass with the ghl-mcp or by a VA.
+
+These are TEMPLATE MASTERS. Never push them into a GHL location until Tanner
+names a client. Rebrand tokens are listed at the top of each file and mirror
+`src/config/funnel.ts`, so rebranding the funnel and the emails is one checklist.
+
+**Payload note:** `FunnelForm.tsx` submits display-ready strings alongside raw
+values (`goalLabel`, `priceDisplay`, `scenarioDetail`, `equity*`, etc.) so GHL
+never formats numbers, and fires a `partial: true` capture the moment a lead
+advances past name+email (no phone yet) so the promised summary email still
+sends to phone-step abandoners. Workflow A must allow re-entry and tag-guard
+Email 1 (see WIRING.md Step 3). If you change form fields, update WIRING.md's
+table and the sample payload in the same commit.
+
 ## Deploy
 
 Vercel. Root = this folder. Framework preset Astro; the `@astrojs/vercel` adapter handles `/api/lead`. Set `LEAD_WEBHOOK_URL`. Custom domain per client.

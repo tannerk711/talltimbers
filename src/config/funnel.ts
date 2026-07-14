@@ -98,9 +98,11 @@ export const usStates = [
   'Virginia','Washington','West Virginia','Wisconsin','Wyoming',
 ];
 
-// TCPA consent copy (shown at the phone step; keep legal team happy)
+// TCPA consent copy (shown at the phone step; keep legal team happy).
+// The "automated technology / prerecorded" clause is load-bearing: it is what
+// qualifies this as prior express written consent for automated marketing SMS.
 export const tcpaCopy =
-  `By continuing you expressly consent to having ${brand.name} contact you about your inquiry by email, text message, or phone call to the number you provided, even if it is on a Do Not Call registry. Message and data rates may apply. Consent is not a condition of receiving services and can be revoked at any time.`;
+  `By continuing you expressly consent to having ${brand.name} contact you about your inquiry by email, text message, or phone call at the number you provided, including via automated technology, autodialer, or prerecorded or artificial voice messages, even if your number is on a Do Not Call registry. Message and data rates may apply; message frequency varies; reply STOP to opt out. Consent is not a condition of purchase or of receiving services and can be revoked at any time.`;
 
 // Deal ticker: recently funded strip (edit per client, or leave generic)
 export const fundedDeals = [
@@ -145,7 +147,7 @@ export const faqs = [
   },
   {
     q: 'Can I close in an LLC?',
-    a: 'Yes, most investors do. DSCR loans are built for LLC vesting, and closing in an entity does not affect your rate.',
+    a: 'Yes, many investors do. DSCR loans are built for LLC vesting, and with most programs closing in an entity does not affect your rate.',
   },
   {
     q: 'How fast can I close?',
