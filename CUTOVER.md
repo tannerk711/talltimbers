@@ -1,10 +1,11 @@
 # Tall Timbers Funnel Cutover Checklist (Tanner-side steps)
 
-**Status (2026-07-22): FUNNEL IS ON `main` AND DEPLOYING TO PRODUCTION.** Tanner called
-the flip, so talltimbersrfs.com now serves the funnel (old LP URLs redirect to /, same
-conversion tag, so live ads keep working). The old site's last commit is `97ff274` in the
-repo history; rollback is one push. Add **dscr.talltimbersrfs.com** as an additional
-domain and point Google Ads final URLs there per the phases below.
+**Status (2026-07-22): FUNNEL IS LIVE ON VERCEL PRODUCTION at
+https://talltimbers.vercel.app** (the project's public alias; slider drag fix verified
+live). **Important discovery:** the apex talltimbersrfs.com is Adam's AgentFire realty
+site behind Cloudflare, so it was never ours and never changes. The ONLY remaining
+plumbing is the dscr subdomain (Phase B) and pointing ads at it (Phase E). Old site's
+last commit is `97ff274` in the repo history if ever needed.
 
 **Code location:** `github.com/tannerk711/talltimbers`, production branch `main`
 (`dscr-funnel` branch kept in sync). Every push to `main` auto-deploys.
@@ -40,14 +41,15 @@ thank-you, privacy + legal pages, full compliance sweep against the 15 DSCR rule
 
 ## Phase B. Add the subdomain (5 min)
 
-- [ ] 4. Same Vercel project > Settings > Domains > add `dscr.talltimbersrfs.com` (no
-      branch assignment needed; it serves production, same as the apex).
-- [ ] 5. If Vercel asks for DNS: add a CNAME record for `dscr` pointing to
-      `cname.vercel-dns.com` wherever talltimbersrfs.com's DNS lives. (If the domain's
-      nameservers are already Vercel's, this is automatic.)
+- [ ] 4. Vercel project (talltimbers, team ai-wizard-junk) > Settings > Domains > add
+      `dscr.talltimbersrfs.com`.
+- [ ] 5. In the talltimbersrfs.com DNS (Cloudflare; the apex is Adam's AgentFire site, so
+      Adam or whoever holds the Cloudflare login adds this): CNAME record, name `dscr`,
+      target `cname.vercel-dns.com`, **proxy OFF (DNS-only / grey cloud)**. Nothing else
+      in the zone changes; the apex site is untouched.
 - [ ] 6. Spot-check live: `dscr.talltimbersrfs.com` shows the funnel; `/privacy`,
-      `/legal`, and `/call-prep` load; `talltimbersrfs.com/lp/georgia-dscr` redirects
-      to the funnel.
+      `/legal`, and `/call-prep` load. (Until then the funnel is reachable at
+      https://talltimbers.vercel.app for testing and demos.)
 
 ## Phase C. Tracking check (5 min)
 

@@ -3,7 +3,7 @@
 // first change event and the drag died with exactly one value change.
 import puppeteer from 'puppeteer-core';
 
-const base = 'http://localhost:4321';
+const base = process.env.BASE_URL || 'http://localhost:4321';
 const browser = await puppeteer.launch({
   executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
   headless: 'new',

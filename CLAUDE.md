@@ -1,11 +1,18 @@
 # CLAUDE.md. Tall Timbers DSCR Funnel (v2 site)
 
-**The new Tall Timbers DSCR funnel, deploying at `dscr.talltimbersrfs.com`** (decided
-2026-07-22; the old multi-page site stays on the apex talltimbersrfs.com until Tanner
-decides otherwise). Built 2026-07-21 by cloning `clients/dscr-funnel-template/` (funnel v1,
-"private credit house" design) and rebranding it for Tall Timbers. The old site lives in
+**The new Tall Timbers DSCR funnel, target domain `dscr.talltimbersrfs.com`.** Built
+2026-07-21 by cloning `clients/dscr-funnel-template/` (funnel v1, "private credit house"
+design) and rebranding it for Tall Timbers. The old Astro LP project lives in
 `clients/tall-timbers/` and stays in the tree because skills and history reference it.
-Traffic switches when Google Ads final URLs point at the subdomain (CUTOVER.md Phase E).
+
+**Domain reality (discovered 2026-07-22):** the apex talltimbersrfs.com is Adam's
+AgentFire-hosted realty site behind Cloudflare. It was NEVER served by our Vercel project,
+and nothing we deploy touches it. Our Vercel project's public production URL is
+**talltimbers.vercel.app** (deployment-protection SSO covers the hash/branch URLs; the
+stable alias is public), which serves the funnel now. The dscr subdomain goes live once a
+Cloudflare CNAME (`dscr` -> `cname.vercel-dns.com`, DNS-only/grey cloud) exists and the
+domain is added to the Vercel project. Traffic switches when Google Ads final URLs point at
+the subdomain (CUTOVER.md Phase E).
 
 ## Client facts (locked)
 
