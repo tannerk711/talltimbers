@@ -20,18 +20,15 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
           Qualify on the rent. <em class="font-display-wonk italic text-brass-2">Skip</em> the tax&nbsp;returns.
         </h1>
         <p class="text-cream/70 text-lg leading-relaxed mt-6 max-w-md gs-reveal">
-          Purchase, refinance, or pull cash out of investment property in all 50 states.
-          {brand.lenderCount} lenders compete on your deal, with closings in as little as {brand.avgDaysToClose} days.
+          Purchase, refinance, or pull cash out of investment property anywhere you invest.
+          One file, {brand.lenderCount} wholesale DSCR lenders, and fast closings on clean files.
         </p>
 
         <!-- proof row -->
         <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mt-8 gs-reveal">
-          <div class="flex items-center gap-2">
-            <div class="flex text-brass-2 text-sm tracking-tight" aria-hidden>★★★★★</div>
-            <span class="text-sm text-cream/70"><strong class="text-cream">{brand.googleRating}</strong> · {brand.googleReviewCount} Google reviews</span>
-          </div>
+          <span class="text-sm text-cream/70"><strong class="text-cream">{brand.loansClosed}</strong> DSCR &amp; non-QM loans closed</span>
           <div class="hidden sm:block w-px h-4 bg-cream/20"></div>
-          <span class="text-sm text-cream/70"><strong class="text-cream">{brand.fundedVolume}</strong> funded for investors</span>
+          <span class="text-sm text-cream/70"><strong class="text-cream">{brand.lenderCount}</strong> lender network</span>
         </div>
 
         <!-- 3D property scene -->
@@ -79,21 +76,21 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
           </div>
         </div>
         <p class="text-center font-mono text-[0.62rem] uppercase tracking-[0.18em] text-cream/50 mt-4">
-          {brand.investorsChecked} investors have checked their eligibility
+          No SSN · No credit pull · No obligation
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ============ DEAL TICKER ============ -->
-  <section class="marquee bg-pine text-cream/90 border-y border-cream/10 overflow-hidden" aria-label="Recently funded deals">
+  <!-- ============ DEAL-STORY TICKER ============ -->
+  <section class="marquee bg-pine text-cream/90 border-y border-cream/10 overflow-hidden" aria-label="Investor deal stories">
     <div class="marquee-track py-3.5">
       {[0, 1].map(() => (
         <div class="flex shrink-0 items-center">
           {fundedDeals.map((d) => (
             <span class="flex items-center gap-3 px-8 whitespace-nowrap font-mono text-[0.72rem] uppercase tracking-[0.14em]">
               <span class="text-brass-2">●</span>
-              Funded {d.amount} · {d.type} · {d.where} · DSCR {d.dscr} · {d.days} days
+              {d.deal} · {d.note}
             </span>
           ))}
         </div>
@@ -130,10 +127,10 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
           </div>
           <div class="gs-reveal border-t-2 border-ink/80 pt-5">
             <div class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ink/40 mb-3">03</div>
-            <h3 class="font-display text-xl mb-2.5">Lenders compete</h3>
+            <h3 class="font-display text-xl mb-2.5">The network works for you</h3>
             <p class="text-[0.94rem] leading-relaxed text-ink/65">
-              One application, {brand.lenderCount} wholesale lenders priced against each other. Same-day
-              term sheets and closings in as little as {brand.avgDaysToClose} days.
+              One file, {brand.lenderCount} wholesale DSCR lenders. We match your deal to the lender
+              whose overlays fit, then present your options for review. We reach out the same business day.
             </p>
           </div>
         </div>
@@ -151,8 +148,8 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
         </h2>
         <p class="text-ink/70 leading-relaxed max-w-md mb-8">
           DSCR, the debt service coverage ratio, is simply the monthly rent divided by the full monthly
-          payment. At 1.0 the property pays for itself. At 1.25+ lenders sharpen their pencils and
-          your rate drops.
+          payment. At 1.0 the property pays for itself. At 1.25+ more of the lender network wants your
+          file. And below break-even, a no-ratio program still gives your deal a path.
         </p>
         <div class="border border-ink/15 rounded-2xl bg-paper divide-y divide-ink/10 max-w-md shadow-[var(--shadow-card)]">
           <div class="flex items-center justify-between px-5 py-3.5">
@@ -205,7 +202,7 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
             <text x="200" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="40" fill="#0f231c" id="dial-readout">1.30×</text>
           </svg>
           <p class="text-center font-mono text-[0.65rem] uppercase tracking-[0.18em] text-ink/45 mt-2">
-            Example deal · $2,450 rent ÷ $1,890 payment · 1.25+ is the sweet spot
+            Example deal · $2,450 rent ÷ $1,890 payment · Illustration, not a quote
           </p>
         </div>
       </div>
@@ -216,20 +213,20 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
   <section class="bg-ink text-cream grain relative py-16 lg:py-20">
     <div class="max-w-7xl mx-auto px-5 lg:px-10 grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 relative z-10">
       <div class="text-center gs-reveal">
-        <div class="font-display text-[clamp(2.6rem,4.5vw,4rem)] leading-none text-brass-2"><span data-count="14">0</span></div>
-        <div class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream/50 mt-3">Days to close, avg</div>
+        <div class="font-display text-[clamp(2.6rem,4.5vw,4rem)] leading-none text-brass-2"><span data-count="250">0</span>+</div>
+        <div class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream/50 mt-3">DSCR/non-QM loans closed</div>
       </div>
       <div class="text-center gs-reveal">
-        <div class="font-display text-[clamp(2.6rem,4.5vw,4rem)] leading-none text-brass-2"><span data-count="100">0</span>+</div>
-        <div class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream/50 mt-3">Lenders competing</div>
+        <div class="font-display text-[clamp(2.6rem,4.5vw,4rem)] leading-none text-brass-2"><span data-count="70">0</span>+</div>
+        <div class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream/50 mt-3">Wholesale lender network</div>
       </div>
       <div class="text-center gs-reveal">
-        <div class="font-display text-[clamp(2.6rem,4.5vw,4rem)] leading-none text-brass-2"><span data-count="50">0</span></div>
-        <div class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream/50 mt-3">States licensed</div>
+        <div class="font-display text-[clamp(2.6rem,4.5vw,4rem)] leading-none text-brass-2">Fast</div>
+        <div class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream/50 mt-3">Closings on clean files</div>
       </div>
       <div class="text-center gs-reveal">
-        <div class="font-display text-[clamp(2.6rem,4.5vw,4rem)] leading-none text-brass-2">$<span data-count="180">0</span>M+</div>
-        <div class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream/50 mt-3">Funded for investors</div>
+        <div class="font-display text-[clamp(2.6rem,4.5vw,4rem)] leading-none text-brass-2">Same-day</div>
+        <div class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream/50 mt-3">Formal pre-approval</div>
       </div>
     </div>
   </section>
@@ -263,20 +260,20 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
         <div class="gs-reveal bg-paper-2 border border-ink/10 rounded-2xl p-7 lg:p-9 flex gap-6 items-start lg:translate-x-8">
           <span class="font-display text-[2.6rem] leading-none text-brass shrink-0">2</span>
           <div>
-            <h3 class="font-display text-[1.35rem] mb-2">We shop {brand.lenderCount} lenders</h3>
+            <h3 class="font-display text-[1.35rem] mb-2">We run it against {brand.lenderCount} lenders</h3>
             <p class="text-[0.95rem] text-ink/65 leading-relaxed">
-              On a quick call we price your scenario across the wholesale market and you see the
-              best terms (rate, points, and payment) side by side.
+              On a quick call we run your scenario across our wholesale lender network and present
+              rates and payments for your review. You pick; nobody pressures.
             </p>
           </div>
         </div>
         <div class="gs-reveal bg-paper-2 border border-ink/10 rounded-2xl p-7 lg:p-9 flex gap-6 items-start lg:translate-x-16">
           <span class="font-display text-[2.6rem] leading-none text-brass shrink-0">3</span>
           <div>
-            <h3 class="font-display text-[1.35rem] mb-2">Close in ~{brand.avgDaysToClose} days</h3>
+            <h3 class="font-display text-[1.35rem] mb-2">Clear to close</h3>
             <p class="text-[0.95rem] text-ink/65 leading-relaxed">
               Appraisal with a rent schedule, title, done. No income verification means no
-              document circus. Most deals fund in two to three weeks.
+              document circus. Fast closings on clean files.
             </p>
           </div>
         </div>
@@ -288,12 +285,10 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
   <section class="bg-paper-2 border-y border-ink/10 py-24 lg:py-32">
     <div class="max-w-5xl mx-auto px-5 lg:px-10">
       <div class="text-center mb-14 gs-reveal">
-        <div class="inline-flex items-center gap-3 border border-ink/15 rounded-full bg-paper px-5 py-2.5">
-          <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11.8c-.5 2.8-2.1 5.1-4.4 6.7v5.5h7.1c4.2-3.8 6.6-9.5 6.6-16.2z"/><path fill="#34A853" d="M24 46c6 0 11-2 14.6-5.3l-7.1-5.5c-2 1.3-4.5 2.1-7.5 2.1-5.8 0-10.7-3.9-12.4-9.1H4.2v5.7C7.8 41.1 15.3 46 24 46z"/><path fill="#FBBC05" d="M11.6 28.2c-.4-1.3-.7-2.7-.7-4.2s.3-2.9.7-4.2v-5.7H4.2C2.8 17 2 20.4 2 24s.8 7 2.2 9.9l7.4-5.7z"/><path fill="#EA4335" d="M24 10.8c3.3 0 6.2 1.1 8.5 3.3l6.3-6.3C35 4.3 30 2 24 2 15.3 2 7.8 6.9 4.2 14.1l7.4 5.7c1.7-5.2 6.6-9 12.4-9z"/></svg>
-          <span class="text-sm font-semibold">{brand.googleRating} on Google</span>
-          <span class="flex text-brass text-sm" aria-hidden>★★★★★</span>
-          <span class="text-sm text-ink/50">{brand.googleReviewCount} reviews</span>
-        </div>
+        <p class="eyebrow text-moss mb-4">Deal stories</p>
+        <h2 class="font-display text-[clamp(2rem,3.6vw,2.8rem)] leading-[1.06] tracking-tight">
+          Investors whose first lender <em class="italic text-pine">said no.</em>
+        </h2>
       </div>
 
       <blockquote class="text-center gs-reveal">
@@ -309,11 +304,10 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
       <div class="grid sm:grid-cols-2 gap-5 mt-14 max-w-3xl mx-auto">
         {reviews.slice(1).map((r) => (
           <figure class="gs-reveal bg-paper border border-ink/10 rounded-2xl p-6">
-            <div class="flex text-brass text-xs mb-3" aria-hidden>★★★★★</div>
+            <div class="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-moss mb-3">{r.detail}</div>
             <blockquote class="text-[0.95rem] leading-relaxed text-ink/75">&ldquo;{r.quote}&rdquo;</blockquote>
             <figcaption class="mt-4 text-sm">
               <span class="font-semibold">{r.name}</span>
-              <span class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-ink/45 ml-2">{r.detail}</span>
             </figcaption>
           </figure>
         ))}
@@ -358,7 +352,7 @@ import { brand, fundedDeals, reviews, faqs } from '../config/funnel';
       <div class="mt-10 gs-reveal">
         <a href="#eligibility" class="btn-brass rounded-xl px-9 py-4 text-lg">Check My Eligibility →</a>
         <p class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream/50 mt-5">
-          {brand.investorsChecked} investors already have
+          We review and reach out the same business day
         </p>
       </div>
     </div>

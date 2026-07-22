@@ -1,102 +1,93 @@
-﻿# DSCR Funnel Template
+# CLAUDE.md. Tall Timbers DSCR Funnel (v2 site)
 
-**The master DSCR funnel template going forward.** Built fresh 2026-07-13 with zero reuse of prior DSCR site/funnel patterns, as a Fable 5 capability demonstration and a fundamentally better funnel than the current production one.
+**The new Tall Timbers DSCR funnel, deploying at `dscr.talltimbersrfs.com`** (decided
+2026-07-22; the old multi-page site stays on the apex talltimbersrfs.com until Tanner
+decides otherwise). Built 2026-07-21 by cloning `clients/dscr-funnel-template/` (funnel v1,
+"private credit house" design) and rebranding it for Tall Timbers. The old site lives in
+`clients/tall-timbers/` and stays in the tree because skills and history reference it.
+Traffic switches when Google Ads final URLs point at the subdomain (CUTOVER.md Phase E).
 
-## The baseline this exists to beat
+## Client facts (locked)
 
-Current production funnel (dscr.promortgagefunding.com, Pro Mortgage Funding, DSCR - MI/CA campaign):
+- **Brand:** Tall Timbers Realty and Financial Services (short: Tall Timbers)
+- **Domain:** talltimbersrfs.com
+- **Specialist:** Adam C. Cunningham, Mortgage Loan Originator, NMLS #312817. Single-broker:
+  Adam takes every lead, every state. Never reintroduce per-state routing.
+- **Phone:** (888) 931-0211 (every tel: link)
+- **Locked proof numbers:** 250+ DSCR/non-QM loans closed, 70+ lender network. Do not inflate.
+- **The 15 DSCR hard rules in `clients/tall-timbers/CLAUDE.md` apply to every line of copy
+  here.** Highlights: no close-day counts, no rate-shopping language, no "soft pull" claims,
+  same-day (never 24-hour) pre-approval, no em-dashes, consultative not gatekeeper.
 
-| Metric | April 2026 | May 2026 | Jul 2-8 2026 |
-| --- | --- | --- | --- |
-| LP conversion rate | 8.72% | 8.15% | n/a |
-| Cost per lead | $70.16 | ~$80 | ~$85 |
-| Avg CPC | $6.12 | n/a | n/a |
-| CTR | 4.93% | n/a | n/a |
+## Tracking (wired and verified 2026-07-21)
 
-Targets: conversion rate 12-15%+, CPL under $50, and higher lead quality (loan size + down payment + equity data captured that the old funnel never asked for).
+- **Google Ads gtag:** `AW-18132955750`, loaded site-wide from `Layout.astro` via
+  `brand.gtagId`.
+- **New Lead conversion:** `AW-18132955750/Tbu1CMmLkrUcEObku8ZD`, fired from the
+  `/thank-you` inline script ONLY when a real submission exists in sessionStorage
+  (`lead-summary`) OR `?demo=1` is present (Tag Assistant verification:
+  `https://talltimbersrfs.com/thank-you?demo=1`). Bare visits and bots never fire it. Do not
+  simplify into an unconditional call.
+- **Hotjar:** site id `6725186`, loaded site-wide from `Layout.astro` via `brand.hotjarId`.
+- **Booking calendar:** Adam's GHL widget `9CBi2dkCfuszehuLkyA1`
+  (`https://api.leadconnectorhq.com/widget/booking/...`) embedded on `/thank-you` via
+  `brand.bookingEmbedUrl`, using the known-good GHL iframe pattern (scrolling="yes",
+  capped height, no overflow-hidden wrapper).
 
-## Stack
+## Everything brandable lives in `src/config/funnel.ts`
 
-Astro 5 + React 19 islands + Tailwind v4 (via `@tailwindcss/vite`) + GSAP (ScrollTrigger) + `@astrojs/vercel` adapter. Static output; only `/api/lead` runs serverless.
+Name, NMLS, phone, logo path, proof numbers, booking URL, gtag ids, Hotjar id, specialist
+(+ headshot), ticker deals, deal-story reviews, FAQs, TCPA copy.
 
-- `npm run dev`: port 4321
-- `npm run build`: must pass before any commit
+## Lead flow
 
-## Design system ("private credit house")
+Form (`FunnelForm.tsx`) → POST `/api/lead` (serverless) → forwards server-side to
+`LEAD_WEBHOOK_URL` env var (set in Vercel; never read webhooks in browser code). Payload is
+the funnel-template contract documented in `deliverables/WIRING.md` (NOT the old site's flat
+Zapier payload; the old Zap's field mapping does not match). Partial captures fire with
+`partial: true` after name+email. Honeypot field `website` drops bots server-side.
 
-- Ink green `#0f231c` / warm paper `#f6f2e9` / brass `#b0873a`. Tokens in `src/styles/global.css` `@theme`.
-- Type: **Fraunces** (display, variable w/ SOFT+WONK axes), **Hanken Grotesk** (body), **Fragment Mono** (data labels). Loaded via Google Fonts in `Layout.astro`.
-- Signature elements: hero 3D property scene (pointer-tilt arch image + floating rent/payment/DSCR ledger chips), animated DSCR gauge (SVG needle sweep 0.80→1.30 on scroll), funded-deal marquee ticker, brass count-up stats band, film grain on dark sections.
+## Old-site route redirects (in `astro.config.mjs`)
 
-## How to rebrand for a client (the whole point)
+`/lp/georgia-dscr` → `/`, `/lp/florida-dscr` → `/`, `/privacy-policy` → `/privacy`,
+`/terms-of-service` → `/legal`. Keep these; live Google Ads final URLs pointed at the old LP
+paths until the campaigns are updated.
 
-1. Edit **`src/config/funnel.ts`**: brand name, NMLS, phone, address, proof numbers, funded-deal ticker rows, reviews, FAQs, specialist, booking embed URL, gtag IDs. Every customer-facing token lives here.
-2. Swap `public/images/hero-property.webp` + `aerial-golden.webp` (fal-generated; regenerate per client vibe). Keep WebP, keep filenames.
-3. Set `LEAD_WEBHOOK_URL` env var (Vercel project settings): GHL inbound webhook. `/api/lead` forwards server-side (Astro/Vite secrets rule: never read webhooks in browser code).
-4. Replace `privacy.astro` / `legal.astro` placeholder copy.
-5. Colors: change the `@theme` tokens in `global.css` if the client needs a different palette.
+## Build / QA
 
-## Funnel architecture
+- `npm run dev` (port 4321) · `npm run build` must pass before commit.
+- `node tools/shoot.mjs <prefix>`: screenshot harness (desktop + mobile emulation + form
+  steps + decline + thank-you).
+- `node tools/verify-tracking.mjs`: asserts gtag/Hotjar load, conversion gating (bare
+  thank-you fires nothing, ?demo=1 and real submits fire the labeled conversion), full
+  form submit → /api/lead 200 → redirect → personalization, honeypot value reaching the
+  payload, old-route redirects, and mobile booking iframe sizing. All 16 checks passed
+  2026-07-21 (after the verification-workflow fixes below).
+- Verification workflow findings fixed 2026-07-21: "50 States served" stat replaced with
+  "Fast / Closings on clean files" (unlocked claim, contradicted by old EXCLUDED_STATES);
+  ticker reframed from invented "Funded $X" amounts to approved deal-story lines;
+  footer/legal/privacy rewritten from directory voice to licensed-shop "we" voice (Rule 9);
+  thank-you tab title "You're Eligible" → "Eligibility Check Complete"; honeypot moved to
+  the always-mounted form shell (it unmounted before submit and could never catch a bot;
+  QA tools must exclude `#ff-company` when selecting form inputs).
 
-LP (`index.astro`) → 8-step form (`FunnelForm.tsx`, React island in hero) → `/thank-you`.
+## Deliverables
 
-Form flow: goal → property type → credit band (<620 = soft-stop screen) → price/value slider ($150K-$2M) → conditional step (purchase: down % · refi/cashout: mortgage balance → shows equity · bridge: rehab budget) → state (type-ahead) → name+email → phone + TCPA + submit.
-
-Conversion engineering built in:
-- Auto-advance on option click, back link, brass progress bar, scenario summary chips at phone step
-- gclid + UTM capture to sessionStorage → submitted with lead
-- Honeypot field (`website`): bots get a silent 200 and are dropped in `/api/lead`
-- `dataLayer` events: `funnel_start`, `funnel_step`, `lead_submit` (wire GA4/Ads to these)
-- `secondsToComplete` submitted for lead-quality scoring
-- Thank-you personalizes from sessionStorage (name + scenario chips), fires `brand.gtagConversion` if set
-- Mobile sticky bottom CTA appears when the form card scrolls out of view
-
-## Gotchas learned building this
-
-- **Tailwind v4 `translate-*` utilities set the CSS `translate` property, not `transform`.** Toggling visibility from JS must set `el.style.translate`, not `el.style.transform`, or the class value silently wins.
-- ffmpeg-style path args in filters break on Windows drive-letter colons; run from the working dir with relative paths.
-- Bare headless-Chrome `--screenshot` at mobile widths clamps window width (~500px) and produces false overflow horrors; use puppeteer-core viewport emulation for honest mobile shots.
-- GHL booking iframe embed on thank-you already applies the known fix: `scrolling="yes"`, height `min(1060px, calc(100vh - 120px))`, no `overflow-hidden` wrapper.
-
-## Deliverables (the promise chain, built 2026-07-13)
-
-The funnel promises the lead three things in its own copy: an eligibility
-summary email in their inbox, a strategy call priced across the lender
-network, and reply-to-book. `deliverables/` holds the assets that make those
-promises real the moment `/api/lead` fires:
-
-- **`deliverables/eligibility-summary-email.html`**: the core promise. GHL-ready
-  HTML email (600px tables, inline CSS, light mode, image-free), personalized
-  scenario ledger via `{{contact.dscr_*}}` merge fields, pre-qualification read,
-  educational DSCR math (illustration only, never a quote), book-the-call CTA.
-  Subject + 2 variants in the header comment.
-- **`deliverables/followup/`**: no-book branch. Day 1 email (hard pull /
-  commitment objection), day 3 email (the 1.25x worked example), day 5 email
-  (last note), plus `sms.md` (day 0 evening + day 4, both under 320 chars).
-- **`deliverables/call-prep-onepager.html`**: print-master prep sheet (letter,
-  one page). Live auto-branded twin ships in the funnel at **`/call-prep`**
-  (`src/pages/call-prep.astro`); keep copy changes in sync between the two.
-- **`deliverables/WIRING.md`**: payload-to-GHL field map + the A/B/C workflow
-  build (inbound webhook, immediate email 1, booked-goal exit, follow-up
-  timing). Written to be executed in one pass with the ghl-mcp or by a VA.
-
-These are TEMPLATE MASTERS. Never push them into a GHL location until Tanner
-names a client. Rebrand tokens are listed at the top of each file and mirror
-`src/config/funnel.ts`, so rebranding the funnel and the emails is one checklist.
-
-**Payload note:** `FunnelForm.tsx` submits display-ready strings alongside raw
-values (`goalLabel`, `priceDisplay`, `scenarioDetail`, `equity*`, etc.) so GHL
-never formats numbers, and fires a `partial: true` capture the moment a lead
-advances past name+email (no phone yet) so the promised summary email still
-sends to phone-step abandoners. Workflow A must allow re-entry and tag-guard
-Email 1 (see WIRING.md Step 3). If you change form fields, update WIRING.md's
-table and the sample payload in the same commit.
+`deliverables/` (eligibility email, follow-up emails + SMS, call-prep one-pager, WIRING.md)
+are rebranded for Tall Timbers and ready to build in GHL. The funnel copy promises an
+eligibility summary email; until Workflow A in WIRING.md exists in GHL, that promise is
+unbacked. Wire it before or immediately after cutover.
 
 ## Deploy
 
-Vercel. Root = this folder. Framework preset Astro; the `@astrojs/vercel` adapter handles `/api/lead`. Set `LEAD_WEBHOOK_URL`. Custom domain per client.
+Vercel, root = this folder, framework Astro (`@astrojs/vercel` adapter handles `/api/lead`).
+Set `LEAD_WEBHOOK_URL`. Point talltimbersrfs.com here at cutover.
 
 ## Lessons Learned
 
-- **[2026-07-13] Tailwind v4 translate toggle:** JS show/hide of a `translate-y-full` element via `style.transform` does nothing: v4 uses the `translate` property. Set `style.translate`.
-- **[2026-07-13] Em-dash rule applied late:** wrote em-dashes through all funnel copy and caught it only near the end, costing a full sweep. Apply MEMORY.md hard rules at generation time, not cleanup time.
+- **[2026-07-21] shoot.mjs path bug:** `new URL().pathname` keeps `%20` for spaces and
+  breaks on this workspace path; use `fileURLToPath`. Fixed here; fix upstream in
+  dscr-funnel-template if reused.
+- **[2026-07-21] gtag config ping vs conversion:** the `viewthroughconversion` request with
+  `en=gtag.config` fires on every page load with an Ads tag. Only requests carrying the
+  conversion label are real conversions; assert on the label when verifying.

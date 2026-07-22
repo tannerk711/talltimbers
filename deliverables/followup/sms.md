@@ -2,19 +2,18 @@
 
 Part of the no-book branch in [WIRING.md](../WIRING.md). Both messages stay
 under 320 characters after merge fields resolve, with real headroom (counts
-below). A long booking URL is the one thing that can push the count up, so
-prefer a short branded link; the counts below already assume a full-length
-GHL widget URL (~70 chars) as the worst case.
+below). The full-length GHL widget booking URL (68 chars) is already baked
+into both messages and into the counts below.
 
-REBRAND TOKENS (replace in the order listed; keep consistent with
-`src/config/funnel.ts`):
+REBRAND APPLIED: Tall Timbers Realty and Financial Services (2026-07-21).
+Values mirror `src/config/funnel.ts`:
 
-| Token | Replace with |
+| Token | Applied value |
 | --- | --- |
-| `Your Loan Specialist` | brand.specialist.name (use FIRST NAME in SMS) |
-| `Meridian` | brand.shortName |
-| `100+` | brand.lenderCount (verify per client) |
-| `https://REPLACE-BOOKING-LINK` | booking / scheduling URL |
+| specialist first name (SMS voice) | Adam (Adam C. Cunningham, NMLS #312817) |
+| brand.shortName | Tall Timbers |
+| brand.lenderCount | 70+ (locked; never any other number) |
+| booking link | https://api.leadconnectorhq.com/widget/booking/9CBi2dkCfuszehuLkyA1 |
 
 Compliance notes:
 - The funnel's TCPA checkbox (`tcpaCopy` in `funnel.ts`, includes the
@@ -35,10 +34,10 @@ lead gets SMS 1 the following evening. That is the intended build; do not
 invent a same-night send for late leads.
 
 ```
-{{contact.first_name}}, it's Your Loan Specialist at Meridian. Your eligibility summary is sitting in your inbox. When you're ready, pick a call time here: https://REPLACE-BOOKING-LINK. Reply STOP to opt out.
+{{contact.first_name}}, it's Adam at Tall Timbers. Your eligibility summary is sitting in your inbox. When you're ready, pick a call time here: https://api.leadconnectorhq.com/widget/booking/9CBi2dkCfuszehuLkyA1. Reply STOP to opt out.
 ```
 
-~205 chars raw; ~235 with typical merged names and a full GHL widget URL.
+~215 chars raw; ~220 with a typical merged first name.
 Deliberately does NOT repeat the no-credit-pull reassurance; the day 1 email
 owns that objection. It also names no subject line, so it survives any
 Email 1 subject A/B test.
@@ -46,9 +45,9 @@ Email 1 subject A/B test.
 ## SMS 2 · Day 4, late morning (10:30am contact-local)
 
 ```
-{{contact.first_name}}, still holding your DSCR file: {{contact.dscr_goal_label}}, {{contact.dscr_state}}, {{contact.dscr_price_display}}. Worth 30 minutes to price it across 100+ lenders? Grab a time: https://REPLACE-BOOKING-LINK. If timing's off, all good. Reply STOP to opt out.
+{{contact.first_name}}, still holding your DSCR file: {{contact.dscr_goal_label}}, {{contact.dscr_state}}, {{contact.dscr_price_display}}. Worth 30 minutes to price it across 70+ lenders? Grab a time: https://api.leadconnectorhq.com/widget/booking/9CBi2dkCfuszehuLkyA1. If timing's off, all good. Reply STOP to opt out.
 ```
 
-~230 chars raw; ~285 with typical merges and a full-length URL. The three
+~250 chars raw with the full URL; ~255 with typical merges. The three
 merge fields double as proof we actually read their file, which is the point
 of the message.

@@ -9,17 +9,43 @@ import { brand } from '../config/funnel';
   <Topbar />
   <section class="bg-paper py-20">
     <div class="max-w-3xl mx-auto px-5 lg:px-10">
-      <h1 class="font-display text-4xl tracking-tight mb-8">Privacy Policy</h1>
+      <h1 class="font-display text-4xl tracking-tight mb-3">Privacy Policy</h1>
+      <p class="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink/45 mb-8">Last updated July 2026</p>
       <div class="space-y-5 text-ink/70 leading-relaxed text-[0.95rem]">
-        <p><em>Template placeholder. Replace with the client's actual privacy policy before launch.</em></p>
+        <h2 class="font-display text-xl text-ink pt-2">What we collect</h2>
         <p>
-          {brand.name} collects the information you submit through this site (name, contact details, and
-          loan-scenario answers) solely to respond to your inquiry and provide loan services. We do not sell
-          your personal information. Information may be shared with lending partners for the purpose of
-          pricing and originating your loan.
+          {brand.name} ("we," "us") collects the information you submit through this site: your name, email
+          address, phone number, and the loan-scenario answers you provide in the eligibility form (deal type,
+          property type, credit range, price and financing figures, and property state). We also collect
+          standard technical data such as your device type, pages visited, and the ad or search campaign that
+          brought you here.
         </p>
+        <h2 class="font-display text-xl text-ink pt-2">How we use it</h2>
         <p>
-          You may request access to or deletion of your data at any time by calling {brand.phone}.
+          We use your information to respond to your inquiry, prepare your eligibility review, contact you
+          about your loan scenario, and provide the services you request. With your consent given at
+          submission, we may contact you by phone, text message, or email, including through automated
+          technology. Reply STOP to any text to opt out at any time.
+        </p>
+        <h2 class="font-display text-xl text-ink pt-2">Who we share it with</h2>
+        <p>
+          Your information is shared with the licensed mortgage originator handling your file (Adam C.
+          Cunningham, NMLS #312817) and, for the purpose of structuring and originating your loan, with
+          our wholesale lender partners. We use service providers such as our CRM, website analytics
+          (Google, Hotjar), and advertising platforms to operate this site; they process data on our behalf.
+          We do not sell your personal information.
+        </p>
+        <h2 class="font-display text-xl text-ink pt-2">Cookies and analytics</h2>
+        <p>
+          This site uses cookies and similar technologies for analytics and advertising measurement,
+          including Google Ads conversion tracking and Hotjar session analytics. You can limit cookies
+          through your browser settings.
+        </p>
+        <h2 class="font-display text-xl text-ink pt-2">Your choices</h2>
+        <p>
+          You may request access to, correction of, or deletion of your personal information at any time by
+          calling <a href={brand.phoneHref} class="underline">{brand.phone}</a>. We retain submitted
+          information only as long as needed to serve your inquiry and meet legal and regulatory obligations.
         </p>
       </div>
     </div>

@@ -1,16 +1,23 @@
 # WIRING: /api/lead → GHL → the promise chain
 
+**Client: Tall Timbers RFS. Leads currently flow to Tanner's GHL (Adam works
+them). Old site posted to Zapier catch hook
+https://hooks.zapier.com/hooks/catch/7361629/4ovjjmn/ with a DIFFERENT flat
+payload; this funnel's payload is the one documented below, so either build
+the GHL inbound-webhook workflow described here (recommended) or remap the
+Zap fields to the new payload.**
+
 **What this wires.** The funnel promises three things in its own copy: "your
 eligibility summary lands in your inbox" (contact step), a strategy call where
-the scenario is priced across 100+ lenders (thank-you page), and "reply to the
+the scenario is priced across 70+ lenders (thank-you page), and "reply to the
 email we just sent to lock in a time" (thank-you page, phone-CTA variant). The
 assets in this folder make those promises real. This doc is the one-pass build
 guide for wiring them into a GHL location.
 
-**Status: TEMPLATE MASTERS. Do not push anywhere until Tanner names a client.**
-When he does, the `ghl-mcp` server (`ghl_create_email_template`,
-`ghl_raw_request`) and the `ghl-email-template` skill exist for pushing
-templates into a location. Until then, everything here stays in this folder.
+**Status: REBRANDED for Tall Timbers Realty and Financial Services
+(2026-07-21). Ready to push.** The `ghl-mcp` server
+(`ghl_create_email_template`, `ghl_raw_request`) and the `ghl-email-template`
+skill exist for pushing templates into the location.
 
 The chain, end to end:
 
@@ -56,7 +63,7 @@ Sample payload (completed purchase lead):
   "state": "Georgia",
   "firstName": "Tanner",
   "email": "lead@example.com",
-  "phone": "8665550140",
+  "phone": "8889310211",
   "partial": false,
   "downPayment": 87500,
   "goalLabel": "Buy a rental",
@@ -165,15 +172,17 @@ want to trim): `first_name`, `dscr_goal_label`, `dscr_property_label`,
 - GHL location has LC Email + LC Phone (or SMTP/Twilio) configured and a
   sending domain authenticated (SPF/DKIM), or Email 1 lands in spam and the
   whole promise chain dies at hello.
-- **The sending address / reply-to resolves to a monitored inbox** (the
-  specialist's). Every email says "reply and we will set a time by hand" and
+- **The sending address / reply-to resolves to a monitored inbox** (Adam's).
+  Every email says "reply and we will set a time by hand" and
   the thank-you page says "reply to the email we just sent"; an unmonitored
   default subdomain address silently kills that promise.
-- A booking calendar for the strategy call exists; grab its scheduling link
-  (this replaces `https://REPLACE-BOOKING-LINK` in all four emails + 2 SMS)
-  and optionally its embed URL for `brand.bookingEmbedUrl` in `funnel.ts`.
-- The funnel is deployed; note the domain (replaces
-  `https://REPLACE-FUNNEL-DOMAIN`; the prep sheet is live at `/call-prep`).
+- Booking calendar: Adam's GHL calendar (widget `9CBi2dkCfuszehuLkyA1`). Its
+  scheduling link
+  `https://api.leadconnectorhq.com/widget/booking/9CBi2dkCfuszehuLkyA1` is
+  already applied in all four emails + 2 SMS, and its embed URL is already
+  set as `brand.bookingEmbedUrl` in `funnel.ts`.
+- The funnel deploys at `https://dscr.talltimbersrfs.com` (already applied in the
+  emails; the prep sheet is live at `https://dscr.talltimbersrfs.com/call-prep`).
 
 ### Step 1: create the custom fields
 Create every field in the section-2 table (Settings › Custom Fields › folder
@@ -185,13 +194,13 @@ auto-generated keys match the key column.
 For each of `eligibility-summary-email.html`,
 `followup/email-day1-no-commitment.html`, `followup/email-day3-the-math.html`,
 `followup/email-day5-last-note.html`:
-1. Find-replace the REBRAND TOKENS listed in the file's header comment,
-   **in the order listed, top to bottom**. Ordering is load-bearing: the
-   specialist NMLS (#000000) is a substring of the company NMLS (#0000000),
-   and the short name is a substring of the full brand name.
-2. Verify the flagged claims for THIS client: lender count (`100+`) and the
-   Email 1 P.S. pre-approval turnaround ("usually lands within 24 hours").
-   Soften or cut anything the client cannot actually deliver.
+1. Rebrand tokens are ALREADY APPLIED for Tall Timbers (each file's header
+   comment lists the applied values). If a value ever changes, re-apply
+   carefully: the short name (Tall Timbers) is a substring of the full brand
+   name.
+2. Claims are locked for Tall Timbers: lender count `70+` and loans closed
+   `250+` DSCR/non-QM (never any other numbers), and the Email 1 P.S. reads
+   "same-day formal pre-approval" (never any hour-count or day-count claim).
 3. **Strip the header comment block** (everything before `<!DOCTYPE html>`)
    so internal template notes never ship in sent email source.
 4. Push via the `ghl-email-template` skill or `ghl_create_email_template`
@@ -241,7 +250,7 @@ Steps:
 | When | Asset | Notes |
 | --- | --- | --- |
 | Day 0: Wait until 6:30pm contact-local | SMS 1 (`followup/sms.md`) | GHL's native Wait rolls a past-due 6:30pm to the next day, so an evening lead gets SMS 1 the following evening. That is the intended build. Respect the location SMS window (8am to 9pm). |
-| Day 1 | Email: `email-day1-no-commitment.html` | Objection: hard pull / commitment |
+| Day 1 | Email: `email-day1-no-commitment.html` | Objection: credit pull / commitment |
 | Day 3 | Email: `email-day3-the-math.html` | The 1.25x worked example |
 | Day 4, 10:30am | SMS 2 (`followup/sms.md`) | Scenario-specific nudge |
 | Day 5 | Email: `email-day5-last-note.html` | Last call, then End |
@@ -251,11 +260,11 @@ promises "last note" and we keep that promise.
 
 ### Step 6: Workflow C · "DSCR Funnel · Booked"
 Trigger: **Customer Booked Appointment** (strategy-call calendar).
-Actions: Remove From Workflow B → internal notification to the specialist
+Actions: Remove From Workflow B → internal notification to Adam
 (include `dscr_scenario_detail`, `dscr_price_display`, `dscr_state`,
-`dscr_credit_band` in the notification body so the broker walks in ready) →
+`dscr_credit_band` in the notification body so he walks in ready) →
 optional: send a short confirmation email linking the prep sheet at
-`https://REPLACE-FUNNEL-DOMAIN/call-prep`.
+`https://dscr.talltimbersrfs.com/call-prep`.
 
 ### Step 7: test checklist
 - [ ] `curl -X POST <funnel-domain>/api/lead -H "Content-Type: application/json" -d @sample.json`
@@ -286,10 +295,11 @@ optional: send a short confirmation email linking the prep sheet at
   Housing Opportunity, unsubscribe. Keep all of it when rebranding.
 - Both SMS carry "Reply STOP to opt out." If the location auto-appends
   opt-out language, delete the manual line so it does not double.
-- VERIFY per client before launch, same rule as the funnel itself: the `100+`
-  lender count, every `funnel.ts` proof number, the Email 1 P.S. pre-approval
-  turnaround ("usually lands within 24 hours"), and the thank-you page's
-  same-day pricing and "usually within 24 hours" step cards.
+- Locked claims for Tall Timbers, same rule as the funnel itself: lender
+  count `70+` and loans closed `250+` DSCR/non-QM (never any other numbers),
+  every `funnel.ts` proof number, the Email 1 P.S. "same-day formal
+  pre-approval" claim (never any hour-count or day-count version), and the
+  thank-you page's step cards must match (same-day language only).
 
 ## 5. Asset inventory (this folder)
 
@@ -303,7 +313,7 @@ optional: send a short confirmation email linking the prep sheet at
 | `call-prep-onepager.html` | Print-master prep sheet (live twin: `/call-prep`) |
 | `WIRING.md` | This doc |
 
-Rebrand rule for all of it: the header comment in each file lists its tokens
-(replace in the listed order; some tokens are substrings of others); the
-values mirror `src/config/funnel.ts`, so rebranding the funnel and the emails
-is the same checklist.
+Rebrand rule for all of it: the header comment in each file lists the APPLIED
+Tall Timbers values; they mirror `src/config/funnel.ts`, so the funnel and
+the emails stay one checklist. If a brand value ever changes, change it in
+`funnel.ts` and in every file here in the same pass.

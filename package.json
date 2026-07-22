@@ -1,5 +1,5 @@
 {
-  "name": "dscr-funnel-template",
+  "name": "tall-timbers-funnel",
   "type": "module",
   "version": "1.0.0",
   "private": true,
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0"
+    "@types/react-dom": "^19.0.0",
+    "puppeteer-core": "^25.3.0"
   }
 }

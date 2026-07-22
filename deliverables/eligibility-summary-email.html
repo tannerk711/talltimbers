@@ -3,22 +3,19 @@
   DSCR Funnel Template deliverable. GHL-ready HTML (custom code template).
   Sent immediately when /api/lead fires the inbound webhook. See WIRING.md.
 
-  REBRAND TOKENS (find-replace IN THE ORDER LISTED, top to bottom; some tokens
-  are substrings of others; values mirror src/config/funnel.ts):
-    Meridian Capital Lending                    -> brand.name
-    NMLS #0000000                               -> brand.nmls (company)
-    NMLS #000000                                -> brand.specialist.nmls
-    Your Loan Specialist                        -> brand.specialist.name
-    DSCR Loan Advisor                           -> brand.specialist.title
-    (866) 555-0140                              -> brand.phone
-    +18665550140                                -> brand.phoneHref digits
-    100 Main Street, Suite 400, Anytown, USA    -> brand.address
-    100+                                        -> brand.lenderCount (VERIFY per client)
-    https://REPLACE-BOOKING-LINK                -> booking / scheduling URL
-    https://REPLACE-FUNNEL-DOMAIN               -> deployed funnel domain
-    "usually lands within 24 hours" (P.S.)      -> VERIFY per client, same rule
-                                                   as the thank-you page's step-2
-                                                   card; soften or cut if untrue
+  REBRAND APPLIED: Tall Timbers Realty and Financial Services (2026-07-21).
+  Values mirror src/config/funnel.ts:
+    brand.name        = Tall Timbers Realty and Financial Services
+    brand.nmls        = NMLS #312817 (company and specialist share it;
+                        Tall Timbers is the licensed originator)
+    brand.specialist  = Adam C. Cunningham, Mortgage Loan Originator, NMLS #312817
+    brand.phone       = (888) 931-0211 / tel:+18889310211
+    brand.address     = Atlanta, GA
+    brand.lenderCount = 70+ (locked; never any other number)
+    booking link      = https://api.leadconnectorhq.com/widget/booking/9CBi2dkCfuszehuLkyA1
+    funnel domain     = https://dscr.talltimbersrfs.com
+    P.S. claim        = same-day formal pre-approval (doctrine: never any
+                        hour-count or day-count claim)
 
   GHL MERGE FIELDS USED (create per WIRING.md before sending):
     {{contact.first_name}}
@@ -83,8 +80,8 @@
           <tr>
             <td bgcolor="#0f231c" align="center" style="padding: 30px 30px 28px;">
               <p style="margin:0 0 10px; font-family:'Courier New',Courier,monospace; font-size:10px; letter-spacing:4px; color:#d7b264; text-transform:uppercase;">Eligibility&nbsp;Summary</p>
-              <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:22px; color:#efe7d2;">Meridian Capital Lending</p>
-              <p style="margin:8px 0 0; font-family:'Courier New',Courier,monospace; font-size:9px; letter-spacing:3px; color:#7f9c8b; text-transform:uppercase;">NMLS&nbsp;#0000000</p>
+              <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:22px; color:#efe7d2;">Tall Timbers Realty and Financial Services</p>
+              <p style="margin:8px 0 0; font-family:'Courier New',Courier,monospace; font-size:9px; letter-spacing:3px; color:#7f9c8b; text-transform:uppercase;">NMLS&nbsp;#312817</p>
             </td>
           </tr>
 
@@ -152,7 +149,7 @@
                 monthly rent &divide; full monthly payment = DSCR
               </p>
               <p style="margin:0 0 22px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:15px; line-height:25px; color:#3d4d45;">
-                The payment side counts everything: principal, interest, taxes, insurance, and any HOA. At 1.00, the property carries itself. Most programs fund from around 1.00 up, and pricing gets noticeably better at 1.25 and above.
+                The payment side counts everything: principal, interest, taxes, insurance, and any HOA. At 1.00, the property carries itself. Most programs fund from around 1.00 up, and a stronger ratio gives you more programs to choose from.
               </p>
 
               <!-- ====== worked example (dark ledger) ====== -->
@@ -178,7 +175,7 @@
                 </tr>
               </table>
               <p style="margin:14px 0 0; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:13px; line-height:21px; color:#6b7a72;">
-                Round numbers to show the shape of it, not your numbers and not a quote. On the call we run the real version for your {{contact.dscr_price_display}} scenario: live pricing across 100+ lenders, your actual payment, and the rent line that makes it work. If your play is a flip rather than a hold, we run the same discipline on purchase, rehab, and exit value instead.
+                Round numbers to show the shape of it, not your numbers and not a quote. On the call we run the real version for your {{contact.dscr_price_display}} scenario: live pricing across 70+ lenders, your actual payment, and the rent line that makes it work. If your play is a flip rather than a hold, we run the same discipline on purchase, rehab, and exit value instead.
               </p>
 
               <!-- ====== CTA ====== -->
@@ -189,17 +186,17 @@
               <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto 18px;">
                 <tr>
                   <td bgcolor="#b0873a" style="border-radius:12px; border:1px solid #8a6a2e; padding:15px 42px;">
-                    <a href="https://REPLACE-BOOKING-LINK" style="display:inline-block; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:16px; font-weight:bold; color:#0f231c; text-decoration:none; border-radius:12px;">Pick my call time&nbsp;&nbsp;&rarr;</a>
+                    <a href="https://api.leadconnectorhq.com/widget/booking/9CBi2dkCfuszehuLkyA1" style="display:inline-block; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:16px; font-weight:bold; color:#0f231c; text-decoration:none; border-radius:12px;">Pick my call time&nbsp;&nbsp;&rarr;</a>
                   </td>
                 </tr>
               </table>
               <p style="margin:0 0 8px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:14px; line-height:23px; color:#3d4d45; text-align:center;">
-                Prefer to talk now? Call <a href="tel:+18665550140" style="color:#24503f; font-weight:bold; text-decoration:none;">(866) 555-0140</a>.<br>
+                Prefer to talk now? Call <a href="tel:+18889310211" style="color:#24503f; font-weight:bold; text-decoration:none;">(888) 931-0211</a>.<br>
                 Or simply reply to this email and we will set a time by hand.
               </p>
               <p style="margin:18px 0 0; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:14px; line-height:23px; color:#3d4d45; text-align:center;">
                 Want to walk in loaded? Here is the one-page prep sheet:<br>
-                <a href="https://REPLACE-FUNNEL-DOMAIN/call-prep" style="color:#24503f; font-weight:bold;">What to have ready for your call</a>
+                <a href="https://dscr.talltimbersrfs.com/call-prep" style="color:#24503f; font-weight:bold;">What to have ready for your call</a>
               </p>
 
               <!-- ====== sign-off ====== -->
@@ -210,14 +207,14 @@
                 Talk soon,
               </p>
               <p style="margin:0 0 6px; font-family:Georgia,'Times New Roman',serif; font-size:18px; color:#0f231c;">
-                Your Loan Specialist
+                Adam C. Cunningham
               </p>
               <p style="margin:0 0 26px; font-family:'Courier New',Courier,monospace; font-size:10px; letter-spacing:2px; color:#6b7a72; text-transform:uppercase;">
-                DSCR Loan Advisor &middot; NMLS #000000<br>
-                Meridian Capital Lending &middot; <span style="white-space:nowrap;">(866)&nbsp;555-0140</span>
+                Mortgage Loan Originator &middot; NMLS #312817<br>
+                Tall Timbers Realty and Financial Services &middot; <span style="white-space:nowrap;">(888)&nbsp;931-0211</span>
               </p>
               <p style="margin:0 0 34px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:13px; line-height:22px; color:#6b7a72;">
-                P.S. Nothing we did today touched your credit. And once we talk, the pre-approval letter usually lands within 24 hours.
+                P.S. Nothing we did today touched your credit. And once we talk, the next step is same-day formal pre-approval.
               </p>
             </td>
           </tr>
@@ -225,10 +222,10 @@
           <!-- ====== compliance footer ====== -->
           <tr>
             <td bgcolor="#0f231c" align="center" class="sp" style="padding: 30px 44px 32px; border-radius:0 0 14px 14px;">
-              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; color:#efe7d2;">Meridian Capital Lending</p>
-              <p style="margin:0 0 18px; font-family:'Courier New',Courier,monospace; font-size:9px; letter-spacing:3px; color:#7f9c8b; text-transform:uppercase;">NMLS&nbsp;#0000000</p>
+              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; color:#efe7d2;">Tall Timbers Realty and Financial Services</p>
+              <p style="margin:0 0 18px; font-family:'Courier New',Courier,monospace; font-size:9px; letter-spacing:3px; color:#7f9c8b; text-transform:uppercase;">NMLS&nbsp;#312817</p>
               <p style="margin:0 0 14px; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:11px; line-height:19px; color:#93a49b;">
-                Meridian Capital Lending. NMLS #0000000. 100 Main Street, Suite 400, Anytown, USA.
+                Tall Timbers Realty and Financial Services. NMLS #312817. Atlanta, GA.
                 For licensing information visit <a href="https://www.nmlsconsumeraccess.org" style="color:#c4cfc8;">www.nmlsconsumeraccess.org</a>.
                 This is not a commitment to lend. All loans are subject to credit approval, underwriting, and property review.
                 Rates, terms, and programs are subject to change without notice. The examples in this email are educational

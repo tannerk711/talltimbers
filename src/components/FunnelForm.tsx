@@ -187,10 +187,11 @@ export default function FunnelForm() {
   // Workflow A branches on `partial` (see deliverables/WIRING.md).
   const sendPartial = () => {
     try {
+      const honeypot = (document.getElementById('ff-company') as HTMLInputElement)?.value || '';
       fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildLeadPayload(true)),
+        body: JSON.stringify(buildLeadPayload(true, honeypot)),
         keepalive: true,
       }).catch(() => {});
     } catch {
@@ -373,8 +374,8 @@ export default function FunnelForm() {
   };
 
   const subtitles: Partial<Record<StepId, string>> = {
-    goal: 'Takes about 60 seconds. No credit pull, no obligation.',
-    credit: 'A soft estimate is fine. This never touches your credit.',
+    goal: 'Takes about 60 seconds.',
+    credit: 'A ballpark is fine. This never touches your credit.',
     secondary: isPurchase ? 'Most DSCR programs start at 20% down.' : undefined,
     contact: 'Your eligibility summary lands in your inbox.',
     phone: "We won't sell your number. No games, no spam.",
@@ -497,7 +498,7 @@ export default function FunnelForm() {
             )}
             {!stateQuery.trim() && (
               <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-ink/40 mt-3 text-center">
-                Lending available in all 50 states
+                Every state welcome
               </p>
             )}
           </div>
@@ -521,15 +522,6 @@ export default function FunnelForm() {
               autoComplete="email"
               value={answers.email}
               onChange={(e) => set('email', e.target.value)}
-            />
-            {/* honeypot; humans never see it */}
-            <input
-              id="ff-company"
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              style={{ position: 'absolute', left: '-5000px', width: 1, height: 1, opacity: 0 }}
             />
             {error && <p className="text-sm text-blush font-medium">{error}</p>}
             <Continue
@@ -638,6 +630,16 @@ export default function FunnelForm() {
 
   return (
     <div ref={cardRef}>
+      {/* honeypot; humans never see it. Lives in the always-mounted shell so its
+          value survives step changes and is still in the DOM at submit time. */}
+      <input
+        id="ff-company"
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: 'absolute', left: '-5000px', width: 1, height: 1, opacity: 0 }}
+      />
       {/* progress */}
       <div className="flex items-center justify-between mb-2">
         <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ink/50">

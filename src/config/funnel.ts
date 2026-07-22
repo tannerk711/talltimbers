@@ -1,41 +1,46 @@
 // ============================================================
-// FUNNEL CONFIG: the single file you edit per client.
+// FUNNEL CONFIG: Tall Timbers Realty and Financial Services.
 // Everything brandable, legal, or client-specific lives here.
+// Locked numbers (per clients/tall-timbers/CLAUDE.md, 2026-05-25):
+// 250+ DSCR/non-QM loans closed, 70+ lender network, phone
+// (888) 931-0211, Adam C. Cunningham NMLS #312817. No close-day
+// counts, no rate-shopping language, no "soft pull" claims.
 // ============================================================
 
 export const brand = {
   // Company
-  name: 'Meridian Capital Lending',        // client company name
-  shortName: 'Meridian',                    // used in tight spots
-  nmls: 'NMLS #0000000',                    // company NMLS line
-  phone: '(866) 555-0140',
-  phoneHref: 'tel:+18665550140',
-  address: '100 Main Street, Suite 400, Anytown, USA',
+  name: 'Tall Timbers Realty and Financial Services',
+  shortName: 'Tall Timbers',
+  nmls: 'NMLS #312817',
+  phone: '(888) 931-0211',
+  phoneHref: 'tel:+18889310211',
+  address: 'Atlanta, GA',
   licensingUrl: 'https://www.nmlsconsumeraccess.org',
+  logo: '/images/tall-timbers-logo.png',
 
-  // Social proof (verify per client before launch)
-  googleRating: '4.9',
-  googleReviewCount: '106',
-  investorsChecked: '2,800+',
-  fundedVolume: '$180M+',
-  avgDaysToClose: 14,
-  lenderCount: '100+',
+  // Social proof (locked numbers, do not inflate)
+  loansClosed: '250+',
+  lenderCount: '70+',
 
   // Where the form submits (server-side forward target).
   // Set LEAD_WEBHOOK_URL in the environment; this is just the doc pointer.
 
-  // Thank-you page booking embed. Leave '' to hide calendar and show phone CTA.
-  bookingEmbedUrl: '',
+  // Thank-you page booking embed: Adam's GHL booking calendar.
+  bookingEmbedUrl: 'https://api.leadconnectorhq.com/widget/booking/9CBi2dkCfuszehuLkyA1',
 
-  // Google Ads conversion (fires on thank-you). Leave '' to disable.
-  gtagId: '',            // e.g. 'AW-XXXXXXXXXX'
-  gtagConversion: '',    // e.g. 'AW-XXXXXXXXXX/AbC-D_efGhIjKlMnOp'
+  // Google Ads conversion (fires on thank-you for real leads and ?demo=1).
+  gtagId: 'AW-18132955750',
+  gtagConversion: 'AW-18132955750/Tbu1CMmLkrUcEObku8ZD',
+
+  // Hotjar site id (loaded site-wide in Layout.astro).
+  hotjarId: 6725186,
 
   // Loan officer / specialist shown on thank-you page
   specialist: {
-    name: 'Your Loan Specialist',
-    title: 'DSCR Loan Advisor',
-    nmls: 'NMLS #000000',
+    name: 'Adam C. Cunningham',
+    title: 'Mortgage Loan Originator',
+    nmls: 'NMLS #312817',
+    headshot: '/images/adam-cunningham.webp',
   },
 };
 
@@ -104,31 +109,38 @@ export const usStates = [
 export const tcpaCopy =
   `By continuing you expressly consent to having ${brand.name} contact you about your inquiry by email, text message, or phone call at the number you provided, including via automated technology, autodialer, or prerecorded or artificial voice messages, even if your number is on a Do Not Call registry. Message and data rates may apply; message frequency varies; reply STOP to opt out. Consent is not a condition of purchase or of receiving services and can be revoked at any time.`;
 
-// Deal ticker: recently funded strip (edit per client, or leave generic)
+// Deal-story ticker. Every line is drawn from the approved Tall Timbers deal
+// stories (FL testimonial carousel) or generic capability claims. No invented
+// dollar amounts, no "funded $X" transaction claims, no close-day counts.
 export const fundedDeals = [
-  { amount: '$412,000', type: 'SFR', where: 'Tampa, FL', dscr: '1.34×', days: 16 },
-  { amount: '$1.28M', type: '8-unit', where: 'Columbus, OH', dscr: '1.21×', days: 21 },
-  { amount: '$267,500', type: 'Duplex', where: 'Kansas City, MO', dscr: '1.42×', days: 12 },
-  { amount: '$730,000', type: 'STR cabin', where: 'Sevierville, TN', dscr: '1.55×', days: 18 },
-  { amount: '$389,000', type: 'SFR', where: 'Phoenix, AZ', dscr: '1.18×', days: 15 },
-  { amount: '$952,000', type: '4-plex', where: 'Charlotte, NC', dscr: '1.29×', days: 19 },
+  { deal: 'Tampa, FL duplex', note: 'Declined elsewhere, closed at 75% LTV' },
+  { deal: 'Kissimmee, FL pool home', note: 'First STR, qualified on AirDNA' },
+  { deal: 'Cape Coral, FL SFR', note: 'Foreign national, no US credit' },
+  { deal: 'Jacksonville, FL SFR', note: 'Bridge to DSCR refi at 75% of ARV' },
+  { deal: 'Atlanta, GA 4-plex', note: 'Qualified on rents, not W-2s' },
+  { deal: 'Blue Ridge, GA cabin', note: 'STR income at market rent' },
 ];
 
+// Deal stories: approved Tall Timbers testimonial copy (FL carousel,
+// clients/tall-timbers). Outcome framing, no rates, no day counts.
 export const reviews = [
   {
-    quote: 'They qualified me on the rent, not my W-2. Three properties financed in nine months and every close hit the date they promised.',
+    quote:
+      "First lender walked away on my Tampa duplex two weeks in. Tall Timbers actually got on the phone, walked through what went wrong, and matched the file to a lender whose overlays fit. Closed at 75% LTV. Felt like working with people who'd seen this scenario a hundred times.",
     name: 'Marcus T.',
-    detail: 'Portfolio investor · 7 doors',
+    detail: 'Declined elsewhere, closed at 75% LTV',
   },
   {
-    quote: 'The entire process was incredibly efficient. I had term sheets in hours, not weeks.',
-    name: 'Sarah K.',
-    detail: 'First rental property',
+    quote:
+      'Bought a 5-bedroom pool home in Four Corners with zero rental history. Most lenders ghosted me. The Tall Timbers team walked me through what Osceola County permits for STR up front, then matched me with a lender that took AirDNA at a 75% factor. First STR in the books.',
+    name: 'Lauren K.',
+    detail: 'Disney STR financed on AirDNA, no rental history',
   },
   {
-    quote: 'Refinanced with much better rates than my bank offered. No tax returns, no circus.',
-    name: 'Sergey R.',
-    detail: 'Cash-out refinance',
+    quote:
+      'I live in Toronto and own two FL rentals. Getting a third was supposed to be impossible. No SSN, no US credit history. Tall Timbers walked me through Foreign National DSCR, used my Canadian credit reference letter, and closed the canal-front.',
+    name: 'Carlos V.',
+    detail: 'Canadian buyer, no US credit, canal-front SFR',
   },
 ];
 
@@ -139,11 +151,11 @@ export const faqs = [
   },
   {
     q: 'What credit score do I need?',
-    a: 'Most programs start at 620, and pricing improves meaningfully at 680 and again at 740. A 680+ score with 20–25% down puts you in the most competitive tier.',
+    a: 'Most DSCR programs start at 620, and more of the lender network opens up at 680 and again at 740. If you are below 620, a few months of focused credit work usually gets you there.',
   },
   {
     q: 'How is the DSCR calculated?',
-    a: 'Monthly rent divided by the full monthly payment (principal, interest, taxes, insurance, and any HOA). A ratio of 1.0 means the rent exactly covers the payment; most lenders want 1.0–1.25 or better, and stronger ratios earn better rates.',
+    a: 'Monthly rent divided by the full monthly payment (principal, interest, taxes, insurance, and any HOA). A ratio of 1.0 means the rent exactly covers the payment; most lenders want 1.0–1.25 or better. Below break-even, no-ratio programs still give your deal a path.',
   },
   {
     q: 'Can I close in an LLC?',
@@ -151,10 +163,14 @@ export const faqs = [
   },
   {
     q: 'How fast can I close?',
-    a: 'Two to three weeks is typical because there is no income documentation to verify. An appraisal with a rent schedule is usually the longest step.',
+    a: 'Fast closings on clean files. There is no income documentation to verify, so the appraisal with a rent schedule is usually the longest step. You get a real timeline for your file on the first call, not a marketing number.',
   },
   {
     q: 'Do short-term rentals qualify?',
-    a: 'Yes. Many programs will qualify Airbnb and VRBO properties using either market rent or documented short-term rental income.',
+    a: 'Yes. Many programs will qualify Airbnb and VRBO properties using either market rent or documented short-term rental income, and we flag the local permitting questions to ask before you write the offer.',
+  },
+  {
+    q: 'I am not a US citizen. Can I still qualify?',
+    a: 'Yes. Foreign national DSCR programs exist for exactly this. Many lenders in our network do not require US credit history; a credit reference letter from your home bank often does the job.',
   },
 ];

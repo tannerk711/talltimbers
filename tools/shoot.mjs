@@ -8,10 +8,11 @@
 // Mobile shots MUST come from this (viewport emulation); bare headless
 // chrome --screenshot clamps window width ~500px and fakes overflow.
 import puppeteer from 'puppeteer-core';
+import { fileURLToPath } from 'node:url';
 
 const prefix = process.argv[2] || 'shot';
 const base = 'http://localhost:4321';
-const outDir = new URL('./shots/', import.meta.url).pathname.replace(/^\/(\w:)/, '$1');
+const outDir = fileURLToPath(new URL('./shots/', import.meta.url));
 
 const browser = await puppeteer.launch({
   executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -123,13 +124,13 @@ await page.screenshot({ path: `${outDir}${prefix}-form-price.png` });
 await clickByText('Continue');
 await page.screenshot({ path: `${outDir}${prefix}-form-down.png` });
 await clickByText('Continue');
-await page.type('#eligibility input', 'Ari');
+await page.type('#eligibility input:not(#ff-company)', 'Ari');
 await settle(500);
 await page.screenshot({ path: `${outDir}${prefix}-form-state.png` });
 await clickByText('Arizona');
 await page.screenshot({ path: `${outDir}${prefix}-form-contact.png` });
 await page.evaluate(() => {
-  const inputs = [...document.querySelectorAll('#eligibility input')];
+  const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-company');
   const setVal = (el, v) => {
     const s = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
     s.call(el, v);

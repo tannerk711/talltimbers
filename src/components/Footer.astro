@@ -4,15 +4,35 @@ import { brand } from '../config/funnel';
 
 <footer class="bg-ink text-cream/60 border-t border-cream/10 py-14">
   <div class="max-w-5xl mx-auto px-5 lg:px-10 text-center">
-    <div class="font-display text-cream text-xl mb-2">{brand.name}</div>
+    <img
+      src={brand.logo}
+      alt={brand.name}
+      class="h-12 w-auto brightness-0 invert mx-auto mb-3"
+      width="196"
+      height="80"
+      loading="lazy"
+    />
     <p class="font-mono text-[0.62rem] uppercase tracking-[0.18em] mb-8">{brand.nmls}</p>
-    <p class="text-[0.8rem] leading-relaxed max-w-3xl mx-auto">
-      {brand.name}. {brand.nmls}. {brand.address}. For licensing information visit
-      <a href={brand.licensingUrl} class="underline hover:text-cream" rel="noopener" target="_blank"> www.nmlsconsumeraccess.org</a>.
-      This is not a commitment to lend. All loans subject to credit approval, underwriting, and property review.
-      Rates, terms, and programs subject to change without notice. This company is not endorsed by, or acting on
-      behalf of, any government agency. For informational purposes only.
-    </p>
+    <div class="text-[0.8rem] leading-relaxed max-w-3xl mx-auto space-y-3 text-left sm:text-center">
+      <p>
+        <strong class="text-cream/80">{brand.name} originates DSCR investment property loans for real estate investors.</strong>
+        This is not a commitment to lend. Loans are originated by Adam C. Cunningham, Mortgage Loan Originator,
+        NMLS #312817, through our network of wholesale lender partners. For licensing information visit
+        <a href={brand.licensingUrl} class="underline hover:text-cream" rel="noopener" target="_blank">www.nmlsconsumeraccess.org</a>.
+      </p>
+      <p>
+        Equal Housing Opportunity. All loan products are offered through licensed mortgage originators and their
+        lender partners. Loan terms, eligibility, and approval are subject to underwriting review and the
+        originating lender's program requirements. Property types, locations, and borrower scenarios may not
+        qualify under all programs. Rates, terms, and programs subject to change without notice. This company is
+        not endorsed by, or acting on behalf of, any government agency.
+      </p>
+      <p>
+        By submitting your information, you consent to be contacted by {brand.name} via phone, SMS, or email
+        regarding your inquiry, even if your number is on a Do Not Call list. Consent is not a condition of any
+        loan or service. Message and data rates may apply.
+      </p>
+    </div>
     <div class="flex items-center justify-center gap-8 mt-8">
       <a href="/privacy" class="text-[0.8rem] underline hover:text-cream">Privacy Policy</a>
       <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Equal Housing Opportunity">
