@@ -80,8 +80,13 @@ unbacked. Wire it before or immediately after cutover.
 
 ## Deploy
 
-Vercel, root = this folder, framework Astro (`@astrojs/vercel` adapter handles `/api/lead`).
-Set `LEAD_WEBHOOK_URL`. Point talltimbersrfs.com here at cutover.
+**Repo:** `github.com/tannerk711/talltimbers`, branch **`dscr-funnel`** (this folder is the
+canonical clone; `main` = old site, history grafted under the funnel commits). Push to
+`dscr-funnel` and the existing talltimbers Vercel project auto-builds it; the domain
+`dscr.talltimbersrfs.com` is assigned to this branch in Vercel domain settings. Env:
+`LEAD_WEBHOOK_URL` (set for all environments; branch domains use the Preview scope).
+`@astrojs/vercel` adapter handles `/api/lead`. Do NOT push this tree to `main` unless
+Tanner says to put the funnel on the apex ("flip main": `git push origin HEAD:main`).
 
 ## Lessons Learned
 

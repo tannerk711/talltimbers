@@ -4,7 +4,10 @@
 stays on the apex (talltimbersrfs.com) untouched for now, so there is nothing to roll back;
 traffic switches when the Google Ads final URLs point at the subdomain.
 
-The code is on GitHub and auto-deploys to Vercel on every push once connected (Phase A).
+**Code location:** branch `dscr-funnel` on the existing repo
+`github.com/tannerk711/talltimbers` (pushed 2026-07-22; `main` still holds the old site,
+whose full history is preserved). The existing Vercel project auto-builds the branch as a
+preview deployment on every push.
 
 **Already done in code, zero action needed:** phone (888) 931-0211 everywhere, logo +
 favicon + Adam's headshot, Google tag AW-18132955750 site-wide, New Lead conversion
@@ -15,14 +18,13 @@ thank-you, privacy + legal pages, full compliance sweep against the 15 DSCR rule
 
 ---
 
-## Phase A. Connect Vercel (5 min, one time)
+## Phase A. Vercel settings (5 min, one time)
 
-- [ ] 1. Vercel dashboard > Add New > Project > Import the GitHub repo (the
-      tall-timbers-funnel repo under your GitHub account). Framework preset: Astro
-      (auto-detected). Root directory: leave as repo root. Deploy.
-      From then on, every push to `main` auto-deploys.
-- [ ] 2. In the new Vercel project: Settings > Environment Variables > add
-      `LEAD_WEBHOOK_URL`. Two options:
+- [ ] 1. The branch is already pushed; the existing talltimbers Vercel project builds it
+      automatically (check Deployments for the `dscr-funnel` preview build).
+- [ ] 2. In that Vercel project: Settings > Environment Variables > add
+      `LEAD_WEBHOOK_URL` and apply it to **all environments** (the subdomain will serve a
+      branch deployment, which uses the Preview scope). Two options:
       - **Option A (recommended): a new GHL inbound webhook.** You get this URL when you
         build Workflow A in Phase D. Until it is set, leads only log server-side, so do
         Phase D before sending traffic.
@@ -38,13 +40,18 @@ thank-you, privacy + legal pages, full compliance sweep against the 15 DSCR rule
 
 ## Phase B. Add the subdomain (5 min)
 
-- [ ] 4. New Vercel project > Settings > Domains > add `dscr.talltimbersrfs.com`.
+- [ ] 4. Same Vercel project > Settings > Domains > add `dscr.talltimbersrfs.com`, then
+      edit the domain and set **Git Branch: `dscr-funnel`**. That serves the funnel branch
+      on the subdomain while `main` (the old site) keeps serving the apex. No new Vercel
+      project needed.
 - [ ] 5. If Vercel asks for DNS: add a CNAME record for `dscr` pointing to
       `cname.vercel-dns.com` wherever talltimbersrfs.com's DNS lives. (If the domain's
       nameservers are already Vercel's, this is automatic.) The apex and the old site are
       NOT touched.
 - [ ] 6. Spot-check live: `dscr.talltimbersrfs.com` shows the funnel; `/privacy`,
       `/legal`, and `/call-prep` load.
+      (Alternative later: to put the funnel on the apex too, tell Claude "flip main"; the
+      branch fast-forwards onto `main` in one push and the old site stays in history.)
 
 ## Phase C. Tracking check (5 min)
 
