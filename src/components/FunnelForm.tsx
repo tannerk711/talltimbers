@@ -49,6 +49,124 @@ const track = (event: string, data: Record<string, unknown> = {}) => {
 };
 
 // ------------------------------------------------------------------
+// shared sub-components. MODULE scope on purpose: defining these inside
+// FunnelForm gave them a new component identity on every render, so React
+// remounted the underlying DOM mid-interaction and range-slider dragging
+// died after the first change event (click worked, drag did not).
+// ------------------------------------------------------------------
+
+const OptionGrid = ({
+  options,
+  onPick,
+  cols = 1,
+}: {
+  options: ReadonlyArray<{
+    value: string;
+    label: string;
+    sub?: string;
+    note?: string;
+    icon?: ReadonlyArray<string>;
+  }>;
+  onPick: (value: string) => void;
+  cols?: 1 | 2;
+}) => (
+  <div className={cols === 2 ? 'grid grid-cols-2 gap-2.5' : 'grid gap-2.5'}>
+    {options.map((o) => (
+      <button
+        key={o.value}
+        type="button"
+        onClick={() => onPick(o.value)}
+        className="opt-btn rounded-xl px-4 py-3.5 flex items-center justify-between gap-3"
+      >
+        <span className="flex items-center gap-3.5">
+          {o.icon && (
+            <span className="w-10 h-10 shrink-0 rounded-full border border-pine/25 bg-pine/5 text-pine flex items-center justify-center">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                {o.icon.map((d) => (
+                  <path key={d} d={d} />
+                ))}
+              </svg>
+            </span>
+          )}
+          <span>
+            <span className="block font-semibold text-[1.02rem] leading-snug">{o.label}</span>
+            {o.sub && <span className="block text-sm text-ink/55 mt-0.5">{o.sub}</span>}
+          </span>
+        </span>
+        <span className="flex items-center gap-2 shrink-0">
+          {o.note && (
+            <span className="font-mono text-[0.62rem] uppercase tracking-widest text-moss">{o.note}</span>
+          )}
+          <span className="opt-arrow text-brass text-lg" aria-hidden>
+            →
+          </span>
+        </span>
+      </button>
+    ))}
+  </div>
+);
+
+const Slider = ({
+  value,
+  min,
+  max,
+  stepSize,
+  onChange,
+  display,
+  hint,
+  minLabel,
+  maxLabel,
+}: {
+  value: number;
+  min: number;
+  max: number;
+  stepSize: number;
+  onChange: (v: number) => void;
+  display: string;
+  hint?: string;
+  minLabel?: string;
+  maxLabel?: string;
+}) => (
+  <div>
+    <div className="text-center mb-5">
+      <div className="font-display text-[2.6rem] leading-none tracking-tight tabular-nums">{display}</div>
+      {hint && <div className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink/50 mt-2">{hint}</div>}
+    </div>
+    <input
+      type="range"
+      className="brass-range"
+      min={min}
+      max={max}
+      step={stepSize}
+      value={value}
+      style={{ ['--fill' as never]: `${((value - min) / (max - min)) * 100}%` }}
+      onChange={(e) => onChange(Number(e.target.value))}
+    />
+    <div className="flex justify-between font-mono text-[0.62rem] uppercase tracking-widest text-ink/40 mt-2">
+      <span>{minLabel ?? fmt(min)}</span>
+      <span>{maxLabel ?? (max >= 2_000_000 ? '$2M+' : fmt(max))}</span>
+    </div>
+  </div>
+);
+
+const Continue = ({ onClick, label = 'Continue' }: { onClick: () => void; label?: string }) => (
+  <button type="button" onClick={onClick} className="btn-brass w-full rounded-xl py-3.5 text-[1.05rem] mt-6">
+    {label} <span aria-hidden>→</span>
+  </button>
+);
+
+const Back = ({ show, onBack }: { show: boolean; onBack: () => void }) =>
+  show ? (
+    <button
+      type="button"
+      onClick={onBack}
+      className="mx-auto mt-4 flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink/45 hover:text-ink transition-colors"
+    >
+      ← Back
+    </button>
+  ) : null;
+
+// ------------------------------------------------------------------
 // component
 // ------------------------------------------------------------------
 
@@ -236,120 +354,9 @@ export default function FunnelForm() {
     }
   };
 
-  // ----------------------------------------------------------------
-  // shared bits
-  // ----------------------------------------------------------------
-
-  const OptionGrid = ({
-    options,
-    field,
-    cols = 1,
-  }: {
-    options: ReadonlyArray<{
-      value: string;
-      label: string;
-      sub?: string;
-      note?: string;
-      icon?: ReadonlyArray<string>;
-    }>;
-    field: keyof Answers;
-    cols?: 1 | 2;
-  }) => (
-    <div className={cols === 2 ? 'grid grid-cols-2 gap-2.5' : 'grid gap-2.5'}>
-      {options.map((o) => (
-        <button
-          key={o.value}
-          type="button"
-          onClick={() => pick(field, o.value as never)}
-          className="opt-btn rounded-xl px-4 py-3.5 flex items-center justify-between gap-3"
-        >
-          <span className="flex items-center gap-3.5">
-            {o.icon && (
-              <span className="w-10 h-10 shrink-0 rounded-full border border-pine/25 bg-pine/5 text-pine flex items-center justify-center">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  {o.icon.map((d) => (
-                    <path key={d} d={d} />
-                  ))}
-                </svg>
-              </span>
-            )}
-            <span>
-              <span className="block font-semibold text-[1.02rem] leading-snug">{o.label}</span>
-              {o.sub && <span className="block text-sm text-ink/55 mt-0.5">{o.sub}</span>}
-            </span>
-          </span>
-          <span className="flex items-center gap-2 shrink-0">
-            {o.note && (
-              <span className="font-mono text-[0.62rem] uppercase tracking-widest text-moss">{o.note}</span>
-            )}
-            <span className="opt-arrow text-brass text-lg" aria-hidden>
-              →
-            </span>
-          </span>
-        </button>
-      ))}
-    </div>
-  );
-
-  const Slider = ({
-    value,
-    min,
-    max,
-    stepSize,
-    onChange,
-    display,
-    hint,
-    minLabel,
-    maxLabel,
-  }: {
-    value: number;
-    min: number;
-    max: number;
-    stepSize: number;
-    onChange: (v: number) => void;
-    display: string;
-    hint?: string;
-    minLabel?: string;
-    maxLabel?: string;
-  }) => (
-    <div>
-      <div className="text-center mb-5">
-        <div className="font-display text-[2.6rem] leading-none tracking-tight tabular-nums">{display}</div>
-        {hint && <div className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink/50 mt-2">{hint}</div>}
-      </div>
-      <input
-        type="range"
-        className="brass-range"
-        min={min}
-        max={max}
-        step={stepSize}
-        value={value}
-        style={{ ['--fill' as never]: `${((value - min) / (max - min)) * 100}%` }}
-        onChange={(e) => onChange(Number(e.target.value))}
-      />
-      <div className="flex justify-between font-mono text-[0.62rem] uppercase tracking-widest text-ink/40 mt-2">
-        <span>{minLabel ?? fmt(min)}</span>
-        <span>{maxLabel ?? (max >= 2_000_000 ? '$2M+' : fmt(max))}</span>
-      </div>
-    </div>
-  );
-
-  const Continue = ({ onClick, label = 'Continue' }: { onClick: () => void; label?: string }) => (
-    <button type="button" onClick={onClick} className="btn-brass w-full rounded-xl py-3.5 text-[1.05rem] mt-6">
-      {label} <span aria-hidden>→</span>
-    </button>
-  );
-
-  const Back = () =>
-    stepIndex > 0 ? (
-      <button
-        type="button"
-        onClick={() => go('back')}
-        className="mx-auto mt-4 flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink/45 hover:text-ink transition-colors"
-      >
-        ← Back
-      </button>
-    ) : null;
+  // shared sub-components live at module scope (see note above the
+  // component): keeping them here remounted the DOM every render and
+  // broke slider dragging.
 
   // ----------------------------------------------------------------
   // step content
@@ -388,13 +395,13 @@ export default function FunnelForm() {
   const renderStep = () => {
     switch (step) {
       case 'goal':
-        return <OptionGrid options={goals} field="goal" />;
+        return <OptionGrid options={goals} onPick={(v) => pick('goal', v as never)} />;
 
       case 'propertyType':
-        return <OptionGrid options={propertyTypes} field="propertyType" cols={2} />;
+        return <OptionGrid options={propertyTypes} onPick={(v) => pick('propertyType', v as never)} cols={2} />;
 
       case 'credit':
-        return <OptionGrid options={creditBands} field="credit" />;
+        return <OptionGrid options={creditBands} onPick={(v) => pick('credit', v as never)} />;
 
       case 'price':
         return (
@@ -664,7 +671,7 @@ export default function FunnelForm() {
         {renderStep()}
       </div>
 
-      <Back />
+      <Back show={stepIndex > 0} onBack={() => go('back')} />
     </div>
   );
 }
