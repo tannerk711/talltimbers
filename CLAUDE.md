@@ -80,13 +80,14 @@ unbacked. Wire it before or immediately after cutover.
 
 ## Deploy
 
-**Repo:** `github.com/tannerk711/talltimbers`, branch **`dscr-funnel`** (this folder is the
-canonical clone; `main` = old site, history grafted under the funnel commits). Push to
-`dscr-funnel` and the existing talltimbers Vercel project auto-builds it; the domain
-`dscr.talltimbersrfs.com` is assigned to this branch in Vercel domain settings. Env:
-`LEAD_WEBHOOK_URL` (set for all environments; branch domains use the Preview scope).
-`@astrojs/vercel` adapter handles `/api/lead`. Do NOT push this tree to `main` unless
-Tanner says to put the funnel on the apex ("flip main": `git push origin HEAD:main`).
+**Repo:** `github.com/tannerk711/talltimbers`, production branch **`main`** (this folder is
+the canonical clone). **Flipped 2026-07-22 on Tanner's call:** `main` now IS the funnel, so
+the existing talltimbers Vercel project serves it at talltimbersrfs.com; the old site's
+last commit is `97ff274` (fully recoverable; rollback = revert/reset push). Add
+`dscr.talltimbersrfs.com` as an additional domain on the same project (it serves
+production, no branch assignment needed). Env: `LEAD_WEBHOOK_URL` (set for all
+environments). `@astrojs/vercel` adapter handles `/api/lead`. The `dscr-funnel` branch
+matches main; push to `main` for deploys.
 
 ## Lessons Learned
 
