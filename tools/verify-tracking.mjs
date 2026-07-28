@@ -15,6 +15,7 @@ const results = [];
 const check = (name, ok, detail = '') => {
   results.push(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? ` :: ${detail}` : ''}`);
 };
+const location_is_thankyou = (p) => p.startsWith('/thank-you');
 const settle = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function pageWithNet(w = 1440, h = 900, mobile = false) {
@@ -93,7 +94,7 @@ async function pageWithNet(w = 1440, h = 900, mobile = false) {
     setVal(inputs[0], 'QA Test');
     setVal(inputs[1], 'qa-test@example.com');
   });
-  await click('Continue'); // -> phone (also fires partial /api/lead)
+  await click('Continue'); // -> phone (no partial capture; removed 2026-07-27)
   await settle(600);
   await page.evaluate(() => {
     const inputs = [...document.querySelectorAll('#eligibility input')];
@@ -102,6 +103,16 @@ async function pageWithNet(w = 1440, h = 900, mobile = false) {
     s.call(tel, '(555) 010-0199');
     tel.dispatchEvent(new Event('input', { bubbles: true }));
   });
+  await settle(300);
+
+  // TCPA gate: submit is blocked until the consent box is checked. Assert the
+  // block first (a silent regression here would mean consent stopped gating),
+  // then consent and continue the real end-to-end path.
+  await click('Get My Eligibility');
+  await settle(800);
+  check('submit blocked until TCPA consent', leadStatus === null && !location_is_thankyou(await page.evaluate(() => location.pathname)));
+  await page.click('#ff-tcpa');
+  await settle(300);
   await click('Get My Eligibility');
   await page.waitForFunction(() => location.pathname.startsWith('/thank-you'), { timeout: 15000 }).catch(() => {});
   await settle(3000);
@@ -155,7 +166,21 @@ async function pageWithNet(w = 1440, h = 900, mobile = false) {
     setVal(inputs[1], 'bot@example.com');
   });
   await click('Continue');
-  await settle(800);
+  await settle(600);
+  // Partial captures were removed 2026-07-27, so the only POST comes from a
+  // completed submit. This block used to rely on the partial firing at the
+  // contact step; it must now finish the form (phone + TCPA consent).
+  await page.evaluate(() => {
+    const tel = document.querySelector('#eligibility input[type=tel]');
+    const s = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    s.call(tel, '(555) 010-0199');
+    tel.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await settle(300);
+  await page.click('#ff-tcpa');
+  await settle(300);
+  await click('Get My Eligibility');
+  await settle(1500);
   let parsed = null;
   try { parsed = leadBody ? JSON.parse(leadBody) : null; } catch { /* ignore */ }
   check('honeypot value reaches /api/lead payload', !!parsed && parsed.website === 'https://spam.example',

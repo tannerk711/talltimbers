@@ -51,8 +51,26 @@ Name, NMLS, phone, logo path, proof numbers, booking URL, gtag ids, Hotjar id, s
 Form (`FunnelForm.tsx`) → POST `/api/lead` (serverless) → forwards server-side to
 `LEAD_WEBHOOK_URL` env var (set in Vercel; never read webhooks in browser code). Payload is
 the funnel-template contract documented in `deliverables/WIRING.md` (NOT the old site's flat
-Zapier payload; the old Zap's field mapping does not match). Partial captures fire with
-`partial: true` after name+email. Honeypot field `website` drops bots server-side.
+Zapier payload; the old Zap's field mapping does not match). Honeypot field `website` drops
+bots server-side.
+
+**ONE webhook per lead, no partial captures (2026-07-27).** `sendPartial` used to fire a
+`partial: true` webhook after name+email, which forces two intake automations in the CRM.
+Removed. The form fires once from `submit()` with name + email + phone all present;
+`partial` stays in the payload hardcoded `false` so a mapped CRM field never sees a missing
+key. **Do not re-add it.**
+
+**TCPA consent is an explicit gated checkbox (2026-07-27).** On the phone step, ABOVE the
+submit button, starting UNCHECKED, blocking submit until checked, gated in `submit()` AND
+in `/api/lead` (400 `consent required` when `tcpaConsent !== true`), because a client-only
+gate is bypassable and this is a legal record. Never pre-check it, never move it below the
+button. The payload carries a seven-field record, not a bare boolean: `tcpaConsent`,
+`tcpaConsentText` (verbatim, ~550 chars, needs a Multi Line field in GHL or it truncates),
+`tcpaConsentAt`, `tcpaConsentUrl`, plus server-stamped `tcpaConsentIp`,
+`tcpaConsentUserAgent`, `tcpaConsentReceivedAt`. Verify with `node tools/tcpa-test.mjs`.
+
+Rationale and the standing rules live in the workspace CLAUDE.md ("Lead capture: standing
+rules for every funnel"); reference build is `clients/Internet-Loans-Direct/`.
 
 ## Old-site route redirects (in `astro.config.mjs`)
 
@@ -98,6 +116,8 @@ matches main; push to `main` for deploys.
 
 ## Lessons Learned
 
+- **[2026-07-27] Removing partial captures broke two verify-tracking assertions, not the site:** the end-to-end block and the honeypot block both depended on the partial POST firing at the contact step, so with partials gone they reported 5 failures on a perfectly healthy build. Both now finish the form (phone + consent) instead. Lesson: when a QA script asserts on a side effect of a feature you are deleting, the script needs updating in the same commit, and a wall of failures right after a change is worth reading carefully before assuming a regression.
+- **[2026-07-27] The email promise in the thank-you phone branch is dead code here:** Adam has a booking calendar, so `bookingEmbedUrl` is set and the iframe branch always renders. The "reply to the email we just sent" line lives in the unreachable `else` branch and was left alone. The visible one was the contact-step subtitle ("Your eligibility summary lands in your inbox"), reworded since Workflow A still does not exist in GHL.
 - **[2026-07-21] shoot.mjs path bug:** `new URL().pathname` keeps `%20` for spaces and
   breaks on this workspace path; use `fileURLToPath`. Fixed here; fix upstream in
   dscr-funnel-template if reused.
