@@ -1,12 +1,12 @@
-# Session prompt: build dscr-funnel-template-2
+# Session prompt: build dscr-2-blueprint
 
 Paste everything below into a fresh Fable 5 chat. If the v1 dev server is running, tell it to kill port 4321 first.
 
 ---
 
-Create a new client folder called dscr-funnel-template-2. We're building a second, completely
+Create a new client folder called dscr-2-blueprint. We're building a second, completely
 original DSCR funnel: landing page, multi-step lead form, and thank-you page. This is a sister
-template to clients/dscr-funnel-template (v1), but it must be visually and conceptually
+template to templates/funnels/dscr-1-private-credit (v1), but it must be visually and conceptually
 DIFFERENT from v1 in every way that matters. Do not open or reuse v1's code, layout, palette,
 typography, or signature elements. The only thing you may read from v1 is its CLAUDE.md, for
 the baseline metrics and the "Gotchas" section.
@@ -56,7 +56,7 @@ PROCESS:
   aesthetic, converted to WebP.
 - Mobile-first: most ad traffic is mobile. Verify with puppeteer-core mobile emulation
   against installed Chrome (bare headless --screenshot lies at mobile widths). A working
-  harness you may adapt: clients/dscr-funnel-template/tools/shoot.mjs.
+  harness you may adapt: templates/funnels/dscr-1-private-credit/tools/shoot.mjs.
 - npm run build after each logical unit, zero errors before continuing.
 - Minimum three full iteration passes: screenshot desktop + mobile + every form step +
   the decline branch + thank-you, review with a fine-toothed comb, fix, repeat.

@@ -1,7 +1,7 @@
 # CLAUDE.md. Tall Timbers DSCR Funnel (v2 site)
 
 **The new Tall Timbers DSCR funnel, target domain `dscr.talltimbersrfs.com`.** Built
-2026-07-21 by cloning `clients/dscr-funnel-template/` (funnel v1, "private credit house"
+2026-07-21 by cloning `templates/funnels/dscr-1-private-credit/` (funnel v1, "private credit house"
 design) and rebranding it for Tall Timbers. The old Astro LP project lives in
 `clients/tall-timbers/` and stays in the tree because skills and history reference it.
 
@@ -120,7 +120,7 @@ matches main; push to `main` for deploys.
 - **[2026-07-27] The email promise in the thank-you phone branch is dead code here:** Adam has a booking calendar, so `bookingEmbedUrl` is set and the iframe branch always renders. The "reply to the email we just sent" line lives in the unreachable `else` branch and was left alone. The visible one was the contact-step subtitle ("Your eligibility summary lands in your inbox"), reworded since Workflow A still does not exist in GHL.
 - **[2026-07-21] shoot.mjs path bug:** `new URL().pathname` keeps `%20` for spaces and
   breaks on this workspace path; use `fileURLToPath`. Fixed here; fix upstream in
-  dscr-funnel-template if reused.
+  templates/funnels/dscr-1-private-credit if reused.
 - **[2026-07-21] gtag config ping vs conversion:** the `viewthroughconversion` request with
   `en=gtag.config` fires on every page load with an Ads tag. Only requests carrying the
   conversion label are real conversions; assert on the label when verifying.

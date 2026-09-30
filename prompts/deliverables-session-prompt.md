@@ -4,7 +4,7 @@ Paste everything below into a fresh Fable 5 chat.
 
 ---
 
-Open clients/dscr-funnel-template (the master DSCR funnel built 2026-07-13). Read its
+Open templates/funnels/dscr-1-private-credit (the master DSCR funnel built 2026-07-13). Read its
 CLAUDE.md and src/config/funnel.ts first. Your job this session: build every deliverable
 asset the funnel PROMISES the lead, so the promise chain is real the moment a form submits.
 
@@ -20,7 +20,7 @@ refinance / cashout / bridge), propertyType, credit band, price, downPayment + d
 (purchase), balance (refi/cashout, equity derivable), rehab (bridge), state, gclid + UTMs,
 secondsToComplete, submittedAt.
 
-BUILD THESE, in clients/dscr-funnel-template/deliverables/:
+BUILD THESE, in templates/funnels/dscr-1-private-credit/deliverables/:
 
 1. ELIGIBILITY SUMMARY EMAIL (the core promise). GHL-ready HTML email, personalized with
    merge fields: recap their exact scenario (goal, property type, credit band, price,
