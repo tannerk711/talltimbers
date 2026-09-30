@@ -70,7 +70,7 @@ button. The payload carries a seven-field record, not a bare boolean: `tcpaConse
 `tcpaConsentUserAgent`, `tcpaConsentReceivedAt`. Verify with `node tools/tcpa-test.mjs`.
 
 Rationale and the standing rules live in the workspace CLAUDE.md ("Lead capture: standing
-rules for every funnel"); reference build is `clients/Internet-Loans-Direct/`.
+rules for every funnel"); reference build is `clients/internet-loans-direct/funnels/lenderdscr/`.
 
 ## Old-site route redirects (in `astro.config.mjs`)
 
