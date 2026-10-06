@@ -51,8 +51,8 @@ Name, NMLS, phone, logo path, proof numbers, booking URL, gtag ids, Hotjar id, s
 Form (`FunnelForm.tsx`) → POST `/api/lead` (serverless) → forwards server-side to
 `LEAD_WEBHOOK_URL` env var (set in Vercel; never read webhooks in browser code). Payload is
 the funnel-template contract documented in `deliverables/WIRING.md` (NOT the old site's flat
-Zapier payload; the old Zap's field mapping does not match). Honeypot field `website` drops
-bots server-side.
+Zapier payload; the old Zap's field mapping does not match). Honeypot trap `ff_hp` drops only a sub-20s submit (slower ones forward flagged `honeypotFilled`, every outcome logs one line);
+server-side.
 
 **ONE webhook per lead, no partial captures (2026-07-27).** `sendPartial` used to fire a
 `partial: true` webhook after name+email, which forces two intake automations in the CRM.
@@ -94,7 +94,7 @@ paths until the campaigns are updated.
   footer/legal/privacy rewritten from directory voice to licensed-shop "we" voice (Rule 9);
   thank-you tab title "You're Eligible" → "Eligibility Check Complete"; honeypot moved to
   the always-mounted form shell (it unmounted before submit and could never catch a bot;
-  QA tools must exclude `#ff-company` when selecting form inputs).
+  QA tools must exclude `#ff-hp` when selecting form inputs).
 
 ## Deliverables
 

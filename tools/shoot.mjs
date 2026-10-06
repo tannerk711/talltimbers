@@ -124,13 +124,13 @@ await page.screenshot({ path: `${outDir}${prefix}-form-price.png` });
 await clickByText('Continue');
 await page.screenshot({ path: `${outDir}${prefix}-form-down.png` });
 await clickByText('Continue');
-await page.type('#eligibility input:not(#ff-company)', 'Ari');
+await page.type('#eligibility input:not(#ff-hp)', 'Ari');
 await settle(500);
 await page.screenshot({ path: `${outDir}${prefix}-form-state.png` });
 await clickByText('Arizona');
 await page.screenshot({ path: `${outDir}${prefix}-form-contact.png` });
 await page.evaluate(() => {
-  const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-company');
+  const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-hp');
   const setVal = (el, v) => {
     const s = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
     s.call(el, v);

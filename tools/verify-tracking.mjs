@@ -81,11 +81,11 @@ async function pageWithNet(w = 1440, h = 900, mobile = false) {
   await click('740+');
   await click('Continue'); // price
   await click('Continue'); // down payment
-  await page.type('#eligibility input:not(#ff-company)', 'Geor');
+  await page.type('#eligibility input:not(#ff-hp)', 'Geor');
   await settle(400);
   await click('Georgia');
   await page.evaluate(() => {
-    const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-company');
+    const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-hp');
     const setVal = (el, v) => {
       const s = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
       s.call(el, v);
@@ -142,21 +142,21 @@ async function pageWithNet(w = 1440, h = 900, mobile = false) {
     }, text);
     await settle(600);
   };
-  await page.waitForSelector('#ff-company', { timeout: 15000 });
+  await page.waitForSelector('#ff-hp', { timeout: 15000 });
   // uncontrolled input: direct value assignment is exactly what a bot does
   await page.evaluate(() => {
-    document.getElementById('ff-company').value = 'https://spam.example';
+    document.getElementById('ff-hp').value = 'https://spam.example';
   });
   await click('Buy a rental');
   await click('Single family');
   await click('740+');
   await click('Continue');
   await click('Continue');
-  await page.type('#eligibility input:not(#ff-company)', 'Geor');
+  await page.type('#eligibility input:not(#ff-hp)', 'Geor');
   await settle(400);
   await click('Georgia');
   await page.evaluate(() => {
-    const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-company');
+    const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-hp');
     const setVal = (el, v) => {
       const s = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
       s.call(el, v);
@@ -183,8 +183,8 @@ async function pageWithNet(w = 1440, h = 900, mobile = false) {
   await settle(1500);
   let parsed = null;
   try { parsed = leadBody ? JSON.parse(leadBody) : null; } catch { /* ignore */ }
-  check('honeypot value reaches /api/lead payload', !!parsed && parsed.website === 'https://spam.example',
-    parsed ? `website="${parsed.website}"` : 'no /api/lead POST captured');
+  check('honeypot value reaches /api/lead payload', !!parsed && parsed.ff_hp === 'https://spam.example',
+    parsed ? `ff_hp="${parsed.ff_hp}"` : 'no /api/lead POST captured');
   await page.close();
 }
 

@@ -308,7 +308,7 @@ export default function FunnelForm() {
       ...attribution.current,
       landingPage: window.location.pathname + window.location.search,
       secondsToComplete: startedAt.current ? Math.round((Date.now() - startedAt.current) / 1000) : null,
-      website: honeypot, // honeypot; non-empty means bot
+      ff_hp: honeypot, // honeypot trap; server drops it only when the form was done in under 20 s
       submittedAt: new Date().toISOString(),
     };
   };
@@ -328,7 +328,7 @@ export default function FunnelForm() {
       setError('Please check the consent box so we have your permission to contact you.');
       return;
     }
-    const honeypot = (document.getElementById('ff-company') as HTMLInputElement)?.value;
+    const honeypot = (document.getElementById('ff-hp') as HTMLInputElement)?.value;
     setSubmitting(true);
     setSubmitError(false);
 
@@ -666,11 +666,15 @@ export default function FunnelForm() {
       {/* honeypot; humans never see it. Lives in the always-mounted shell so its
           value survives step changes and is still in the DOM at submit time. */}
       <input
-        id="ff-company"
+        id="ff-hp"
+        name="ff_hp"
         type="text"
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
+        data-lpignore="true"
+        data-1p-ignore
+        data-form-type="other"
         style={{ position: 'absolute', left: '-5000px', width: 1, height: 1, opacity: 0 }}
       />
       {/* progress */}

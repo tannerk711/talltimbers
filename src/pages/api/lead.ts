@@ -15,16 +15,41 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ ok: false, error: 'bad json' }, 400);
   }
 
-  // honeypot filled → bot. Return success so it learns nothing.
-  if (typeof data.website === 'string' && data.website.trim() !== '') {
-    return json({ ok: true }, 200);
+  // Honeypot. The trap carries a nonsense name (`ff_hp`) plus password-manager
+  // ignore attributes; a filled trap only drops a form "completed" in under
+  // 20 s. A slower submit is a human whose form filler hit the trap: it goes
+  // through, flagged. `website` is the pre-rename key; cached bundles still
+  // send it. (2026-10-06: a CLP submit returned 200 and reached nobody, and
+  // the silent drop left nothing in the logs.)
+  const who = () =>
+    JSON.stringify({ name: data.firstName, email: data.email ?? data.phone });
+  const trap = [data.ff_hp, data.website].find((v) => typeof v === 'string' && v.trim() !== '');
+  delete data.ff_hp;
+  delete data.website;
+  const seconds = Number(data.secondsToComplete);
+  data.honeypotFilled = trap !== undefined;
+  if (trap !== undefined) {
+    if (!Number.isFinite(seconds) || seconds < 20) {
+      console.warn(`[lead] dropped: honeypot filled, form done in ${seconds}s`, who());
+      return json({ ok: true }, 200);
+    }
+    console.warn(`[lead] honeypot filled after ${seconds}s, forwarding flagged`, who());
   }
 
   // TCPA gate, server side. The checkbox in the form is the real UX, but a
   // client-only gate is bypassable and this is a legal consent record, so a
   // lead without affirmative consent never reaches the CRM.
   if (data.tcpaConsent !== true) {
+    console.warn('[lead] rejected: missing consent', who());
     return json({ ok: false, error: 'consent required' }, 400);
+  }
+
+  // one webhook per lead means a COMPLETE lead: name + email + phone.
+  for (const req of ['firstName', 'email', 'phone']) {
+    if (String(data[req] ?? '').trim() === '') {
+      console.warn(`[lead] rejected: missing ${req}`, who());
+      return json({ ok: false, error: `missing ${req}` }, 400);
+    }
   }
 
   // Stamp the consent record with data only the server can vouch for. The
@@ -45,8 +70,23 @@ export const POST: APIRoute = async ({ request }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      if (!res.ok) return json({ ok: false, error: `webhook ${res.status}` }, 502);
-    } catch {
+      if (!res.ok) {
+        console.error(`[lead] webhook answered ${res.status}`, who());
+        return json({ ok: false, error: `webhook ${res.status}` }, 502);
+      }
+      console.log(
+        `[lead] accepted, webhook ${res.status}`,
+        JSON.stringify({
+          name: data.firstName,
+          email: data.email,
+          receivedAt: data.tcpaConsentReceivedAt,
+          ip: data.tcpaConsentIp,
+          seconds,
+          honeypotFilled: data.honeypotFilled,
+        }),
+      );
+    } catch (e) {
+      console.error('[lead] webhook unreachable', who(), e);
       return json({ ok: false, error: 'webhook unreachable' }, 502);
     }
   } else {

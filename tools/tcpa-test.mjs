@@ -54,7 +54,7 @@ await clickByText('Continue');   // price
 await clickByText('Continue');   // down payment
 // template keeps the state step (ILD hardcodes one state and skips it)
 await page.evaluate(() => {
-  const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-company');
+  const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-hp');
   const s = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
   s.call(inputs[0], 'Texas');
   inputs[0].dispatchEvent(new Event('input', { bubbles: true }));
@@ -62,7 +62,7 @@ await page.evaluate(() => {
 await new Promise((r) => setTimeout(r, 600));
 await clickByText('Texas');
 await page.evaluate(() => {
-  const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-company');
+  const inputs = [...document.querySelectorAll('#eligibility input')].filter((i) => i.id !== 'ff-hp');
   const setVal = (el, v) => {
     const s = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
     s.call(el, v);
