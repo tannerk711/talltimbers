@@ -51,7 +51,7 @@ Name, NMLS, phone, logo path, proof numbers, booking URL, gtag ids, Hotjar id, s
 Form (`FunnelForm.tsx`) → POST `/api/lead` (serverless) → forwards server-side to
 `LEAD_WEBHOOK_URL` env var (set in Vercel; never read webhooks in browser code). Payload is
 the funnel-template contract documented in `deliverables/WIRING.md` (NOT the old site's flat
-Zapier payload; the old Zap's field mapping does not match). Honeypot trap `ff_hp` drops only a sub-20s submit (slower ones forward flagged `honeypotFilled`, every outcome logs one line);
+Zapier payload; the old Zap's field mapping does not match). Honeypot trap `ff_hp` is a label, never a gate (a filled trap forwards flagged `honeypotFilled`, nothing is dropped, every outcome logs one line; Tanner 2026-10-06, every complete submit fires the Zap);
 server-side.
 
 **ONE webhook per lead, no partial captures (2026-07-27).** `sendPartial` used to fire a
